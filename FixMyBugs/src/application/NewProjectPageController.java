@@ -37,8 +37,11 @@ public class NewProjectPageController implements Initializable
 
     @FXML
     private Button cancelButton;
+    
+    @FXML
+    private Button clearButton;
 
-    private static final String jdbcUrl = "jdbc:sqlite:database.db";
+    private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
 
  
 
@@ -122,4 +125,15 @@ public class NewProjectPageController implements Initializable
         projectDescriptionArea.setFocusTraversable(false); 
 		
 	}
+	
+	 @FXML
+	 public void clearButton(ActionEvent event) throws Exception 
+	 {
+		  projectNameField.clear();
+		  projectDatePicker.setValue(LocalDate.now()); // Set default date to today
+		  projectDescriptionArea.clear();
+
+	       
+	 }
+	
 }
