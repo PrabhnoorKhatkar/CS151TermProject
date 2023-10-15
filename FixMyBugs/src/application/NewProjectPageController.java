@@ -20,6 +20,10 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for the New Project Page in the JavaFX application.
+ * This class handles creating and saving new projects to a SQLite database.
+ */
 public class NewProjectPageController implements Initializable
 {
 
@@ -41,10 +45,16 @@ public class NewProjectPageController implements Initializable
     @FXML
     private Button clearButton;
 
-    private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
+    private static final String jdbcUrl = "jdbc:sqlite:/Users/rimonyacoub/Desktop/CS151TermProject/Data";
 
  
 
+    /**
+     * This method handles the action when the "Save" button is clicked.
+     * Creates a new project and saves it to the database.
+     * @param event The action event.
+     * @throws Exception If saving the project or navigation fails.
+     */
     public void saveProject(ActionEvent event) throws Exception 
     {
         String projectName = projectNameField.getText();
@@ -65,11 +75,22 @@ public class NewProjectPageController implements Initializable
         }
     }
 
+    /**
+     * This method handles the action when the "Cancel" button is clicked.
+     * Navigates back to the main page.
+     * @param event The action event.
+     * @throws Exception If navigation fails.
+     */
     @FXML
     public void cancelButton(ActionEvent event) throws Exception {
         navigateToMainPage(event);
     }
 
+    /**
+     * This method navigates back to the main page.
+     * @param event The action event.
+     * @throws Exception If navigation fails.
+     */
     private void navigateToMainPage(ActionEvent event) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
         Stage stage = (Stage) cancelButton.getScene().getWindow();
@@ -78,6 +99,9 @@ public class NewProjectPageController implements Initializable
         stage.show();
     }
 
+    /**
+     * This method creates the "projects" table in the database if it doesn't exist.
+     */
     private void createTable() {
         try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
             String createTableSQL = "CREATE TABLE IF NOT EXISTS projects (" + // Updated table name to "projects"
@@ -95,6 +119,12 @@ public class NewProjectPageController implements Initializable
         }
     }
 
+    /**
+     * This method inserts a new project into the database.
+     * @param projectName The name of the project.
+     * @param projectDate The date of the project.
+     * @param projectDescription The description of the project.
+     */
     private void insertProject(String projectName, LocalDate projectDate, String projectDescription) {
         try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
             String insertQuery = "INSERT INTO projects (project_name, project_date, project_description) VALUES (?, ?, ?)"; // Updated table name to "projects"
@@ -116,7 +146,11 @@ public class NewProjectPageController implements Initializable
         }
     }
     
-    // Initialize method to set the default value of the DatePicker
+    /**
+     * This method initializes the New Project Page by setting the default date and creating the database table.
+     * @param location The location used to resolve the root object.
+     * @param resources The resources used to localize the root object.
+     */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
 	{
@@ -126,6 +160,12 @@ public class NewProjectPageController implements Initializable
 		
 	}
 	
+	/**
+     * This method handles the action when the "Clear" button is clicked.
+     * Clears the input fields and sets the date to the default value.
+     * @param event The action event.
+     * @throws Exception If clearing the fields fails.
+     */
 	 @FXML
 	 public void clearButton(ActionEvent event) throws Exception 
 	 {

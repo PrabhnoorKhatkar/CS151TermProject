@@ -31,7 +31,6 @@ public class HomePageController
 	 * @param event The ActionEvent triggered by the user's interaction.
 	 * @throws IOException If there is an error loading the FXML file.
 	 */
-	
 	public void goToNewProjectScene(ActionEvent event) throws IOException 
 	{
 		// Set the style and properties of the page into parent root
@@ -48,6 +47,14 @@ public class HomePageController
 	
 	}
 	
+	/**
+     * This method handles the action event when a user wants to go to the Show Projects scene.
+     * It loads the "ShowProjectPage.fxml" file, creates a new scene, and sets it as the current scene.
+     * It also updates the stage to display the new scene.
+     *
+     * @param event The ActionEvent triggered by the user's interaction.
+     * @throws IOException If there is an error loading the FXML file.
+     */
 	public void goToShowProjects(ActionEvent event) throws IOException 
 	{
 		// Set the style and properties of the page into parent root

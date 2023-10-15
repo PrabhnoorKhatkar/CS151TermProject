@@ -34,7 +34,7 @@ public class Main extends Application
 	}
 	
 	/**
-	 * The main method is meant for launching the Java application.
+	 * This method is meant for launching the Java application.
 	 * It calls the launch method to start the JavaFX application.
 	 *
 	 * @param args Command-line arguments (not used in this application).

@@ -35,9 +35,15 @@ public class ShowProjectPageController implements Initializable
     @FXML
     private ListView<String> activeProjects = new ListView<String>();
     
-   
-    private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
+  
+    private static final String jdbcUrl = "jdbc:sqlite:/Users/rimonyacoub/Desktop/CS151TermProject/Data";
 
+    /**
+     * This method handles the action when the "Back" button is clicked.
+     * Navigates back to the home page.
+     * @param event The action event.
+     * @throws Exception If navigation fails.
+     */
     @FXML
     public void backButton(ActionEvent event) throws Exception {
     	 Parent root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
@@ -47,10 +53,16 @@ public class ShowProjectPageController implements Initializable
          stage.show();
     }
 
+    /**
+     * This method initializes the Show Project Page.
+     * Retrieves a list of project names from the database and populates the ListView.
+     * @param location The location used to resolve the root object.
+     * @param resources The resources used to localize the root object.
+     */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
 	{
-		
+		// Initialize the activeProjects list view with project names
 		ObservableList<String> projectNames =  FXCollections.observableArrayList(getProjectNames("projects", "project_name"));
 		activeProjects.setItems(projectNames);
 	
@@ -58,6 +70,12 @@ public class ShowProjectPageController implements Initializable
 		
 	}
 	
+	 /**
+     * This method retrieves a list of project names from the specified database table and column.
+     * @param table The database table name.
+     * @param col The column containing project names.
+     * @return A list of project names.
+     */
 	public List<String> getProjectNames(String table, String col) 
 	{
 		List<String> returnStringList = new ArrayList<String>();
