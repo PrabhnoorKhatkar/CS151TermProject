@@ -36,7 +36,7 @@ public class ShowProjectPageController implements Initializable
     private ListView<String> activeProjects = new ListView<String>();
     
   
-    private static final String jdbcUrl = "jdbc:sqlite:/Users/rimonyacoub/Desktop/CS151TermProject/Data";
+    private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
 
     /**
      * This method handles the action when the "Back" button is clicked.

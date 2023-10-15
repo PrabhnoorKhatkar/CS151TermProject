@@ -45,7 +45,7 @@ public class NewProjectPageController implements Initializable
     @FXML
     private Button clearButton;
 
-    private static final String jdbcUrl = "jdbc:sqlite:/Users/rimonyacoub/Desktop/CS151TermProject/Data";
+    private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
 
  
 
