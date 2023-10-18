@@ -27,8 +27,8 @@
                   </ToolBar>
                   <ToolBar layoutX="10.0" layoutY="49.0" prefHeight="40.0" prefWidth="200.0">
                      <items>
-                        <Button mnemonicParsing="false" text="NA" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Not Setup" />
+                        <Button fx:id="newTicketButton" mnemonicParsing="false" onAction="#goToNewTicket" text="New Ticket" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Create New Ticket" />
                      </items>
                   </ToolBar>
                </children>
