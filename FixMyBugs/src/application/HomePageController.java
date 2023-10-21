@@ -23,6 +23,9 @@ public class HomePageController
 	@FXML
 	private Button newTicketButton;
 	
+	@FXML
+	private Button goToSearchTicket;
+	
 	
 	private Stage HomepageStage;
 	
@@ -78,6 +81,22 @@ public class HomePageController
 	{
 		// Set the style and properties of the page into parent root
 		Parent root = FXMLLoader.load(getClass().getResource("NewTicketPage.fxml")); 
+		Node source = (Node) event.getSource();
+		// Get the Stage from which the button was pressed in
+	    HomepageStage = (Stage) source.getScene().getWindow();
+	    // Create the scene from the "NewProjectPage.fxml"
+		Scene newProjectScene = new Scene(root); 
+		// Override the old scene and replace with new one
+		HomepageStage.setScene(newProjectScene); 
+		// Update the scene
+		HomepageStage.show(); 
+	
+	}
+	
+	public void goToSearchTicket(ActionEvent event) throws IOException 
+	{
+		// Set the style and properties of the page into parent root
+		Parent root = FXMLLoader.load(getClass().getResource("SearchTicketPage.fxml")); 
 		Node source = (Node) event.getSource();
 		// Get the Stage from which the button was pressed in
 	    HomepageStage = (Stage) source.getScene().getWindow();
