@@ -50,6 +50,7 @@ public class NewTicketPageController implements Initializable
     
     @FXML
     private Button clearButton;
+    
 
     private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
 
@@ -63,6 +64,31 @@ public class NewTicketPageController implements Initializable
      */
     public void saveTicket(ActionEvent event) throws Exception 
     {
+    	
+    	String selectedProject = listProjects.getValue();
+    	String ticketName = ticketNameField.getText();
+    	String ticketDesc = ticketDescriptionArea.getText();
+    	
+    	//TODO if empty dont SAVE
+    	 if (selectedProject.isEmpty() || ticketName.isEmpty() || ticketDesc.isEmpty()) {
+             // Handle validation or show an error message
+    		 //TODO
+         } 
+    	 else 
+         {
+             // Insert the project into the database
+             insertTicket(selectedProject, ticketName, ticketDesc);
+
+             // Provide user feedback that the project was saved successfully
+             // Example: showSuccessAlert("Project saved successfully.");
+
+             // After saving the project, you can navigate back to the main page
+             navigateToMainPage(event);
+         }
+    	
+    	
+    	
+    	
        
     }
 
@@ -96,11 +122,11 @@ public class NewTicketPageController implements Initializable
      */
     private void createTable() {
         try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
-            String createTableSQL = "CREATE TABLE IF NOT EXISTS projects (" + // Updated table name to "projects"
+            String createTableSQL = "CREATE TABLE IF NOT EXISTS tickets (" + // Updated table name to "tickets"
                     "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "project_name TEXT NOT NULL," +
-                    "project_date TEXT NOT NULL," +
-                    "project_description TEXT" +
+                    "ticket_name TEXT NOT NULL," +
+                    "ticket_description TEXT" +
                     ")";
             try (PreparedStatement preparedStatement = connection.prepareStatement(createTableSQL)) {
                 preparedStatement.executeUpdate();
@@ -117,9 +143,25 @@ public class NewTicketPageController implements Initializable
      * @param projectDate The date of the project.
      * @param projectDescription The description of the project.
      */
-    private void insertProject(String projectName, LocalDate projectDate, String projectDescription) 
-    {
-    
+    private void insertTicket(String projectName, String ticketName, String ticketDescription) {
+        try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
+            String insertQuery = "INSERT INTO tickets (project_name, ticket_name, ticket_description) VALUES (?, ?, ?)"; // Updated table name to "tickets"
+            try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
+                preparedStatement.setString(1, projectName);
+                preparedStatement.setString(2, ticketName); // Store date as a string
+                preparedStatement.setString(3, ticketDescription);
+
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    // The data was successfully inserted
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Database connection error: " + e.getMessage());
+            System.err.println("Project data not saved.");
+        }
     }
     
     /**
@@ -148,6 +190,7 @@ public class NewTicketPageController implements Initializable
 	 {
 		  ticketNameField.clear();
 		  ticketDescriptionArea.clear();
+		  listProjects.valueProperty().set(null);
 
 	       
 	 }

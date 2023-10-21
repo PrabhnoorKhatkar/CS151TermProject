@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -19,12 +18,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 /**
  * Controller for the New Project Page in the JavaFX application.
@@ -76,36 +73,23 @@ public class SearchTicketPageController implements Initializable
     {
     	String searchInput = ticketNameField.getText();
     	ProjectsAndTickets.getItems().clear();
-    	ProjectsAndTickets.getItems().addAll(searchProjectsAndTickets(searchInput, getProjectsAndTickets("projects", "project_name", "tickets", "ticket_name")));
-    	ProjectsAndTickets.getSelectionModel().selectedItemProperty().addListener(new Event);
+    	ProjectsAndTickets.getItems().addAll(searchProjectsAndTickets(searchInput, retrieveProjectAndTicketNames()));
+    	ProjectsAndTickets.getSelectionModel().selectedItemProperty();
     	
-    	
-    	
+  
     }
     
     
-    private String searchProjectsAndTickets(String searchInput, List<String> projectsAndTickets2) 
+    private List<String> searchProjectsAndTickets(String searchInput, List<String> projectsAndTickets2) 
     {
-	
     	
-    	
-		return null;
-	}
+    	   return projectsAndTickets2.stream().filter(name -> name.toLowerCase().contains(searchInput.toLowerCase())).collect(Collectors.toList());
 
-
-    
-    private List<String> getProjectsAndTickets(String string, String string2, String string3, String string4) 
-    {
 		
-    	
-    	
-    	
-		return null;
 	}
 
 
-
-
+ 
 
 	/**
      * This method initializes the New Project Page by setting the default date and creating the database table.
@@ -117,11 +101,53 @@ public class SearchTicketPageController implements Initializable
 	{
 		
 		// Initialize the projectAndTicketNames list view with all project names and ticket names
-		ObservableList<String> projectAndTicketNames =  FXCollections.observableArrayList(getProjectsAndTickets("projects", "project_name", "tickets", "ticket_name"));
+		ObservableList<String> projectAndTicketNames =  FXCollections.observableArrayList(retrieveProjectAndTicketNames());
 		ProjectsAndTickets.setItems(projectAndTicketNames);
      
 		
 	}
+	
+	  public List<String> retrieveProjectAndTicketNames() 
+	  {
+	        List<String> result = new ArrayList<>();
+
+	        try (Connection connection = DriverManager.getConnection(jdbcUrl)) 
+	        {
+	            // Query the projects table to retrieve project names
+	            String projectQuery = "SELECT project_name FROM projects";
+	            
+	            try (PreparedStatement projectStatement = connection.prepareStatement(projectQuery);
+	            		
+	                 ResultSet projectResultSet = projectStatement.executeQuery()) 
+	            {
+	                while (projectResultSet.next()) 
+	                {
+	                    String projectName = projectResultSet.getString("project_name");
+	                    result.add(projectName);
+
+	                    // Query the tickets table for associated ticket names
+	                    String ticketQuery = "SELECT ticket_name FROM tickets WHERE project_name = ?";
+	                    try (PreparedStatement ticketStatement = connection.prepareStatement(ticketQuery)) 
+	                    {
+	                        ticketStatement.setString(1, projectName);
+	                        try (ResultSet ticketResultSet = ticketStatement.executeQuery()) 
+	                        {
+	                            while (ticketResultSet.next()) 
+	                            {
+	                                String ticketName = ticketResultSet.getString("ticket_name");
+	                                result.add(ticketName);
+	                            }
+	                        }
+	                    }
+	                }
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+
+	        return result;
+	    }
+	
 	
 		
 }

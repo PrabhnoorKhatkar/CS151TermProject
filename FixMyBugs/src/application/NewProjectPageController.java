@@ -82,7 +82,8 @@ public class NewProjectPageController implements Initializable
      * @throws Exception If navigation fails.
      */
     @FXML
-    public void cancelButton(ActionEvent event) throws Exception {
+    public void cancelButton(ActionEvent event) throws Exception 
+    {
         navigateToMainPage(event);
     }
 
