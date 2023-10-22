@@ -1,5 +1,7 @@
 package application;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -67,6 +69,21 @@ public class SearchTicketPageController implements Initializable
          stage.setScene(scene);
          stage.show();
     }
+    
+    /**
+     * This method handles the action when the "Back" button is clicked.
+     * Navigates back to the home page.
+     * @param event The action event.
+     * @throws Exception If navigation fails.
+     */
+    @FXML
+    public void selectButton(ActionEvent event) throws Exception {
+    	 Parent root = FXMLLoader.load(getClass().getResource("ShowTicket.fxml"));
+         Stage stage = (Stage) backButton.getScene().getWindow();
+         Scene scene = new Scene(root);
+         stage.setScene(scene);
+         stage.show();
+    }
 
   
     public void onInputMethodTextChangedProperty(ActionEvent event)
@@ -74,7 +91,16 @@ public class SearchTicketPageController implements Initializable
     	String searchInput = ticketNameField.getText();
     	ProjectsAndTickets.getItems().clear();
     	ProjectsAndTickets.getItems().addAll(searchProjectsAndTickets(searchInput, retrieveProjectAndTicketNames()));
-    	ProjectsAndTickets.getSelectionModel().selectedItemProperty();
+    	ProjectsAndTickets.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) 
+			{
+				selectedTicketOrProject = ProjectsAndTickets.getSelectionModel().getSelectedItem();
+				
+			}
+    		
+    	});
     	
   
     }

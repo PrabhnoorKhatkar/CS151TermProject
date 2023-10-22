@@ -47,7 +47,7 @@
                               <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="selectButton" mnemonicParsing="false" onAction="#onInputMethodTextChangedProperty" text="Select" translateX="99.0">
+                        <Button fx:id="selectButton" mnemonicParsing="false" onAction="#selectButton" text="Select" translateX="99.0">
                            <HBox.margin>
                               <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                            </HBox.margin>
