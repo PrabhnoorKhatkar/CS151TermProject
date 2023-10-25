@@ -50,6 +50,8 @@ public class SearchTicketPageController implements Initializable
 	
 	@FXML
     private ListView<String> ProjectsAndTickets = new ListView<String>();
+
+	private List<ProjectsAndTickets> ListOfProjectsAndTickets = new ArrayList<>();
 	
 	
 
@@ -91,7 +93,7 @@ public class SearchTicketPageController implements Initializable
     {
     	String searchInput = ticketNameField.getText();
     	ProjectsAndTickets.getItems().clear();
-    	ProjectsAndTickets.getItems().addAll(searchProjectsAndTickets(searchInput, retrieveProjectAndTicketNames()));
+    	ProjectsAndTickets.getItems().addAll(searchProjectsAndTickets(searchInput, ListOfProjectsAndTickets));
     	ProjectsAndTickets.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 
 			@Override
@@ -107,10 +109,10 @@ public class SearchTicketPageController implements Initializable
     }
     
     
-    private List<String> searchProjectsAndTickets(String searchInput, List<String> projectsAndTickets2) 
+    private List<String> searchProjectsAndTickets(String searchInput, List<ProjectsAndTickets> passInprojectsAndTickets) 
     {
     	
-    	   return projectsAndTickets2.stream().filter(name -> name.toLowerCase().contains(searchInput.toLowerCase())).collect(Collectors.toList());
+    	   return passInprojectsAndTickets.getName().stream().filter(name -> name.toLowerCase().contains(searchInput.toLowerCase())).collect(Collectors.toList());
 
 		
 	}
