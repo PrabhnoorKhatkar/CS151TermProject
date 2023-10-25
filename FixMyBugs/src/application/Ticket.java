@@ -4,7 +4,7 @@ import java.util.List;
 
 
 public class Ticket {
-    private List<Project> projects; // List of projects associated with this ticket
+    private String projects; // List of projects associated with this ticket
     private String ticketName;
     private String ticketDescription;
 
@@ -17,7 +17,7 @@ public class Ticket {
      *                         
      * @throws IllegalArgumentException If the ticket name is null or empty.
      */
-    public Ticket(List<Project> projects, String ticketName, String ticketDescription) {
+    public Ticket(String projects, String ticketName, String ticketDescription) {
         if (ticketName == null || ticketName.isEmpty()) {
             throw new IllegalArgumentException("Ticket name must not be empty.");
         }
@@ -32,7 +32,7 @@ public class Ticket {
      *
      * @return The list of projects.
      */
-    public List<Project> getProjects() {
+    public String getProjects() {
         return projects;
     }
 
@@ -75,25 +75,4 @@ public class Ticket {
         this.ticketDescription = ticketDescription;
     }
 
-    /**
-     * Returns a string representation of the Ticket, including its name, description,
-     * and associated projects.
-     *
-     * @return A string representation of the Ticket.
-     */
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Ticket Name: ").append(ticketName).append("\n");
-        sb.append("Ticket Description: ").append(ticketDescription).append("\n");
-
-        if (projects != null && !projects.isEmpty()) {
-            sb.append("Projects Associated with this Ticket: \n");
-            for (Project project : projects) {
-                sb.append("  - ").append(project.getProjectName()).append("\n");
-            }
-        }
-
-        return sb.toString();
-    }
 }
