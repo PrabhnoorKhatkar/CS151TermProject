@@ -127,7 +127,8 @@ public class SearchTicketPageController implements Initializable
 	public void initialize(URL location, ResourceBundle resources) 
 	{
 
-		
+		retrieveProjects();
+		retrieveTickets();
 		
 
 
