@@ -3,8 +3,9 @@ package application;
 import java.util.List;
 
 
-public class Ticket {
-    private String projects; // List of projects associated with this ticket
+public class Ticket extends ProjectItem
+{
+    private String projects; 
     private String ticketName;
     private String ticketDescription;
 
@@ -74,5 +75,11 @@ public class Ticket {
     public void setTicketDescription(String ticketDescription) {
         this.ticketDescription = ticketDescription;
     }
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return ticketName;
+	}
 
 }

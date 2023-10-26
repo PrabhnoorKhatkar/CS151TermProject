@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
  * Controller for the New Project Page in the JavaFX application.
  * This class handles creating and saving new projects to a SQLite database.
  */
-public class SearchTicketPageController implements Initializable
+public class SearchTicketPageController extends ProjectItem implements Initializable
 {
 
 	@FXML
@@ -43,15 +43,14 @@ public class SearchTicketPageController implements Initializable
     private Button searchButton;
 	
 	@FXML
-	private String selectedTicketOrProject;
+	private ProjectItem selectedTicketOrProject;
 	
 	@FXML
 	private Button selectButton;
 	
 	@FXML
-    private ListView<String> ProjectsAndTickets = new ListView<String>();
+    private ListView<ProjectItem> ProjectsAndTickets = new ListView<ProjectItem>();
 
-	private List<ProjectsAndTickets> ListOfProjectsAndTickets = new ArrayList<>();
 	
 	
 
@@ -93,13 +92,14 @@ public class SearchTicketPageController implements Initializable
     {
     	String searchInput = ticketNameField.getText();
     	ProjectsAndTickets.getItems().clear();
-    	ProjectsAndTickets.getItems().addAll(searchProjectsAndTickets(searchInput, ListOfProjectsAndTickets));
-    	ProjectsAndTickets.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+    	ProjectsAndTickets.getItems().addAll(searchProjectsAndTickets(searchInput, retrieveProjectsAndTickets()));
+    	ProjectsAndTickets.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ProjectItem>() {
 
+		
 			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) 
-			{
-				selectedTicketOrProject = ProjectsAndTickets.getSelectionModel().getSelectedItem();
+			public void changed(ObservableValue<? extends ProjectItem> observable, ProjectItem oldValue,
+					ProjectItem newValue) {
+				selectedTicketOrProject = (ProjectItem) ProjectsAndTickets.getSelectionModel().getSelectedItem();
 				
 			}
     		
@@ -109,11 +109,11 @@ public class SearchTicketPageController implements Initializable
     }
     
     
-    private List<String> searchProjectsAndTickets(String searchInput, List<ProjectsAndTickets> passInprojectsAndTickets) 
+    private List<ProjectItem> searchProjectsAndTickets(String searchInput, List<ProjectItem> passInprojectsAndTickets) 
     {
     	
-    	   return passInprojectsAndTickets.getName().stream().filter(name -> name.toLowerCase().contains(searchInput.toLowerCase())).collect(Collectors.toList());
-
+    	  // return passInprojectsAndTickets.getName().stream().filter(name -> name.toLowerCase().contains(searchInput.toLowerCase())).collect(Collectors.toList());
+return null;
 		
 	}
 
@@ -129,79 +129,65 @@ public class SearchTicketPageController implements Initializable
 	public void initialize(URL location, ResourceBundle resources) 
 	{
 
-		retrieveProjects();
-		retrieveTickets();
-		
-
-
+	
 		// Initialize the projectAndTicketNames list view with all project names and ticket names
-		ObservableList<ProjectsAndTickets> projectAndTicketNames =  FXCollections.observableArrayList();
+		ObservableList<ProjectItem> projectAndTicketNames =  FXCollections.observableArrayList(retrieveProjectsAndTickets());
+		
 		ProjectsAndTickets.setItems(projectAndTicketNames);
      
 		
 	}
 	
-	public List<Project> retrieveProjects() 
-	{
-        List<Project> projectList = new ArrayList<>();
+	
+	
+	 public List<ProjectItem> retrieveProjectsAndTickets() 
+	 {
+	        List<ProjectItem> projectAndTicketList = new ArrayList<>();
 
-          try (Connection connection = DriverManager.getConnection(jdbcUrl))  
-		  {
-            // Query the projects table to retrieve project data
-            String projectQuery = "SELECT project_name, project_date, project_description FROM projects";
+	        try (Connection connection = DriverManager.getConnection(jdbcUrl))  {
+	            // Query the projects table to retrieve project data
+	            String projectQuery = "SELECT project_name, project_date, project_description FROM projects";
 
-            try (PreparedStatement projectStatement = connection.prepareStatement(projectQuery); ResultSet projectResultSet = projectStatement.executeQuery())
-			{
+	            try (PreparedStatement projectStatement = connection.prepareStatement(projectQuery);
+	                 ResultSet projectResultSet = projectStatement.executeQuery()) {
+	                while (projectResultSet.next()) {
+	                    String projectName = projectResultSet.getString("project_name");
+	                    LocalDate projectDate = projectResultSet.getDate("project_date").toLocalDate();
+	                    String projectDescription = projectResultSet.getString("project_description");
 
-                while (projectResultSet.next()) 
-				{
-                    String projectName = projectResultSet.getString("project_name");
-                    LocalDate projectDate = projectResultSet.getDate("project_date").toLocalDate();
-                    String projectDescription = projectResultSet.getString("project_description");
+	                    Project project = new Project(projectName, projectDate, projectDescription);
+	                    projectAndTicketList.add(project);
+	                }
+	            }
 
-                    Project project = new Project(projectName, projectDate, projectDescription);
-                    projectList.add(project);
-                }
-            }
-        }
-		catch (Exception e) 
-		{
-            e.printStackTrace();
-        }
+	            // Query the tickets table to retrieve ticket data
+	            String ticketQuery = "SELECT project_name, ticket_name, ticket_description FROM tickets";
 
-        return projectList;
-    }
+	            try (PreparedStatement ticketStatement = connection.prepareStatement(ticketQuery);
+	                 ResultSet ticketResultSet = ticketStatement.executeQuery()) {
+	                while (ticketResultSet.next()) {
+	                    String projectName = ticketResultSet.getString("project_name");
+	                    String ticketName = ticketResultSet.getString("ticket_name");
+	                    String ticketDescription = ticketResultSet.getString("ticket_description");
 
-	public List<Ticket> retrieveTickets() 
-	{
-        List<Ticket> ticketList = new ArrayList<>();
+	                    Ticket ticket = new Ticket(projectName, ticketName, ticketDescription);
+	                    projectAndTicketList.add(ticket);
+	                }
+	            }
+	        } 
+	        catch (Exception e) 
+	        {
+	            e.printStackTrace();
+	        }
 
-          try (Connection connection = DriverManager.getConnection(jdbcUrl))  
-		  {
-            // Query the projects table to retrieve project data
-            String projectQuery = "SELECT project_name, ticket_name, ticket_description FROM tickets";
+	        return projectAndTicketList;
+	    }
 
-            try (PreparedStatement projectStatement = connection.prepareStatement(projectQuery); ResultSet tickektResultSet = projectStatement.executeQuery())
-			{
-
-                while (tickektResultSet.next()) 
-				{
-                    String projectName = tickektResultSet.getString("project_name");
-                    String ticketName = tickektResultSet.getString("ticket_name");
-                    String ticketDescription = tickektResultSet.getString("ticket_description");
-
-                    Ticket ticket = new Ticket(projectName, ticketName, ticketDescription);
-                    ticketList.add(ticket);
-                }
-            }
-        }
-		catch (Exception e) 
-		{
-            e.printStackTrace();
-        }
-
-        return ticketList;
-    }
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 
 
