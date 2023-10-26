@@ -188,6 +188,12 @@ public class SearchTicketPageController implements ProjectItem, Initializable
 	        return projectAndTicketList;
 	    }
 
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 

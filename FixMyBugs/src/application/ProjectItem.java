@@ -2,16 +2,11 @@ package application;
 
 public interface ProjectItem 
 {
+
+	String getName();
 	
-    public default String getName()
-    {
-		return "hi";
-    	
-    	
-    	
-    }
     
-    
+
     
     
 }
