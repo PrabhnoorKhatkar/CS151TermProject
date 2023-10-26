@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * This class is representing a project with a name, date, and description.
  */
-public class Project extends ProjectItem{
+public class Project implements ProjectItem{
     private String projectName;
     private LocalDate projectDate;
     private String projectDescription;

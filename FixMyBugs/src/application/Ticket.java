@@ -3,7 +3,7 @@ package application;
 import java.util.List;
 
 
-public class Ticket extends ProjectItem
+public class Ticket implements ProjectItem
 {
     private String projects; 
     private String ticketName;

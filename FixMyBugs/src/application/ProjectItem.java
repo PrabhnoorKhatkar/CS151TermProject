@@ -1,9 +1,15 @@
 package application;
 
-public abstract class ProjectItem 
+public interface ProjectItem 
 {
 	
-    public abstract String getName();
+    public default String getName()
+    {
+		return "hi";
+    	
+    	
+    	
+    }
     
     
     

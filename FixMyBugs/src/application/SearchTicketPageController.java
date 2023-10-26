@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
  * Controller for the New Project Page in the JavaFX application.
  * This class handles creating and saving new projects to a SQLite database.
  */
-public class SearchTicketPageController extends ProjectItem implements Initializable
+public class SearchTicketPageController implements ProjectItem, Initializable
 {
 
 	@FXML
@@ -112,8 +112,10 @@ public class SearchTicketPageController extends ProjectItem implements Initializ
     private List<ProjectItem> searchProjectsAndTickets(String searchInput, List<ProjectItem> passInprojectsAndTickets) 
     {
     	
-    	  // return passInprojectsAndTickets.getName().stream().filter(name -> name.toLowerCase().contains(searchInput.toLowerCase())).collect(Collectors.toList());
-return null;
+    	 // return ((SearchTicketPageController) passInprojectsAndTickets).getName().stream().filter(name -> name.toLowerCase().contains(searchInput.toLowerCase())).collect(Collectors.toList());
+
+    	  
+    	  return passInprojectsAndTickets.stream().filter(item -> item.getName().toLowerCase().contains(searchInput.toLowerCase())).collect(Collectors.toList());
 		
 	}
 
@@ -144,34 +146,37 @@ return null;
 	 {
 	        List<ProjectItem> projectAndTicketList = new ArrayList<>();
 
-	        try (Connection connection = DriverManager.getConnection(jdbcUrl))  {
+	        try (Connection connection = DriverManager.getConnection(jdbcUrl))  
+	        {
 	            // Query the projects table to retrieve project data
 	            String projectQuery = "SELECT project_name, project_date, project_description FROM projects";
 
-	            try (PreparedStatement projectStatement = connection.prepareStatement(projectQuery);
-	                 ResultSet projectResultSet = projectStatement.executeQuery()) {
-	                while (projectResultSet.next()) {
+	            try (PreparedStatement projectStatement = connection.prepareStatement(projectQuery);ResultSet projectResultSet = projectStatement.executeQuery()) 
+	            {
+	                while (projectResultSet.next()) 
+	                {
 	                    String projectName = projectResultSet.getString("project_name");
 	                    LocalDate projectDate = projectResultSet.getDate("project_date").toLocalDate();
 	                    String projectDescription = projectResultSet.getString("project_description");
 
 	                    Project project = new Project(projectName, projectDate, projectDescription);
-	                    projectAndTicketList.add(project);
+	                    projectAndTicketList.add((ProjectItem) project);
 	                }
 	            }
 
 	            // Query the tickets table to retrieve ticket data
 	            String ticketQuery = "SELECT project_name, ticket_name, ticket_description FROM tickets";
 
-	            try (PreparedStatement ticketStatement = connection.prepareStatement(ticketQuery);
-	                 ResultSet ticketResultSet = ticketStatement.executeQuery()) {
-	                while (ticketResultSet.next()) {
+	            try (PreparedStatement ticketStatement = connection.prepareStatement(ticketQuery);ResultSet ticketResultSet = ticketStatement.executeQuery()) 
+	            {
+	                while (ticketResultSet.next()) 
+	                {
 	                    String projectName = ticketResultSet.getString("project_name");
 	                    String ticketName = ticketResultSet.getString("ticket_name");
 	                    String ticketDescription = ticketResultSet.getString("ticket_description");
 
 	                    Ticket ticket = new Ticket(projectName, ticketName, ticketDescription);
-	                    projectAndTicketList.add(ticket);
+	                    projectAndTicketList.add((ProjectItem) ticket);
 	                }
 	            }
 	        } 
@@ -183,11 +188,8 @@ return null;
 	        return projectAndTicketList;
 	    }
 
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
+
 
 
 
