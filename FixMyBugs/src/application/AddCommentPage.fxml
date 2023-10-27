@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.NewTicketPageController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AddCommentPageController">
    <children>
       <BorderPane layoutX="27.0" layoutY="27.0" prefHeight="284.0" prefWidth="215.0">
          <center>
@@ -28,13 +28,13 @@
                   <Label alignment="CENTER" prefHeight="17.0" prefWidth="99.0" text="Add Comment" translateX="69.0" />
                   <Separator prefHeight="25.0" prefWidth="242.0" />
                   <Label text="Selected Ticket  " />
-                  <TextField fx:id="autoTicketName" disable="true" />
+                  <TextField fx:id="autoPopulatedTicketName" disable="true" />
                   <Separator prefHeight="19.0" prefWidth="242.0" />
                   <Label text="Comment Name*" />
-                  <TextField fx:id="commentNameField" />
+                  <TextField fx:id="commentName" />
                   <Separator prefHeight="28.0" prefWidth="242.0" />
                   <Label text="Description" />
-                  <TextArea fx:id="ticketDescriptionArea" prefHeight="78.0" prefWidth="242.0" promptText="Type here..." />
+                  <TextArea fx:id="commentDescriptionArea" prefHeight="78.0" prefWidth="242.0" promptText="Type here..." />
                   <Separator layoutX="10.0" layoutY="121.0" prefHeight="31.0" prefWidth="215.0" />
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>

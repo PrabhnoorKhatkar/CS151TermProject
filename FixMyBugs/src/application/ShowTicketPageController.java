@@ -1,8 +1,12 @@
 package application;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,7 +14,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class ShowTicketPageController 
+public class ShowTicketPageController implements Initializable
 {
 	 
 	@FXML
@@ -59,7 +63,11 @@ public class ShowTicketPageController
     @FXML
     public void backButton(ActionEvent event) throws Exception 
     {
-    	
+    	 Parent root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
+         Stage stage = (Stage) backButton.getScene().getWindow();
+         Scene scene = new Scene(root);
+         stage.setScene(scene);
+         stage.show();
     	
     }
     
@@ -86,12 +94,14 @@ public class ShowTicketPageController
     	
     	FXMLLoader loader = new FXMLLoader();
         Parent root = null;
-        
         loader.setLocation(getClass().getResource("AddCommentPage.fxml"));
         root = loader.load();
         AddCommentPageController controller = loader.getController();
+        
+        
         controller.initData((Ticket) passedInTicket);
-    
+        
+       
         Stage stage = (Stage) addCommentButton.getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -100,6 +110,14 @@ public class ShowTicketPageController
     	
     	
     }
+
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) 
+	{
+		// TODO Auto-generated method stub
+		
+	}
     
     
     
