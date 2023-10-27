@@ -45,7 +45,8 @@ public class ShowProjectPageController implements Initializable
      * @throws Exception If navigation fails.
      */
     @FXML
-    public void backButton(ActionEvent event) throws Exception {
+    public void backButton(ActionEvent event) throws Exception 
+    {
     	 Parent root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
          Stage stage = (Stage) backButton.getScene().getWindow();
          Scene scene = new Scene(root);
@@ -105,6 +106,8 @@ public class ShowProjectPageController implements Initializable
 		
 		return returnStringList;
 	}
+
+
 	
 	
 

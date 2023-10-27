@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -21,7 +22,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -79,12 +79,34 @@ public class SearchTicketPageController implements ProjectItem, Initializable {
 	 * @throws Exception If navigation fails.
 	 */
 	@FXML
-	public void selectButton(ActionEvent event) throws Exception {
-		Parent root = FXMLLoader.load(getClass().getResource("ShowTicket.fxml"));
-		Stage stage = (Stage) backButton.getScene().getWindow();
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
+	public void selectButton(ActionEvent event) throws Exception 
+	{
+		
+		 if (selectedTicketOrProject != null) {
+		        FXMLLoader loader = new FXMLLoader();
+		        Parent root = null;
+
+		        if (selectedTicketOrProject instanceof Project) 
+		        {
+		            loader.setLocation(getClass().getResource("ShowProjectPage.fxml"));
+		            root = loader.load();
+		            ShowProjectPageController controller = loader.getController();
+		            //controller.initData((Project) selectedTicketOrProject);
+		        } 
+		        else if (selectedTicketOrProject instanceof Ticket)
+		        {
+		            loader.setLocation(getClass().getResource("ShowTicketPage.fxml"));
+		            root = loader.load();
+		            ShowTicketPageController controller = loader.getController();
+		            controller.initData((Ticket) selectedTicketOrProject);
+		        }
+
+		        Stage stage = (Stage) selectButton.getScene().getWindow();
+		        Scene scene = new Scene(root);
+		        stage.setScene(scene);
+		        stage.show();
+		    }
+	
 	}
 
 	public void onInputMethodTextChangedProperty(ActionEvent event) {
@@ -94,14 +116,16 @@ public class SearchTicketPageController implements ProjectItem, Initializable {
 		ProjectsAndTickets.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ProjectItem>() {
 
 			@Override
-			public void changed(ObservableValue<? extends ProjectItem> observable, ProjectItem oldValue,
-					ProjectItem newValue) {
+			public void changed(ObservableValue<? extends ProjectItem> observable, ProjectItem oldValue, ProjectItem newValue) {
 				selectedTicketOrProject = (ProjectItem) ProjectsAndTickets.getSelectionModel().getSelectedItem();
+				
+				
 
 			}
 
 		});
-
+		
+		
 	}
 
 	private List<ProjectItem> searchProjectsAndTickets(String searchInput, List<ProjectItem> passInprojectsAndTickets) {
@@ -110,9 +134,7 @@ public class SearchTicketPageController implements ProjectItem, Initializable {
 		// passInprojectsAndTickets).getName().stream().filter(name ->
 		// name.toLowerCase().contains(searchInput.toLowerCase())).collect(Collectors.toList());
 
-		return passInprojectsAndTickets.stream()
-				.filter(item -> item.getName().toLowerCase().contains(searchInput.toLowerCase()))
-				.collect(Collectors.toList());
+		return passInprojectsAndTickets.stream().filter(item -> item.getName().toLowerCase().contains(searchInput.toLowerCase())).collect(Collectors.toList());
 
 	}
 
@@ -128,10 +150,22 @@ public class SearchTicketPageController implements ProjectItem, Initializable {
 
 		// Initialize the projectAndTicketNames list view with all project names and
 		// ticket names
-		ObservableList<ProjectItem> projectAndTicketNames = FXCollections
-				.observableArrayList(retrieveProjectsAndTickets());
+		ObservableList<ProjectItem> projectAndTicketNames = FXCollections.observableArrayList(retrieveProjectsAndTickets());
 
 		ProjectsAndTickets.setItems(projectAndTicketNames);
+		
+		// Set up a custom cell factory to display only the project name in the ListView
+	    ProjectsAndTickets.setCellFactory(listView -> new ListCell<ProjectItem>() {
+	        @Override
+	        protected void updateItem(ProjectItem item, boolean empty) {
+	            super.updateItem(item, empty);
+	            if (empty || item == null) {
+	                setText(null);
+	            } else {
+	                setText(item.getName());
+	            }
+	        }
+	    });
 
 	}
 
@@ -153,7 +187,7 @@ public class SearchTicketPageController implements ProjectItem, Initializable {
 					ResultSet projectResuitSet = projectStatement.executeQuery()) {
 				
 				while (projectResuitSet.next()) {
-					String projectName = projectResuitSet.getString("project _name");
+					String projectName = projectResuitSet.getString("project_name");
 					Date projectDate = dateFormat.parse(projectResuitSet.getString("project_date")); 
 					String projectDescription = projectResuitSet.getString("project_description");
 					Project project = new Project(projectName,

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
@@ -47,6 +49,17 @@
                   <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButton" text="Back" translateX="120.0" translateY="40.0" />
                </children>
             </VBox>
+         </center>
+      </BorderPane>
+      <BorderPane layoutX="358.0" layoutY="66.0" prefHeight="200.0" prefWidth="200.0">
+         <bottom>
+            <Button fx:id="addCommentButton" mnemonicParsing="false" onAction="#addComment" text="Add Comment" BorderPane.alignment="CENTER" />
+         </bottom>
+         <top>
+            <Label text="Comment History" BorderPane.alignment="CENTER" />
+         </top>
+         <center>
+            <ListView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
          </center>
       </BorderPane>
    </children>
