@@ -1,4 +1,4 @@
-package application;
+package application.controller;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -28,6 +28,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
+
+import application.Project;
+import application.ProjectItem;
+import application.Ticket;
 
 /**
  * Controller for the New Project Page in the JavaFX application. This class
@@ -64,7 +68,7 @@ public class SearchTicketPageController implements ProjectItem, Initializable {
 	 */
 	@FXML
 	public void backButton(ActionEvent event) throws Exception {
-		Parent root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
+		Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/HomePage.fxml"));
 		Stage stage = (Stage) backButton.getScene().getWindow();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
@@ -88,14 +92,14 @@ public class SearchTicketPageController implements ProjectItem, Initializable {
 
 		        if (selectedTicketOrProject instanceof Project) 
 		        {
-		            loader.setLocation(getClass().getResource("ShowProjectPage.fxml"));
+		            loader.setLocation(getClass().getClassLoader().getResource("view/ShowProjectPage.fxml"));
 		            root = loader.load();
 		            ShowProjectPageController controller = loader.getController();
 		            //controller.initData((Project) selectedTicketOrProject);
 		        } 
 		        else if (selectedTicketOrProject instanceof Ticket)
 		        {
-		            loader.setLocation(getClass().getResource("ShowTicketPage.fxml"));
+		            loader.setLocation(getClass().getClassLoader().getResource("view/ShowTicketPage.fxml"));
 		            root = loader.load();
 		            ShowTicketPageController controller = loader.getController();
 		            controller.initData((Ticket) selectedTicketOrProject);

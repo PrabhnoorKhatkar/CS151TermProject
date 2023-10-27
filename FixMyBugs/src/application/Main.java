@@ -21,13 +21,14 @@ public class Main extends Application
 	{
 		try {
 			// Load the "HomePage.fxml" file and create a root Pane from it
-			Pane root = (Pane)FXMLLoader.load(getClass().getResource("HomePage.fxml"));
+			Pane root = (Pane)FXMLLoader.load(getClass().getClassLoader().getResource("view/HomePage.fxml"));
 			// Create a new scene with the root Pane and set its dimensions (400x400)
 			Scene scene = new Scene(root,400,400);
 			// Set the created scene as the scene for the primary stage
 			primaryStage.setScene(scene);
 			// Show the primary stage to display the UI
 			primaryStage.show();
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

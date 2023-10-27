@@ -1,4 +1,4 @@
-package application;
+package application.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -47,7 +47,7 @@ public class ShowProjectPageController implements Initializable
     @FXML
     public void backButton(ActionEvent event) throws Exception 
     {
-    	 Parent root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
+    	 Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/HomePage.fxml"));
          Stage stage = (Stage) backButton.getScene().getWindow();
          Scene scene = new Scene(root);
          stage.setScene(scene);

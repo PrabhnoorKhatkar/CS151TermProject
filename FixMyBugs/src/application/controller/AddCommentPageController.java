@@ -1,8 +1,9 @@
-package application;
+package application.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import application.Ticket;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -115,7 +116,7 @@ public class AddCommentPageController
     	FXMLLoader loader = new FXMLLoader();
         Parent root = null;
         
-        loader.setLocation(getClass().getResource("ShowTicketPage.fxml"));
+        loader.setLocation(getClass().getClassLoader().getResource("view/ShowTicketPage.fxml"));
         root = loader.load();
         ShowTicketPageController controller = loader.getController();
         controller.initData((Ticket) passedInProject);

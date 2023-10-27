@@ -1,8 +1,9 @@
-package application;
+package application.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import application.Ticket;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -63,7 +64,7 @@ public class ShowTicketPageController implements Initializable
     @FXML
     public void backButton(ActionEvent event) throws Exception 
     {
-    	 Parent root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
+    	 Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/HomePage.fxml"));
          Stage stage = (Stage) backButton.getScene().getWindow();
          Scene scene = new Scene(root);
          stage.setScene(scene);
@@ -94,7 +95,7 @@ public class ShowTicketPageController implements Initializable
     	
     	FXMLLoader loader = new FXMLLoader();
         Parent root = null;
-        loader.setLocation(getClass().getResource("AddCommentPage.fxml"));
+        loader.setLocation(getClass().getClassLoader().getResource("view/AddCommentPage.fxml"));
         root = loader.load();
         AddCommentPageController controller = loader.getController();
         
