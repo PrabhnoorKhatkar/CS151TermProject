@@ -1,13 +1,9 @@
 package application.controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import application.Ticket;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -49,15 +45,10 @@ public class AddCommentPageController
 
 	public void initData(Ticket selectedTicketOrProject) 
 	{
-		// TODO Auto-generated method stub
-		System.out.println("TEMP");
-		
+	
 		passedInProject = selectedTicketOrProject;
 		autoPopulatedTicketName.setText(passedInProject.getTicketName()); 
 		commentDescriptionArea.setFocusTraversable(false); 
-		
-		
-		
 		
 	}
 	
@@ -69,10 +60,11 @@ public class AddCommentPageController
     	String commentDesc = commentDescriptionArea.getText();
     	
     	//TODO if empty dont SAVE
-   	 if (commentName.isEmpty() || commentDesc.isEmpty()) {
+   	 if (commentName.isEmpty() || commentDesc.isEmpty()) 
+   	 {
             // Handle validation or show an error message
    		 //TODO
-        } 
+     } 
    	 else 
         {
             // Insert the project into the database
@@ -102,7 +94,8 @@ public class AddCommentPageController
      * @throws Exception If navigation fails.
      */
     @FXML
-    public void cancelButton(ActionEvent event) throws Exception {
+    public void cancelButton(ActionEvent event) throws Exception 
+    {
         navigateToTicketPage(event);
     }
 

@@ -15,6 +15,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -40,7 +41,9 @@ public class ShowTicketPageController implements Initializable
     @FXML
   	private Button addCommentButton;
     
-    
+    @FXML
+  	private Label ticketNameDisplay;
+      
     private Ticket passedInTicket;
     
     @FXML
@@ -50,10 +53,9 @@ public class ShowTicketPageController implements Initializable
     
 	public void initData(Ticket selectedTicketOrProject) 
 	{
-		// TODO Auto-generated method stub
-		System.out.println("TEMP");
 		
 		passedInTicket = selectedTicketOrProject;
+		ticketNameDisplay.setText(passedInTicket.getName());
 		
 	}
 	
@@ -147,11 +149,5 @@ public class ShowTicketPageController implements Initializable
     
     
     
-    
-    
-    
-
-	
-	
 
 }

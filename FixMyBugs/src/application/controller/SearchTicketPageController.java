@@ -155,11 +155,24 @@ public class SearchTicketPageController implements ProjectItem, Initializable {
 		ObservableList<ProjectItem> projectAndTicketNames = FXCollections.observableArrayList(retrieveProjectsAndTickets());
 
 		ProjectsAndTickets.setItems(projectAndTicketNames);
+		ProjectsAndTickets.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ProjectItem>() {
+
+			@Override
+			public void changed(ObservableValue<? extends ProjectItem> observable, ProjectItem oldValue, ProjectItem newValue) {
+				selectedTicketOrProject = (ProjectItem) ProjectsAndTickets.getSelectionModel().getSelectedItem();
+				
+				
+
+			}
+
+		});
 		
 		// Set up a custom cell factory to display only the project name in the ListView
-	    ProjectsAndTickets.setCellFactory(listView -> new ListCell<ProjectItem>() {
+	    ProjectsAndTickets.setCellFactory(listView -> new ListCell<ProjectItem>() 
+	    {
 	        @Override
-	        protected void updateItem(ProjectItem item, boolean empty) {
+	        protected void updateItem(ProjectItem item, boolean empty) 
+	        {
 	            super.updateItem(item, empty);
 	            if (empty || item == null) {
 	                setText(null);
@@ -176,19 +189,21 @@ public class SearchTicketPageController implements ProjectItem, Initializable {
 	 *
 	 * @return A list of ProjectItem objects representing projects and tickets.
 	 */
-	public List<ProjectItem> retrieveProjectsAndTickets() {
+	public List<ProjectItem> retrieveProjectsAndTickets() 
+	{
 		List<ProjectItem> projectAndTicketList = new ArrayList<>();
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
-			
+		try (Connection connection = DriverManager.getConnection(jdbcUrl)) 
+		{
 			//The table to retrieve project data
 			String projectQuery = "SELECT project_name, project_date, project_description FROM projects";
 
-			try (PreparedStatement projectStatement = connection.prepareStatement(projectQuery);
-					ResultSet projectResuitSet = projectStatement.executeQuery()) {
+			try (PreparedStatement projectStatement = connection.prepareStatement(projectQuery); ResultSet projectResuitSet = projectStatement.executeQuery()) 
+			{
 				
-				while (projectResuitSet.next()) {
+				while (projectResuitSet.next()) 
+				{
 					String projectName = projectResuitSet.getString("project_name");
 					Date projectDate = dateFormat.parse(projectResuitSet.getString("project_date")); 
 					String projectDescription = projectResuitSet.getString("project_description");
@@ -200,9 +215,10 @@ public class SearchTicketPageController implements ProjectItem, Initializable {
 			// The table to retrieve ticket data
 			String ticketQuery = "SELECT project_name, ticket_name, ticket_description FROM tickets";
 			
-			try (PreparedStatement ticketStatement = connection.prepareStatement(ticketQuery);
-					ResultSet ticketResultSet = ticketStatement.executeQuery()) {
-				while (ticketResultSet.next()) {
+			try (PreparedStatement ticketStatement = connection.prepareStatement(ticketQuery); ResultSet ticketResultSet = ticketStatement.executeQuery()) 
+			{
+				while (ticketResultSet.next()) 
+				{
 					String projectName = ticketResultSet.getString("project_name");
 					String ticketName = ticketResultSet.getString("ticket_name");
 					String ticketDescription = ticketResultSet.getString("ticket_description");
@@ -210,14 +226,17 @@ public class SearchTicketPageController implements ProjectItem, Initializable {
 					projectAndTicketList.add(ticket);
 				}
 			}
-		} catch (Exception e) {
+		} 
+		catch (Exception e) 
+		{
 			e.printStackTrace();
 		}
 		return projectAndTicketList;
 	}
 
 	@Override
-	public String getName() {
+	public String getName() 
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
