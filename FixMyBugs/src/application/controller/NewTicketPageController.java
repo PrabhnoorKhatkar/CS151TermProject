@@ -135,7 +135,7 @@ public class NewTicketPageController implements Initializable
                     "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "project_name TEXT NOT NULL," +
                     "ticket_name TEXT NOT NULL," +
-                    "ticket_description TEXT" +
+                    "ticket_description TEXT," +
                     "ticketID TEXT NOT NULL" +
                     ")";
             try (PreparedStatement preparedStatement = connection.prepareStatement(createTableSQL)) {

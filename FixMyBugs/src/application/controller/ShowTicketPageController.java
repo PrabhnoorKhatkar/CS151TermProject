@@ -1,9 +1,18 @@
 package application.controller;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import application.Comment;
 import application.Ticket;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -51,6 +60,8 @@ public class ShowTicketPageController implements Initializable
     
     @FXML
     private ListView<String> commentList = new ListView<String>();
+    
+    private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
     
     
     
@@ -146,22 +157,51 @@ public class ShowTicketPageController implements Initializable
 	public void initialize(URL arg0, ResourceBundle arg1) 
 	{
 		// Initialize the activeProjects list view with project names
-		ObservableList<String> listOfComments =  FXCollections.observableArrayList(getComments("comment", passedInTicket.getTicketID()));
-		commentList.setItems(listOfComments);
+		//ObservableList<String> listOfComments =  FXCollections.observableArrayList(getComments("comment", "ticketID", passedInTicket.getTicketID()));
+		//commentList.setItems(listOfComments);
 		
 		
 		
 	}
 
 
+/*
+	public List<Comment> getCommentsByTicketID(String ticketID) 
+	{
+        List<Comment> commentList = new ArrayList<>();
 
-	private Callback getComments(String string, String ticketID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+        try {
+            Connection connection = DriverManager.getConnection(jdbcUrl);
+
+            String sql = "SELECT timestamp, comment_description FROM comments WHERE ticketID = ?";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, ticketID);
+
+            ResultSet resultSet = pstmt.executeQuery();
+
+            while (resultSet.next()) 
+            {
+                String timestamp = resultSet.getString("timestamp");
+                String commentDescription = resultSet.getString("comment_description");
+
+                Comment comment = new Comment(timestamp, commentDescription);
+                commentList.add(comment);
+            }
+
+            resultSet.close();
+            pstmt.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Error retrieving comments: " + e.getMessage());
+        }
+
+        return commentList;
+    }
+
     
     
-    
+    */
     
 
 }
