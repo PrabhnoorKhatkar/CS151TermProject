@@ -11,6 +11,7 @@ public class Ticket implements ProjectItem
     private String projects; 
     private String ticketName;
     private String ticketDescription;
+    private String ticketID;
     private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
 
     /**
@@ -22,7 +23,7 @@ public class Ticket implements ProjectItem
      *                         
      * @throws IllegalArgumentException If the ticket name is null or empty.
      */
-    public Ticket(String projects, String ticketName, String ticketDescription) {
+    public Ticket(String projects, String ticketName, String ticketDescription, String ticketID) {
         if (ticketName == null || ticketName.isEmpty()) {
             throw new IllegalArgumentException("Ticket name must not be empty.");
         }
@@ -30,6 +31,7 @@ public class Ticket implements ProjectItem
         this.projects = projects;
         this.ticketName = ticketName;
         this.ticketDescription = ticketDescription;
+        this.ticketID = ticketID;
     }
 
     /**
@@ -102,6 +104,14 @@ public class Ticket implements ProjectItem
 	        e.printStackTrace();
 	        System.err.println("Error deleting ticket: " + e.getMessage());
 	    }
+	}
+
+	public String getTicketID() {
+		return ticketID;
+	}
+
+	public void setTicketID(String ticketID) {
+		this.ticketID = ticketID;
 	}
 
 }

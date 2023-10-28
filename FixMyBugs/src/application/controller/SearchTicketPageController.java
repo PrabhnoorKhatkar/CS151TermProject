@@ -213,7 +213,7 @@ public class SearchTicketPageController implements ProjectItem, Initializable {
 				}
 			}
 			// The table to retrieve ticket data
-			String ticketQuery = "SELECT project_name, ticket_name, ticket_description FROM tickets";
+			String ticketQuery = "SELECT project_name, ticket_name, ticket_description, ticketID FROM tickets";
 			
 			try (PreparedStatement ticketStatement = connection.prepareStatement(ticketQuery); ResultSet ticketResultSet = ticketStatement.executeQuery()) 
 			{
@@ -222,7 +222,8 @@ public class SearchTicketPageController implements ProjectItem, Initializable {
 					String projectName = ticketResultSet.getString("project_name");
 					String ticketName = ticketResultSet.getString("ticket_name");
 					String ticketDescription = ticketResultSet.getString("ticket_description");
-					Ticket ticket = new Ticket(projectName, ticketName, ticketDescription);
+					String ticketID = ticketResultSet.getString("ticketID");
+					Ticket ticket = new Ticket(projectName, ticketName, ticketDescription, ticketID);
 					projectAndTicketList.add(ticket);
 				}
 			}

@@ -58,6 +58,7 @@ public class AddCommentPageController
 	   	String ticketName = autoPopulatedTicketName.getText();
     	String commentName = this.commentName.getText();
     	String commentDesc = commentDescriptionArea.getText();
+    	String ticketID = passedInProject.getTicketID();
     	
     	//TODO if empty dont SAVE
    	 if (commentName.isEmpty() || commentDesc.isEmpty()) 
@@ -68,7 +69,7 @@ public class AddCommentPageController
    	 else 
         {
             // Insert the project into the database
-           // insertComment(ticketName, commentName, commentDesc);
+           // insertComment(ticketName, commentName, commentDesc, ticketID);
 
             // Provide user feedback that the project was saved successfully
             // Example: showSuccessAlert("Project saved successfully.");

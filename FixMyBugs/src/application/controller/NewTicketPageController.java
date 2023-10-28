@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.UUID;
 
 /**
  * Controller for the New Project Page in the JavaFX application.
@@ -68,6 +69,15 @@ public class NewTicketPageController implements Initializable
     	String ticketName = ticketNameField.getText();
     	String ticketDesc = ticketDescriptionArea.getText();
     	
+    	 
+    	// Generate a UUID (Universally Unique Identifier)
+    	String uuid = UUID.randomUUID().toString();
+    	        
+    	// Remove hyphens and any other special characters
+    	String ticketID = uuid.replaceAll("-", "");
+    	
+    
+    	
     	//TODO if empty dont SAVE
     	 if (selectedProject.isEmpty() || ticketName.isEmpty() || ticketDesc.isEmpty()) {
              // Handle validation or show an error message
@@ -76,7 +86,7 @@ public class NewTicketPageController implements Initializable
     	 else 
          {
              // Insert the project into the database
-             insertTicket(selectedProject, ticketName, ticketDesc);
+             insertTicket(selectedProject, ticketName, ticketDesc, ticketID);
 
              // Provide user feedback that the project was saved successfully
              // Example: showSuccessAlert("Project saved successfully.");
@@ -126,6 +136,7 @@ public class NewTicketPageController implements Initializable
                     "project_name TEXT NOT NULL," +
                     "ticket_name TEXT NOT NULL," +
                     "ticket_description TEXT" +
+                    "ticketID TEXT NOT NULL" +
                     ")";
             try (PreparedStatement preparedStatement = connection.prepareStatement(createTableSQL)) {
                 preparedStatement.executeUpdate();
@@ -139,16 +150,19 @@ public class NewTicketPageController implements Initializable
     /**
      * This method inserts a new project into the database.
      * @param projectName The name of the project.
+     * @param ticketID 
      * @param projectDate The date of the project.
      * @param projectDescription The description of the project.
      */
-    private void insertTicket(String projectName, String ticketName, String ticketDescription) {
+    private void insertTicket(String projectName, String ticketName, String ticketDescription, String ticketID) {
         try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
-            String insertQuery = "INSERT INTO tickets (project_name, ticket_name, ticket_description) VALUES (?, ?, ?)"; // Updated table name to "tickets"
+            String insertQuery = "INSERT INTO tickets (project_name, ticket_name, ticket_description, ticketID) VALUES (?, ?, ?, ?)"; // Updated table name to "tickets"
             try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
                 preparedStatement.setString(1, projectName);
                 preparedStatement.setString(2, ticketName); // Store date as a string
                 preparedStatement.setString(3, ticketDescription);
+                preparedStatement.setString(4, ticketID);
+                
 
                 int rowsAffected = preparedStatement.executeUpdate();
 

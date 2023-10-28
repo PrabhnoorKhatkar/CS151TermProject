@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import application.Ticket;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class ShowTicketPageController implements Initializable
 {
@@ -47,7 +50,7 @@ public class ShowTicketPageController implements Initializable
     private Ticket passedInTicket;
     
     @FXML
-    private ListView commentList;
+    private ListView<String> commentList = new ListView<String>();
     
     
     
@@ -142,8 +145,19 @@ public class ShowTicketPageController implements Initializable
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) 
 	{
-		// TODO Auto-generated method stub
+		// Initialize the activeProjects list view with project names
+		ObservableList<String> listOfComments =  FXCollections.observableArrayList(getComments("comment", passedInTicket.getTicketID()));
+		commentList.setItems(listOfComments);
 		
+		
+		
+	}
+
+
+
+	private Callback getComments(String string, String ticketID) {
+		// TODO Auto-generated method stub
+		return null;
 	}
     
     
