@@ -1,13 +1,17 @@
 package application;
 
-import java.util.List;
-
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Ticket implements ProjectItem
 {
     private String projects; 
     private String ticketName;
     private String ticketDescription;
+    private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
 
     /**
      * Constructs a new Ticket with the given information.
@@ -78,8 +82,26 @@ public class Ticket implements ProjectItem
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return ticketName;
+	}
+
+	public static void deleteTicket(String ticketName) {
+	    try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
+	        String deleteQuery = "DELETE FROM tickets WHERE id = ?";
+	        try (PreparedStatement deleteStatement = connection.prepareStatement(deleteQuery)) {
+	           
+	            int rowsAffected = deleteStatement.executeUpdate();
+	            
+	            if (rowsAffected == 0) {
+	                System.err.println("No ticket with ID " + ticketName + " found for deletion.");
+	            } else {
+	                System.out.println("Ticket with ID " + ticketName + " has been deleted.");
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        System.err.println("Error deleting ticket: " + e.getMessage());
+	    }
 	}
 
 }

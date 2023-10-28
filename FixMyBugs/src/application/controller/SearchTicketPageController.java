@@ -94,8 +94,6 @@ public class SearchTicketPageController implements ProjectItem, Initializable {
 		        {
 		            loader.setLocation(getClass().getClassLoader().getResource("view/ShowProjectPage.fxml"));
 		            root = loader.load();
-		            ShowProjectPageController controller = loader.getController();
-		            //controller.initData((Project) selectedTicketOrProject);
 		        } 
 		        else if (selectedTicketOrProject instanceof Ticket)
 		        {

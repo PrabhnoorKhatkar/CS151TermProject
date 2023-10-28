@@ -2,7 +2,6 @@ package application;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 /**
  * This class is representing a project with a name, date, and description.

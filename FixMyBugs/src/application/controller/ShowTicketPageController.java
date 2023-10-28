@@ -1,6 +1,7 @@
 package application.controller;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import application.Ticket;
@@ -10,7 +11,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -84,11 +88,35 @@ public class ShowTicketPageController implements Initializable
     	
     }
     
-    public void deleteTicket(ActionEvent event) throws Exception 
-    {
-    	
-    	
+    @FXML
+    public void deleteTicket(ActionEvent event) throws Exception {
+        if (passedInTicket != null) {
+            // Check if a ticket is selected
+            String ticketName = passedInTicket.getTicketName(); // Assuming getTicketName() returns the ticket name
+
+            // Check if the ticket name is not empty
+            if (ticketName != null && !ticketName.isEmpty()) {
+                // Prompt the user for confirmation or directly delete the ticket
+                Alert alert = new Alert(AlertType.CONFIRMATION);
+                alert.setTitle("Delete Ticket");
+                alert.setHeaderText("Confirm Deletion");
+                alert.setContentText("Are you sure you want to delete this ticket?");
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK) {
+                    // The user confirmed the deletion
+                    Ticket.deleteTicket(ticketName); // Assuming Ticket class has a deleteTicket method by name
+                    // You might also want to update the UI, e.g., remove the ticket from a list
+                    // and refresh the ticket view.
+                }
+            } else {
+                // Handle the case where the ticket name is empty or null
+                System.out.println("Invalid ticket name");
+            }
+        }
     }
+
+
     
     public void addComment(ActionEvent event) throws Exception 
     {
