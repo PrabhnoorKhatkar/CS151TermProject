@@ -91,12 +91,10 @@ public class ShowTicketPageController implements Initializable
     @FXML
     public void deleteTicket(ActionEvent event) throws Exception {
         if (passedInTicket != null) {
-            // Check if a ticket is selected
-            String ticketName = passedInTicket.getTicketName(); // Assuming getTicketName() returns the ticket name
-
-            // Check if the ticket name is not empty
+            String ticketName = passedInTicket.getTicketName(); 
+    
             if (ticketName != null && !ticketName.isEmpty()) {
-                // Prompt the user for confirmation or directly delete the ticket
+                
                 Alert alert = new Alert(AlertType.CONFIRMATION);
                 alert.setTitle("Delete Ticket");
                 alert.setHeaderText("Confirm Deletion");
@@ -104,13 +102,11 @@ public class ShowTicketPageController implements Initializable
 
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK) {
-                    // The user confirmed the deletion
-                    Ticket.deleteTicket(ticketName); // Assuming Ticket class has a deleteTicket method by name
-                    // You might also want to update the UI, e.g., remove the ticket from a list
-                    // and refresh the ticket view.
+                    
+                    Ticket.deleteTicket(ticketName); 
                 }
             } else {
-                // Handle the case where the ticket name is empty or null
+                
                 System.out.println("Invalid ticket name");
             }
         }
