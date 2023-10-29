@@ -30,10 +30,10 @@
                   <Label text="Selected Ticket  " />
                   <TextField fx:id="autoPopulatedTicketName" disable="true" />
                   <Separator prefHeight="19.0" prefWidth="242.0" />
-                  <Label text="Comment Name*" />
-                  <TextField fx:id="commentName" />
-                  <Separator prefHeight="28.0" prefWidth="242.0" />
-                  <Label text="Description" />
+                  <Label text="Timestamp" />
+                  <TextField fx:id="timestampTextField" disable="true" />
+                  <Separator prefWidth="200.0" />
+                  <Label text="Description*" />
                   <TextArea fx:id="commentDescriptionArea" prefHeight="78.0" prefWidth="242.0" promptText="Type here..." />
                   <Separator layoutX="10.0" layoutY="121.0" prefHeight="31.0" prefWidth="215.0" />
                   <HBox prefHeight="100.0" prefWidth="200.0">

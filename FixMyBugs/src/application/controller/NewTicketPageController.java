@@ -79,7 +79,7 @@ public class NewTicketPageController implements Initializable
     
     	
     	//TODO if empty dont SAVE
-    	 if (selectedProject.isEmpty() || ticketName.isEmpty() || ticketDesc.isEmpty()) {
+    	 if (selectedProject.isEmpty() || ticketName.isEmpty()) {
              // Handle validation or show an error message
     		 //TODO
          } 

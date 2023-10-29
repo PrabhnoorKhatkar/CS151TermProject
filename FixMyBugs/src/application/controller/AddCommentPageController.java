@@ -1,5 +1,9 @@
 package application.controller;
 
+import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
+import java.time.format.DateTimeFormatter;
+
 import application.Ticket;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -20,18 +25,21 @@ public class AddCommentPageController
 	
     @FXML
     private TextField autoPopulatedTicketName;
-
+    
+    @FXML
+    private TextField timestampTextField;
+    
     @FXML
     private TextArea commentDescriptionArea;
     
-    @FXML
-    private TextField commentName;
-
     @FXML
     private Button saveCommentButton;
 
     @FXML
     private Button cancelButton;
+    
+    @FXML
+    private DatePicker projectDatePicker;
     
     @FXML
     private Button clearButton;
@@ -52,6 +60,9 @@ public class AddCommentPageController
 		autoPopulatedTicketName.setText(passedInProject.getTicketName()); 
 		commentDescriptionArea.setFocusTraversable(false); 
 		
+		timestampTextField.setText(LocalDate.now().toString());
+		
+		
 	}
 	/**
      * When save button is pressed takes in parameters and stores them in ticket table sql
@@ -60,14 +71,12 @@ public class AddCommentPageController
      */
 	public void saveComment(ActionEvent event) throws Exception 
 	{
-	
-	   	String ticketName = autoPopulatedTicketName.getText();
-    	String commentName = this.commentName.getText();
+	    String timestamp = timestampTextField.getText();
     	String commentDesc = commentDescriptionArea.getText();
     	String ticketID = passedInProject.getTicketID();
     	
     	//TODO if empty dont SAVE
-   	 if (commentName.isEmpty() || commentDesc.isEmpty()) 
+   	 if (commentDesc.isEmpty()) 
    	 {
             // Handle validation or show an error message
    		    //TODO
@@ -93,8 +102,6 @@ public class AddCommentPageController
      */
 	public void clearButton(ActionEvent event) throws Exception 
 	{
-		
-		 commentName.clear();
 		 commentDescriptionArea.clear();
 	}
 	
