@@ -1,21 +1,10 @@
 package application.controller;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import application.Comment;
 import application.Ticket;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,7 +19,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 public class ShowTicketPageController implements Initializable
 {
@@ -64,10 +52,12 @@ public class ShowTicketPageController implements Initializable
     private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
     
     
-    
+    /**
+     * Initalizes the display and the instance variable to the selected ticket
+     * @param selectedTicketOrProject passed in ticket from searchTicketPage
+     */
 	public void initData(Ticket selectedTicketOrProject) 
 	{
-		
 		passedInTicket = selectedTicketOrProject;
 		ticketNameDisplay.setText(passedInTicket.getName());
 		
@@ -94,17 +84,21 @@ public class ShowTicketPageController implements Initializable
     
     public void editTicket(ActionEvent event) throws Exception 
     {
-    	
+    	//TODO
     	
     }
     
     public void goToShowComments(ActionEvent event) throws Exception 
     {
     	
-    	
+    	//TODO
     }
     
-    @FXML
+    /**
+     * Deletes ticket and warns users plenty of times it will be deleted
+     * @param event
+     * @throws Exception
+     */
     public void deleteTicket(ActionEvent event) throws Exception {
         if (passedInTicket != null) {
             String ticketName = passedInTicket.getTicketName(); 
@@ -129,7 +123,12 @@ public class ShowTicketPageController implements Initializable
     }
 
 
-    
+    /**
+     * When add comment button is pressed it loads and intilaizes the new page with the ticket, so it can be used in 
+     * addcommentPage.fxml
+     * @param event
+     * @throws Exception
+     */
     public void addComment(ActionEvent event) throws Exception 
     {
     	

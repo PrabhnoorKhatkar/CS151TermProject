@@ -153,6 +153,7 @@ public class NewTicketPageController implements Initializable
      * @param ticketID 
      * @param projectDate The date of the project.
      * @param projectDescription The description of the project.
+     * @param ticketID UUID of ticket which connects comments and tickets
      */
     private void insertTicket(String projectName, String ticketName, String ticketDescription, String ticketID) {
         try (Connection connection = DriverManager.getConnection(jdbcUrl)) {

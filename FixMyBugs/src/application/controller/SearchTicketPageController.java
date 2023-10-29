@@ -110,7 +110,10 @@ public class SearchTicketPageController implements ProjectItem, Initializable {
 		    }
 	
 	}
-
+	/**
+	 * When search button is pressed it clears the ListView and gets a new list of tickets and projects with the gotten substring search word
+	 * @param event
+	 */
 	public void onInputMethodTextChangedProperty(ActionEvent event) {
 		String searchInput = ticketNameField.getText();
 		ProjectsAndTickets.getItems().clear();
@@ -129,7 +132,12 @@ public class SearchTicketPageController implements ProjectItem, Initializable {
 		
 		
 	}
-
+	/**
+	 * This iterates through the list and looks for all names of tickets and projects that contain the search word and return a new list that holds the substring searched list
+	 * @param searchInput word to find substring
+	 * @param passInprojectsAndTickets the full list of all tickets and projects
+	 * @return List<ProjectItem> both tickets and projects in one List
+	 */
 	private List<ProjectItem> searchProjectsAndTickets(String searchInput, List<ProjectItem> passInprojectsAndTickets) {
 
 		// return ((SearchTicketPageController)

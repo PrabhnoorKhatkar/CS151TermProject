@@ -76,7 +76,14 @@ public class HomePageController
 		HomepageStage.show(); 
 	
 	}
-	
+	/**
+     * This method handles the action event when a user wants to go to the New Ticket scene.
+     * It loads the "NewTicketPage.fxml" file, creates a new scene, and sets it as the current scene.
+     * It also updates the stage to display the new scene.
+     *
+     * @param event The ActionEvent triggered by the user's interaction.
+     * @throws IOException If there is an error loading the FXML file.
+     */
 	public void goToNewTicket(ActionEvent event) throws IOException 
 	{
 		// Set the style and properties of the page into parent root
@@ -92,7 +99,14 @@ public class HomePageController
 		HomepageStage.show(); 
 	
 	}
-	
+	/**
+     * This method handles the action event when a user wants to go to the New Ticket scene.
+     * It loads the "SearchTicketPage.fxml" file, creates a new scene, and sets it as the current scene.
+     * It also updates the stage to display the new scene.
+     *
+     * @param event The ActionEvent triggered by the user's interaction.
+     * @throws IOException If there is an error loading the FXML file.
+     */
 	public void goToSearchTicket(ActionEvent event) throws IOException 
 	{
 		// Set the style and properties of the page into parent root

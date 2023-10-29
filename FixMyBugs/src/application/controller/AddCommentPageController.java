@@ -36,13 +36,15 @@ public class AddCommentPageController
     @FXML
     private Button clearButton;
     
-    
     private Ticket passedInProject;
     
     private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
 
 
-
+    /**
+     * initializes data from previous controller, passes in selectedTicket
+     * @param selectedTicketOrProject
+     */
 	public void initData(Ticket selectedTicketOrProject) 
 	{
 	
@@ -51,7 +53,11 @@ public class AddCommentPageController
 		commentDescriptionArea.setFocusTraversable(false); 
 		
 	}
-	
+	/**
+     * When save button is pressed takes in parameters and stores them in ticket table sql
+     * @param event
+     * @throws Exception
+     */
 	public void saveComment(ActionEvent event) throws Exception 
 	{
 	
@@ -64,7 +70,7 @@ public class AddCommentPageController
    	 if (commentName.isEmpty() || commentDesc.isEmpty()) 
    	 {
             // Handle validation or show an error message
-   		 //TODO
+   		    //TODO
      } 
    	 else 
         {
@@ -80,7 +86,11 @@ public class AddCommentPageController
     	
 	}
 	
-	
+	/**
+     * Clears all enterable textfields in the AddCommentPage
+     * @param event
+     * @throws Exception
+     */
 	public void clearButton(ActionEvent event) throws Exception 
 	{
 		
