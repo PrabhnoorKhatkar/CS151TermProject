@@ -47,8 +47,7 @@ public class Comment {
     @Override
     public String toString() {
         
-        return "Comment Description: " + description + "\n" +
-                "Timestamp: " + this.timestamp;
+        return description + "\n                                    -" + this.timestamp;
     }
 
 	public String getName() {
