@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ShowProjectPage2Controller">
+   <children>
+      <BorderPane layoutX="27.0" layoutY="27.0" prefHeight="64.0" prefWidth="300.0">
+         <center>
+            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ToolBar prefHeight="40.0" prefWidth="200.0">
+                    <items>
+                      <Button fx:id="editTicket" mnemonicParsing="false" onAction="#editTicket" text="Edit Project" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Edit Project" />
+                    </items>
+                  </ToolBar>
+                  <ToolBar layoutX="10.0" layoutY="10.0" prefHeight="40.0" prefWidth="200.0">
+                     <items>
+                        <Button fx:id="editComment" mnemonicParsing="false" onAction="#goToShowComments" text="Delete Ticket" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Delete Ticket" />
+                     </items>
+                  </ToolBar>
+               </children>
+            </VBox>
+         </center>
+      </BorderPane>
+      <BorderPane layoutX="27.0" layoutY="265.0" prefHeight="64.0" prefWidth="300.0">
+         <center>
+            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ToolBar prefHeight="40.0" prefWidth="200.0">
+                     <items>
+                        <Button fx:id="deleteTicket" mnemonicParsing="false" onAction="#deleteTicket" text="Delete Project" textFill="#eb0000" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="*WARNING*">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Text>
+                     </items>
+                  </ToolBar>
+                  <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButton" text="Back" translateX="120.0" translateY="40.0" />
+               </children>
+            </VBox>
+         </center>
+      </BorderPane>
+      <BorderPane layoutX="358.0" layoutY="66.0" prefHeight="200.0" prefWidth="200.0">
+         <top>
+            <Label text="Ticket History" BorderPane.alignment="CENTER" />
+         </top>
+         <center>
+            <ListView fx:id="commentList" minHeight="200.0" minWidth="200.0" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+         </center>
+         <bottom>
+            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="addCommentButton" mnemonicParsing="false" onAction="#addComment" text="Add Ticket" translateX="61.0" />
+                  <Button fx:id="addCommentButton1" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#addComment" text="Select Ticket" translateX="55.0" />
+               </children>
+            </VBox>
+         </bottom>
+      </BorderPane>
+      <Label layoutX="95.0" layoutY="6.0" text="Project Name: " />
+      <Label fx:id="ticketNameDisplay" layoutX="177.0" layoutY="6.0" text="Label" />
+   </children>
+</Pane>
