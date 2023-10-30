@@ -1,5 +1,9 @@
 package application;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.chrono.ChronoLocalDate;
 import java.time.format.DateTimeFormatter;
@@ -63,6 +67,7 @@ public class AddCommentPageController
 		timestampTextField.setText(LocalDate.now().toString());
 		
 		
+		
 	}
 	/**
      * When save button is pressed takes in parameters and stores them in ticket table sql
@@ -84,7 +89,7 @@ public class AddCommentPageController
    	 else 
         {
             // Insert the project into the database
-           // insertComment(ticketName, commentName, commentDesc, ticketID);
+            insertComment(timestamp, commentDesc, ticketID);
 
             // Provide user feedback that the project was saved successfully
             // Example: showSuccessAlert("Project saved successfully.");
@@ -94,6 +99,33 @@ public class AddCommentPageController
         }
     	
 	}
+	
+	private void insertComment(String timestamp, String commentDesc, String ticketID) 
+	{
+		// TODO Auto-generated method stub
+		try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
+            String insertQuery = "INSERT INTO comments (ticketID, timestamp, comment_description) VALUES (?, ?, ?)"; // Updated table name to "tickets"
+            try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
+                preparedStatement.setString(1, ticketID);
+                preparedStatement.setString(2, timestamp); // Store date as a string
+                preparedStatement.setString(3, commentDesc);
+                
+
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    // The data was successfully inserted
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Database connection error: " + e.getMessage());
+            System.err.println("Project data not saved.");
+        }
+		
+		
+	}
+	
 	
 	/**
      * Clears all enterable textfields in the AddCommentPage
@@ -140,8 +172,7 @@ public class AddCommentPageController
         
     }
 	
-	
-	
+  
  
 
     

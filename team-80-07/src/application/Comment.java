@@ -6,19 +6,19 @@ import java.time.format.DateTimeFormatter;
 
 public class Comment {
     private String description;
-    private LocalDateTime timestamp;
+    private String timestamp;
 
     /**
      * Constructs a new Comment with the given description.
      *
      * @param description The text content of the comment (required).
      */
-    public Comment(String description) {
+    public Comment(String description, String time) {
         if (description == null || description.isEmpty()) {
             throw new IllegalArgumentException("Comment description must not be empty.");
         }
         this.description = description;
-        this.timestamp = LocalDateTime.now();
+        this.timestamp = time;
     }
 
     /**
@@ -35,7 +35,7 @@ public class Comment {
      *
      * @return The comment TimeStamp.
      */
-    public LocalDateTime getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
@@ -46,8 +46,13 @@ public class Comment {
      */
     @Override
     public String toString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        
         return "Comment Description: " + description + "\n" +
-                "Timestamp: " + timestamp.format(formatter);
+                "Timestamp: " + this.timestamp;
     }
+
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

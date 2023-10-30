@@ -1,10 +1,21 @@
 package application;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 import application.Ticket;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +27,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -46,20 +58,25 @@ public class ShowTicketPageController implements Initializable
       
     private Ticket passedInTicket;
     
+    private Comment selectedComment;
+    
     @FXML
-    private ListView<String> commentList = new ListView<String>();
+    private ListView<Comment> commentList = new ListView<Comment>();
     
     private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
     
     
     /**
-     * Initalizes the display and the instance variable to the selected ticket
+     * Initializes the display and the instance variable to the selected ticket
      * @param selectedTicketOrProject passed in ticket from searchTicketPage
      */
 	public void initData(Ticket selectedTicketOrProject) 
 	{
 		passedInTicket = selectedTicketOrProject;
 		ticketNameDisplay.setText(passedInTicket.getName());
+		
+		doStuff();
+		
 		
 	}
 	
@@ -155,16 +172,11 @@ public class ShowTicketPageController implements Initializable
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) 
 	{
-		// Initialize the activeProjects list view with project names
-		//ObservableList<String> listOfComments =  FXCollections.observableArrayList(getComments("comment", "ticketID", passedInTicket.getTicketID()));
-		//commentList.setItems(listOfComments);
-		
-		
-		
+		doStuff();
+	
+	
 	}
 
-
-/*
 	public List<Comment> getCommentsByTicketID(String ticketID) 
 	{
         List<Comment> commentList = new ArrayList<>();
@@ -183,7 +195,7 @@ public class ShowTicketPageController implements Initializable
                 String timestamp = resultSet.getString("timestamp");
                 String commentDescription = resultSet.getString("comment_description");
 
-                Comment comment = new Comment(timestamp, commentDescription);
+                Comment comment = new Comment(commentDescription, timestamp);
                 commentList.add(comment);
             }
 
@@ -199,8 +211,67 @@ public class ShowTicketPageController implements Initializable
     }
 
     
+	  
+    /**
+     * This method creates the "projects" table in the database if it doesn't exist.
+     */
+    private void createTable() {
+        try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
+            String createTableSQL = "CREATE TABLE IF NOT EXISTS comments (" + // Updated table name to "tickets"
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "ticketID TEXT NOT NULL," +
+                    "timestamp TEXT NOT NULL," +
+                    "comment_description TEXT NOT NULL" +
+                    ")";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(createTableSQL)) {
+                preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Error creating the table: " + e.getMessage());
+        }
+    }
+	
+	
+    private void doStuff()
+    {
+    	   createTable();
+		
+    	   try {
+    		   // Initialize the activeProjects list view with project names
+   	        ObservableList<Comment> listOfComments = FXCollections.observableArrayList(getCommentsByTicketID(passedInTicket.getTicketID()));
+   	        commentList.setItems(listOfComments);
+
+   	        commentList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Comment>() {
+   	            @Override
+   	            public void changed(ObservableValue<? extends Comment> observable, Comment oldValue, Comment newValue) {
+   	                selectedComment = (Comment) commentList.getSelectionModel().getSelectedItem();
+   	            }
+   	        });
+
+   	        // Set up a custom cell factory to display only the project name in the ListView
+   	        commentList.setCellFactory(listView -> new ListCell<Comment>() {
+   	            @Override
+   	            protected void updateItem(Comment item, boolean empty) {
+   	                super.updateItem(item, empty);
+   	                if (empty || item == null) {
+   	                    setText(null);
+   	                } else {
+   	                    setText(item.toString());
+   	                }
+   	            }
+   	        });
+    		   
+    	   }
+    	   catch (NullPointerException e)
+    	   {
+    		   //TODO
+    	   }
+	      
+	    }
+    }
     
-    */
+   
     
 
-}
+
