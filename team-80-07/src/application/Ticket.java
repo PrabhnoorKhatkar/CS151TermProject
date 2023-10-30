@@ -87,17 +87,17 @@ public class Ticket implements ProjectItem
 		return ticketName;
 	}
 
-	public static void deleteTicket(String ticketName) {
+	public static void deleteTicket(String uuid) {
 	    try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
-	        String deleteQuery = "DELETE FROM tickets WHERE id = ?";
+	        String deleteQuery = "DELETE FROM tickets WHERE ticketID = ?";
 	        try (PreparedStatement deleteStatement = connection.prepareStatement(deleteQuery)) {
 	           
 	            int rowsAffected = deleteStatement.executeUpdate();
 	            
 	            if (rowsAffected == 0) {
-	                System.err.println("No ticket with ID " + ticketName + " found for deletion.");
+	                System.err.println("No ticket with ID " + uuid + " found for deletion.");
 	            } else {
-	                System.out.println("Ticket with ID " + ticketName + " has been deleted.");
+	                System.out.println("Ticket with ID " + uuid + " has been deleted.");
 	            }
 	        }
 	    } catch (SQLException e) {
@@ -106,12 +106,10 @@ public class Ticket implements ProjectItem
 	    }
 	}
 
-	public String getTicketID() {
+	public String getTicketID() 
+	{
 		return ticketID;
 	}
 
-	public void setTicketID(String ticketID) {
-		this.ticketID = ticketID;
-	}
 
 }

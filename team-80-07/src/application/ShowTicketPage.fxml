@@ -59,7 +59,7 @@
             <Label text="Comment History" BorderPane.alignment="CENTER" />
          </top>
          <center>
-            <ListView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+            <ListView fx:id="commentList" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
          </center>
       </BorderPane>
       <Label layoutX="95.0" layoutY="6.0" text="Ticket Name: " />

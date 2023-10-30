@@ -32,7 +32,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class ShowTicketPageController implements Initializable
+public class ShowTicketPageController
 {
 	 
 	@FXML
@@ -75,7 +75,39 @@ public class ShowTicketPageController implements Initializable
 		passedInTicket = selectedTicketOrProject;
 		ticketNameDisplay.setText(passedInTicket.getName());
 		
-		doStuff();
+		createTable();
+	
+ 	   try {
+ 		   // Initialize the activeProjects list view with project names
+	        ObservableList<Comment> listOfComments = FXCollections.observableArrayList(getCommentsByTicketID(passedInTicket.getTicketID()));
+	        commentList.setItems(listOfComments);
+
+	        commentList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Comment>() {
+	            @Override
+	            public void changed(ObservableValue<? extends Comment> observable, Comment oldValue, Comment newValue) {
+	                selectedComment = (Comment) commentList.getSelectionModel().getSelectedItem();
+	            }
+	        });
+
+	        // Set up a custom cell factory to display only the project name in the ListView
+	        commentList.setCellFactory(listView -> new ListCell<Comment>() {
+	            @Override
+	            protected void updateItem(Comment item, boolean empty) {
+	                super.updateItem(item, empty);
+	                if (empty || item == null) {
+	                    setText(null);
+	                } else {
+	                    setText(item.toString());
+	                }
+	            }
+	        });
+ 		   
+ 	   }
+ 	   catch (NullPointerException e)
+ 	   {
+ 		   System.out.println("FAIL??");
+ 	   }
+	      
 		
 		
 	}
@@ -118,7 +150,7 @@ public class ShowTicketPageController implements Initializable
      */
     public void deleteTicket(ActionEvent event) throws Exception {
         if (passedInTicket != null) {
-            String ticketName = passedInTicket.getTicketName(); 
+            String ticketName = passedInTicket.getTicketID(); 
     
             if (ticketName != null && !ticketName.isEmpty()) {
                 
@@ -168,20 +200,12 @@ public class ShowTicketPageController implements Initializable
     	
     }
 
-
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) 
-	{
-		doStuff();
-	
-	
-	}
-
 	public List<Comment> getCommentsByTicketID(String ticketID) 
 	{
         List<Comment> commentList = new ArrayList<>();
 
-        try {
+        try 
+        {
             Connection connection = DriverManager.getConnection(jdbcUrl);
 
             String sql = "SELECT timestamp, comment_description FROM comments WHERE ticketID = ?";
@@ -202,7 +226,9 @@ public class ShowTicketPageController implements Initializable
             resultSet.close();
             pstmt.close();
             connection.close();
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e) 
+        {
             e.printStackTrace();
             System.err.println("Error retrieving comments: " + e.getMessage());
         }
@@ -231,46 +257,10 @@ public class ShowTicketPageController implements Initializable
             System.err.println("Error creating the table: " + e.getMessage());
         }
     }
-	
-	
-    private void doStuff()
-    {
-    	   createTable();
-		
-    	   try {
-    		   // Initialize the activeProjects list view with project names
-   	        ObservableList<Comment> listOfComments = FXCollections.observableArrayList(getCommentsByTicketID(passedInTicket.getTicketID()));
-   	        commentList.setItems(listOfComments);
 
-   	        commentList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Comment>() {
-   	            @Override
-   	            public void changed(ObservableValue<? extends Comment> observable, Comment oldValue, Comment newValue) {
-   	                selectedComment = (Comment) commentList.getSelectionModel().getSelectedItem();
-   	            }
-   	        });
 
-   	        // Set up a custom cell factory to display only the project name in the ListView
-   	        commentList.setCellFactory(listView -> new ListCell<Comment>() {
-   	            @Override
-   	            protected void updateItem(Comment item, boolean empty) {
-   	                super.updateItem(item, empty);
-   	                if (empty || item == null) {
-   	                    setText(null);
-   	                } else {
-   	                    setText(item.toString());
-   	                }
-   	            }
-   	        });
-    		   
-    	   }
-    	   catch (NullPointerException e)
-    	   {
-    		   //TODO
-    	   }
-	      
-	    }
-    }
-    
+}
+	
    
     
 
