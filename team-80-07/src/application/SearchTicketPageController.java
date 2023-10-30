@@ -1,4 +1,4 @@
-package application.controller;
+package application;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -68,7 +68,7 @@ public class SearchTicketPageController implements ProjectItem, Initializable {
 	 */
 	@FXML
 	public void backButton(ActionEvent event) throws Exception {
-		Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/HomePage.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
 		Stage stage = (Stage) backButton.getScene().getWindow();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
@@ -92,12 +92,12 @@ public class SearchTicketPageController implements ProjectItem, Initializable {
 
 		        if (selectedTicketOrProject instanceof Project) 
 		        {
-		            loader.setLocation(getClass().getClassLoader().getResource("view/ShowProjectPage.fxml"));
+		            loader.setLocation(getClass().getResource("ShowProjectPage.fxml"));
 		            root = loader.load();
 		        } 
 		        else if (selectedTicketOrProject instanceof Ticket)
 		        {
-		            loader.setLocation(getClass().getClassLoader().getResource("view/ShowTicketPage.fxml"));
+		            loader.setLocation(getClass().getResource("ShowTicketPage.fxml"));
 		            root = loader.load();
 		            ShowTicketPageController controller = loader.getController();
 		            controller.initData((Ticket) selectedTicketOrProject);

@@ -1,4 +1,4 @@
-package application.controller;
+package application;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -93,7 +93,7 @@ public class NewProjectPageController implements Initializable
      * @throws Exception If navigation fails.
      */
     private void navigateToMainPage(ActionEvent event) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/HomePage.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);

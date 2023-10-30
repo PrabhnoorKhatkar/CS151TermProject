@@ -1,4 +1,4 @@
-package application.controller;
+package application;
 
 import java.time.LocalDate;
 import java.time.chrono.ChronoLocalDate;
@@ -127,7 +127,7 @@ public class AddCommentPageController
     	FXMLLoader loader = new FXMLLoader();
         Parent root = null;
         
-        loader.setLocation(getClass().getClassLoader().getResource("view/ShowTicketPage.fxml"));
+        loader.setLocation(getClass().getResource("ShowTicketPage.fxml"));
         root = loader.load();
         ShowTicketPageController controller = loader.getController();
         controller.initData((Ticket) passedInProject);

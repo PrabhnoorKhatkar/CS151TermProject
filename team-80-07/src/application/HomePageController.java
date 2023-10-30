@@ -1,4 +1,4 @@
-package application.controller;
+package application;
 
 import java.io.IOException;
 
@@ -40,7 +40,7 @@ public class HomePageController
 	public void goToNewProjectScene(ActionEvent event) throws IOException 
 	{
 		// Set the style and properties of the page into parent root
-		Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/NewProjectPage.fxml")); 
+		Parent root = FXMLLoader.load(getClass().getResource("NewProjectPage.fxml")); 
 		Node source = (Node) event.getSource();
 		// Get the Stage from which the button was pressed in
 	    HomepageStage = (Stage) source.getScene().getWindow();
@@ -64,7 +64,7 @@ public class HomePageController
 	public void goToShowProjects(ActionEvent event) throws IOException 
 	{
 		// Set the style and properties of the page into parent root
-		Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/ShowProjectPage.fxml")); 
+		Parent root = FXMLLoader.load(getClass().getResource("ShowProjectPage.fxml")); 
 		Node source = (Node) event.getSource();
 		// Get the Stage from which the button was pressed in
 	    HomepageStage = (Stage) source.getScene().getWindow();
@@ -87,7 +87,7 @@ public class HomePageController
 	public void goToNewTicket(ActionEvent event) throws IOException 
 	{
 		// Set the style and properties of the page into parent root
-		Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/NewTicketPage.fxml")); 
+		Parent root = FXMLLoader.load(getClass().getResource("NewTicketPage.fxml")); 
 		Node source = (Node) event.getSource();
 		// Get the Stage from which the button was pressed in
 	    HomepageStage = (Stage) source.getScene().getWindow();
@@ -110,7 +110,7 @@ public class HomePageController
 	public void goToSearchTicket(ActionEvent event) throws IOException 
 	{
 		// Set the style and properties of the page into parent root
-		Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/SearchTicketPage.fxml")); 
+		Parent root = FXMLLoader.load(getClass().getResource("SearchTicketPage.fxml")); 
 		Node source = (Node) event.getSource();
 		// Get the Stage from which the button was pressed in
 	    HomepageStage = (Stage) source.getScene().getWindow();
