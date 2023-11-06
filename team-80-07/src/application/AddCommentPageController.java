@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.chrono.ChronoLocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -64,7 +65,10 @@ public class AddCommentPageController
 		autoPopulatedTicketName.setText(passedInProject.getTicketName()); 
 		commentDescriptionArea.setFocusTraversable(false); 
 		
-		timestampTextField.setText(LocalDate.now().toString());
+		LocalDateTime currentDateTime = LocalDateTime.now();
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"); // Change the pattern as needed
+
+	    timestampTextField.setText(currentDateTime.format(formatter));
 		
 		
 		
