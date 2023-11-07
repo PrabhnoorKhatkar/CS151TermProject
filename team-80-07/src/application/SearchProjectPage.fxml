@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SearchTicketPageController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SearchProjectPageController">
    <children>
       <BorderPane layoutX="27.0" layoutY="27.0" prefHeight="284.0" prefWidth="322.0">
          <center>
@@ -26,12 +26,12 @@
          <center>
             <VBox prefHeight="284.0" prefWidth="335.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="150.0" text="Search Ticket" translateX="77.0" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="150.0" text="Search Project" translateX="77.0" />
                   <Separator prefHeight="25.0" prefWidth="242.0" />
                   <Label text="Search" />
                   <HBox prefHeight="56.0" prefWidth="335.0">
                      <children>
-                        <TextField fx:id="ticketNameField" onInputMethodTextChanged="#onInputMethodTextChangedProperty" prefHeight="27.0" prefWidth="183.0">
+                        <TextField fx:id="projectNameField" onInputMethodTextChanged="#onInputMethodTextChangedProperty" prefHeight="27.0" prefWidth="183.0">
                            <HBox.margin>
                               <Insets bottom="11.0" right="22.0" />
                            </HBox.margin>
@@ -39,7 +39,7 @@
                         <Button fx:id="searchButton" mnemonicParsing="false" onAction="#onInputMethodTextChangedProperty" text="Search" />
                      </children>
                   </HBox>
-                  <ListView fx:id="TicketList" prefHeight="205.0" prefWidth="335.0" />
+                  <ListView fx:id="ProjectsList" prefHeight="205.0" prefWidth="335.0" />
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButton" text="Back" translateX="77.0">

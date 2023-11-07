@@ -1,9 +1,5 @@
 package application;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
-
 public class Comment {
     private String description;
     private String timestamp;
@@ -40,18 +36,19 @@ public class Comment {
     }
 
     /**
-     * Returns a string representation of the Comment, including its description and TimeStamp.
+     * Returns a string representation of the Comment, including its description and
+     * TimeStamp.
      *
      * @return A string representation of the Comment.
      */
     @Override
     public String toString() {
-        
+
         return description + "\n                                    -" + this.timestamp;
     }
 
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public String getName() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

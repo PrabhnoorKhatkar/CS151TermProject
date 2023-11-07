@@ -24,8 +24,7 @@ import java.util.ResourceBundle;
  * Controller for the New Project Page in the JavaFX application.
  * This class handles creating and saving new projects to a SQLite database.
  */
-public class NewProjectPageController implements Initializable
-{
+public class NewProjectPageController implements Initializable {
 
     @FXML
     private TextField projectNameField;
@@ -41,22 +40,20 @@ public class NewProjectPageController implements Initializable
 
     @FXML
     private Button cancelButton;
-    
+
     @FXML
     private Button clearButton;
 
     private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
 
- 
-
     /**
      * This method handles the action when the "Save" button is clicked.
      * Creates a new project and saves it to the database.
+     * 
      * @param event The action event.
      * @throws Exception If saving the project or navigation fails.
      */
-    public void saveProject(ActionEvent event) throws Exception 
-    {
+    public void saveProject(ActionEvent event) throws Exception {
         String projectName = projectNameField.getText();
         LocalDate projectDate = projectDatePicker.getValue();
         String projectDescription = projectDescriptionArea.getText();
@@ -78,17 +75,18 @@ public class NewProjectPageController implements Initializable
     /**
      * This method handles the action when the "Cancel" button is clicked.
      * Navigates back to the main page.
+     * 
      * @param event The action event.
      * @throws Exception If navigation fails.
      */
     @FXML
-    public void cancelButton(ActionEvent event) throws Exception 
-    {
+    public void cancelButton(ActionEvent event) throws Exception {
         navigateToMainPage(event);
     }
 
     /**
      * This method navigates back to the main page.
+     * 
      * @param event The action event.
      * @throws Exception If navigation fails.
      */
@@ -122,13 +120,18 @@ public class NewProjectPageController implements Initializable
 
     /**
      * This method inserts a new project into the database.
-     * @param projectName The name of the project.
-     * @param projectDate The date of the project.
+     * 
+     * @param projectName        The name of the project.
+     * @param projectDate        The date of the project.
      * @param projectDescription The description of the project.
      */
     private void insertProject(String projectName, LocalDate projectDate, String projectDescription) {
         try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
-            String insertQuery = "INSERT INTO projects (project_name, project_date, project_description) VALUES (?, ?, ?)"; // Updated table name to "projects"
+            String insertQuery = "INSERT INTO projects (project_name, project_date, project_description) VALUES (?, ?, ?)"; // Updated
+                                                                                                                            // table
+                                                                                                                            // name
+                                                                                                                            // to
+                                                                                                                            // "projects"
             try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
                 preparedStatement.setString(1, projectName);
                 preparedStatement.setString(2, projectDate.toString()); // Store date as a string
@@ -146,35 +149,35 @@ public class NewProjectPageController implements Initializable
             System.err.println("Project data not saved.");
         }
     }
-    
+
     /**
-     * This method initializes the New Project Page by setting the default date and creating the database table.
-     * @param location The location used to resolve the root object.
+     * This method initializes the New Project Page by setting the default date and
+     * creating the database table.
+     * 
+     * @param location  The location used to resolve the root object.
      * @param resources The resources used to localize the root object.
      */
-	@Override
-	public void initialize(URL location, ResourceBundle resources) 
-	{
-		projectDatePicker.setValue(LocalDate.now()); // Set default date to today
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        projectDatePicker.setValue(LocalDate.now()); // Set default date to today
         createTable(); // Call the createTable method when the application initializes
-        projectDescriptionArea.setFocusTraversable(false); 
-		
-	}
-	
-	/**
+        projectDescriptionArea.setFocusTraversable(false);
+
+    }
+
+    /**
      * This method handles the action when the "Clear" button is clicked.
      * Clears the input fields and sets the date to the default value.
+     * 
      * @param event The action event.
      * @throws Exception If clearing the fields fails.
      */
-	 @FXML
-	 public void clearButton(ActionEvent event) throws Exception 
-	 {
-		  projectNameField.clear();
-		  projectDatePicker.setValue(LocalDate.now()); // Set default date to today
-		  projectDescriptionArea.clear();
+    @FXML
+    public void clearButton(ActionEvent event) throws Exception {
+        projectNameField.clear();
+        projectDatePicker.setValue(LocalDate.now()); // Set default date to today
+        projectDescriptionArea.clear();
 
-	       
-	 }
-	
+    }
+
 }

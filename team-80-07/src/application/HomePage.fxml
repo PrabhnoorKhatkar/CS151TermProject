@@ -33,8 +33,14 @@
                   </ToolBar>
                   <ToolBar layoutX="10.0" layoutY="88.0" prefHeight="40.0" prefWidth="200.0">
                      <items>
-                        <Button mnemonicParsing="false" onAction="#goToSearchTicket" text="Search Ticket" />
+                        <Button fx:id="goToSearchTicket" mnemonicParsing="false" onAction="#goToSearchTicket" text="Search Ticket" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Search Tickets" />
+                     </items>
+                  </ToolBar>
+                  <ToolBar layoutX="10.0" layoutY="127.0" prefHeight="40.0" prefWidth="200.0">
+                     <items>
+                        <Button fx:id="goToSearchProject" mnemonicParsing="false" onAction="#goToSearchProject" text="Search Project" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Search Projects" />
                      </items>
                   </ToolBar>
                </children>
