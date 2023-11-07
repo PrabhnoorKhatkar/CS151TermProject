@@ -45,9 +45,12 @@ public class ShowProjectPageController2
 
   @FXML
   private Button editTicket;
-
   @FXML
   private Button deleteProject;
+  @FXML
+  private Button deleteTicket;
+  @FXML
+  private Button selectTicket;
 
   @FXML
   private Button backButton;
@@ -59,6 +62,13 @@ public class ShowProjectPageController2
   private Label projectNameDisplay;
 
   private Project passedInProject;
+  
+  private Ticket selectedTicket;
+  
+  @FXML
+  private ListView<Ticket> ticketList = new ListView<Ticket>();
+  
+  
 
   private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
   
@@ -69,27 +79,27 @@ public class ShowProjectPageController2
    */
 	public void initData(Project selectedProject) 
 	{
-		passedInTicket = selectedProject;
-		ticketNameDisplay.setText(passedInTicket.getName());
+		passedInProject = selectedProject;
+		projectNameDisplay.setText(passedInProject.getName());
 		
 		createTable();
 	
 	   try {
 		   // Initialize the activeProjects list view with project names
-	        ObservableList<Comment> listOfComments = FXCollections.observableArrayList(getCommentsByTicketID(passedInTicket.getTicketID()));
-	        commentList.setItems(listOfComments);
+	        ObservableList<Ticket> listOfTickets = FXCollections.observableArrayList(retrieveTickets(passedInProject.getProjectName()));
+	        ticketList.setItems(listOfTickets);
 
-	        commentList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Comment>() {
+	        ticketList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Ticket>() {
 	            @Override
-	            public void changed(ObservableValue<? extends Comment> observable, Comment oldValue, Comment newValue) {
-	                selectedComment = (Comment) commentList.getSelectionModel().getSelectedItem();
+	            public void changed(ObservableValue<? extends Ticket> observable, Ticket oldValue, Ticket newValue) {
+	                selectedTicket =  ticketList.getSelectionModel().getSelectedItem();
 	            }
 	        });
 
 	        // Set up a custom cell factory to display only the project name in the ListView
-	        commentList.setCellFactory(listView -> new ListCell<Comment>() {
+	        ticketList.setCellFactory(listView -> new ListCell<Ticket>() {
 	            @Override
-	            protected void updateItem(Comment item, boolean empty) {
+	            protected void updateItem(Ticket item, boolean empty) {
 	                super.updateItem(item, empty);
 	                if (empty || item == null) {
 	                    setText(null);
@@ -133,6 +143,32 @@ public class ShowProjectPageController2
   	//TODO
   	
   }
+  public void editProject(ActionEvent event) throws Exception 
+  {
+  	//TODO
+  	
+  }
+  public void deleteProject(ActionEvent event) throws Exception 
+  {
+  	//TODO
+  	
+  }
+  public void deleteTicket(ActionEvent event) throws Exception 
+  {
+  	//TODO
+  	
+  }
+  public void addTicket(ActionEvent event) throws Exception 
+  {
+  	//TODO
+  	
+  }
+  
+  public void selectTicket(ActionEvent event) throws Exception 
+  {
+  	//TODO
+  	
+  }
   
   public void goToShowComments(ActionEvent event) throws Exception 
   {
@@ -140,120 +176,60 @@ public class ShowProjectPageController2
   	//TODO
   }
   
-  /**
-   * Deletes ticket and warns users plenty of times it will be deleted
-   * @param event
-   * @throws Exception
-   */
-  public void deleteTicket(ActionEvent event) throws Exception {
-      if (passedInTicket != null) {
-          String ticketName = passedInTicket.getTicketID(); 
   
-          if (ticketName != null && !ticketName.isEmpty()) {
-              
-              Alert alert = new Alert(AlertType.CONFIRMATION);
-              alert.setTitle("Delete Ticket");
-              alert.setHeaderText("Confirm Deletion");
-              alert.setContentText("Are you sure you want to delete this ticket?");
-
-              Optional<ButtonType> result = alert.showAndWait();
-              if (result.get() == ButtonType.OK) {
-                  
-                  Ticket.deleteTicket(ticketName); 
-              }
-          } else {
-              
-              System.out.println("Invalid ticket name");
-          }
-      }
-  }
-
-
-  /**
-   * When add comment button is pressed it loads and intilaizes the new page with the ticket, so it can be used in 
-   * addcommentPage.fxml
-   * @param event
-   * @throws Exception
-   */
-  public void addComment(ActionEvent event) throws Exception 
+	/**
+	 * Retrieves the list of projects and tickets from the database.
+	 *
+	 * @return A list of ProjectItem objects representing projects and tickets.
+	 */
+  public List<Ticket> retrieveTickets(String projectName) 
   {
-  	
-  	FXMLLoader loader = new FXMLLoader();
-      Parent root = null;
-      loader.setLocation(getClass().getResource("AddCommentPage.fxml"));
-      root = loader.load();
-      AddCommentPageController controller = loader.getController();
-      
-      
-      controller.initData((Ticket) passedInTicket);
-      
-     
-      Stage stage = (Stage) addCommentButton.getScene().getWindow();
-      Scene scene = new Scene(root);
-      stage.setScene(scene);
-      stage.show();
-  	
-  	
-  	
-  }
+	    List<Ticket> ticketList = new ArrayList<>();
 
-	public List<Comment> getCommentsByTicketID(String ticketID) 
-	{
-      List<Comment> commentList = new ArrayList<>();
+	    try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
+	        // The table to retrieve ticket data
+	        String ticketQuery = "SELECT project_name, ticket_name, ticket_description, ticketID FROM tickets WHERE project_name = ?";
 
-      try 
-      {
-          Connection connection = DriverManager.getConnection(jdbcUrl);
+	        try (PreparedStatement ticketStatement = connection.prepareStatement(ticketQuery)) {
+	            ticketStatement.setString(1, projectName); // Set the project name parameter
+	            try (ResultSet ticketResultSet = ticketStatement.executeQuery()) {
+	                while (ticketResultSet.next()) {
+	                    String ticketName = ticketResultSet.getString("ticket_name");
+	                    String ticketDescription = ticketResultSet.getString("ticket_description");
+	                    String ticketID = ticketResultSet.getString("ticketID");
+	                    Ticket ticket = new Ticket(projectName, ticketName, ticketDescription, ticketID);
+	                    ticketList.add(ticket);
+	                }
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return ticketList;
+	}
 
-          String sql = "SELECT timestamp, comment_description FROM comments WHERE ticketID = ?";
-          PreparedStatement pstmt = connection.prepareStatement(sql);
-          pstmt.setString(1, ticketID);
+	/**
+     * This method creates the "projects" table in the database if it doesn't exist.
+     */
+    private void createTable() {
+        try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
+            String createTableSQL = "CREATE TABLE IF NOT EXISTS tickets (" + // Updated table name to "tickets"
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "project_name TEXT NOT NULL," +
+                    "ticket_name TEXT NOT NULL," +
+                    "ticket_description TEXT," +
+                    "ticketID TEXT NOT NULL" +
+                    ")";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(createTableSQL)) {
+                preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Error creating the table: " + e.getMessage());
+        }
+    }
 
-          ResultSet resultSet = pstmt.executeQuery();
 
-          while (resultSet.next()) 
-          {
-              String timestamp = resultSet.getString("timestamp");
-              String commentDescription = resultSet.getString("comment_description");
-
-              Comment comment = new Comment(commentDescription, timestamp);
-              commentList.add(comment);
-          }
-
-          resultSet.close();
-          pstmt.close();
-          connection.close();
-      } 
-      catch (SQLException e) 
-      {
-          e.printStackTrace();
-          System.err.println("Error retrieving comments: " + e.getMessage());
-      }
-
-      return commentList;
-  }
-
-  
-	  
-  /**
-   * This method creates the "projects" table in the database if it doesn't exist.
-   */
-  private void createTable() {
-      try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
-          String createTableSQL = "CREATE TABLE IF NOT EXISTS comments (" + // Updated table name to "tickets"
-                  "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                  "ticketID TEXT NOT NULL," +
-                  "timestamp TEXT NOT NULL," +
-                  "comment_description TEXT NOT NULL" +
-                  ")";
-          try (PreparedStatement preparedStatement = connection.prepareStatement(createTableSQL)) {
-              preparedStatement.executeUpdate();
-          }
-      } catch (SQLException e) {
-          e.printStackTrace();
-          System.err.println("Error creating the table: " + e.getMessage());
-      }
-  }
 
 
 }

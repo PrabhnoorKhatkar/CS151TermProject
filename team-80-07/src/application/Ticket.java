@@ -110,6 +110,18 @@ public class Ticket implements ProjectItem
 	{
 		return ticketID;
 	}
+	
+	  /**
+     * Returns a string representation of the Comment, including its description and
+     * TimeStamp.
+     *
+     * @return A string representation of the Comment.
+     */
+    @Override
+    public String toString() {
+
+        return ticketName;
+    }
 
 
 }

@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ShowProjectPage2Controller">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ShowProjectPageController2">
    <children>
       <BorderPane layoutX="27.0" layoutY="27.0" prefHeight="64.0" prefWidth="300.0">
          <center>
@@ -18,13 +18,13 @@
                <children>
                   <ToolBar prefHeight="40.0" prefWidth="200.0">
                     <items>
-                      <Button fx:id="editTicket" mnemonicParsing="false" onAction="#editTicket" text="Edit Project" />
+                      <Button fx:id="editProject" mnemonicParsing="false" onAction="#editProject" text="Edit Project" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Edit Project" />
                     </items>
                   </ToolBar>
                   <ToolBar layoutX="10.0" layoutY="10.0" prefHeight="40.0" prefWidth="200.0">
                      <items>
-                        <Button fx:id="editComment" mnemonicParsing="false" onAction="#goToShowComments" text="Delete Ticket" />
+                        <Button fx:id="deleteTicket" mnemonicParsing="false" onAction="#deleteTicket" text="Delete Ticket" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Delete Ticket" />
                      </items>
                   </ToolBar>
@@ -38,7 +38,7 @@
                <children>
                   <ToolBar prefHeight="40.0" prefWidth="200.0">
                      <items>
-                        <Button fx:id="deleteTicket" mnemonicParsing="false" onAction="#deleteTicket" text="Delete Project" textFill="#eb0000" />
+                        <Button fx:id="deleteProject" mnemonicParsing="false" onAction="#deleteProject" text="Delete Project" textFill="#eb0000" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="*WARNING*">
                            <font>
                               <Font name="System Bold" size="13.0" />
@@ -56,18 +56,18 @@
             <Label text="Ticket History" BorderPane.alignment="CENTER" />
          </top>
          <center>
-            <ListView fx:id="commentList" minHeight="200.0" minWidth="200.0" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+            <ListView fx:id="ticketList" minHeight="200.0" minWidth="200.0" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
          </center>
          <bottom>
             <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="addCommentButton" mnemonicParsing="false" onAction="#addComment" text="Add Ticket" translateX="61.0" />
-                  <Button fx:id="selectTicket" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Select Ticket" translateX="55.0" />
+                  <Button fx:id="addTicketButton" mnemonicParsing="false" onAction="#addTicket" text="Add Ticket" translateX="61.0" />
+                  <Button fx:id="selectTicket" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#selectTicket" text="Select Ticket" translateX="55.0" />
                </children>
             </VBox>
          </bottom>
       </BorderPane>
       <Label layoutX="95.0" layoutY="6.0" text="Project Name: " />
-      <Label fx:id="ticketNameDisplay" layoutX="177.0" layoutY="6.0" text="Label" />
+      <Label fx:id="projectNameDisplay" layoutX="177.0" layoutY="6.0" text="Label" />
    </children>
 </Pane>

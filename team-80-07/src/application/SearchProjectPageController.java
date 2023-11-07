@@ -92,7 +92,7 @@ public class SearchProjectPageController implements Initializable {
 		root = loader.load();
 
 		ShowProjectPageController2 controller = loader.getController();
-		//controller.initData(selectedProject);
+		controller.initData(selectedProject);
 
 		Stage stage = (Stage) selectButton.getScene().getWindow();
 		Scene scene = new Scene(root);
@@ -110,11 +110,11 @@ public class SearchProjectPageController implements Initializable {
 		String searchInput = projectNameField.getText();
 		ProjectsList.getItems().clear();
 		ProjectsList.getItems().addAll(searchProjects(searchInput, retrieveProjects()));
-		ProjectsList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ProjectItem>() {
+		ProjectsList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Project>() {
 
 			@Override
-			public void changed(ObservableValue<? extends ProjectItem> observable, ProjectItem oldValue,
-					ProjectItem newValue) {
+			public void changed(ObservableValue<? extends Project> observable, Project oldValue,
+					Project newValue) {
 				selectedProject = ProjectsList.getSelectionModel().getSelectedItem();
 
 			}

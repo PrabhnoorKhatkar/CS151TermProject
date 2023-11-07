@@ -215,10 +215,4 @@ public class SearchTicketPageController implements Initializable {
 		return TicketList;
 	}
 
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
