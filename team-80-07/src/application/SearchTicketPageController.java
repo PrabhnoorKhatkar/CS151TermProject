@@ -1,11 +1,22 @@
 package application;
 
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,25 +24,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-
-import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.text.SimpleDateFormat;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.stream.Collectors;
-
-import application.Project;
-import application.ProjectItem;
-import application.Ticket;
 
 /**
  * Controller for the New Project Page in the JavaFX application. This class
@@ -57,7 +49,6 @@ public class SearchTicketPageController implements Initializable {
 	@FXML
 	private ListView<Ticket> TicketList = new ListView<Ticket>();
 
-	private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
 
 	/**
 	 * This method handles the action when the "Back" button is clicked. Navigates
@@ -109,7 +100,7 @@ public class SearchTicketPageController implements Initializable {
 	 * 
 	 * @param event
 	 */
-	public void onInputMethodTextChangedProperty(ActionEvent event) {
+	public void searchSubstring(ActionEvent event) {
 		String searchInput = ticketNameField.getText();
 		TicketList.getItems().clear();
 		TicketList.getItems().addAll(searchTickets(searchInput, retrieveTickets()));
@@ -180,6 +171,11 @@ public class SearchTicketPageController implements Initializable {
 				}
 			}
 		});
+		
+		// Add a listener to the TextField to trigger searchSubstring on text change
+	    ticketNameField.textProperty().addListener((observable, oldValue, newValue) -> {
+	        searchSubstring(null); 
+	    });
 
 	}
 
@@ -192,7 +188,8 @@ public class SearchTicketPageController implements Initializable {
 	{
 		List<Ticket> TicketList = new ArrayList<>();
 
-		try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
+		
+		try (Connection connection = DatabaseConnection.getInstance()) {
 			// The table to retrieve project data
 		
 			// The table to retrieve ticket data

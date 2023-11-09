@@ -59,10 +59,6 @@ public class ShowProjectPageController2
   private ListView<Ticket> ticketList = new ListView<Ticket>();
   
   
-
-  private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
-  
-  
   /**
    * Initializes the display and the instance variable to the selected ticket
    * @param selectedProject passed in ticket from searchTicketPage
@@ -196,7 +192,7 @@ public class ShowProjectPageController2
   {
 	    List<Ticket> ticketList = new ArrayList<>();
 
-	    try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
+        try (Connection connection = DatabaseConnection.getInstance()) {
 	        // The table to retrieve ticket data
 	        String ticketQuery = "SELECT project_name, ticket_name, ticket_description, ticketID FROM tickets WHERE project_name = ?";
 
@@ -223,7 +219,7 @@ public class ShowProjectPageController2
    * The table includes columns for ticket ID, project name, ticket name, ticket description, and ticket identifier.
    */
     private void createTable() {
-        try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
+        try (Connection connection = DatabaseConnection.getInstance()) {
             String createTableSQL = "CREATE TABLE IF NOT EXISTS tickets (" + // Updated table name to "tickets"
                     "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "project_name TEXT NOT NULL," +

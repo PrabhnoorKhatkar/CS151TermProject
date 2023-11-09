@@ -31,12 +31,12 @@
                   <Label text="Search" />
                   <HBox prefHeight="56.0" prefWidth="335.0">
                      <children>
-                        <TextField fx:id="projectNameField" onInputMethodTextChanged="#onInputMethodTextChangedProperty" prefHeight="27.0" prefWidth="183.0">
+                        <TextField fx:id="projectNameField" prefHeight="27.0" prefWidth="183.0">
                            <HBox.margin>
                               <Insets bottom="11.0" right="22.0" />
                            </HBox.margin>
                         </TextField>
-                        <Button fx:id="searchButton" mnemonicParsing="false" onAction="#onInputMethodTextChangedProperty" text="Search" />
+                        <Button fx:id="searchButton" mnemonicParsing="false" onAction="#searchSubstring" text="Search" />
                      </children>
                   </HBox>
                   <ListView fx:id="ProjectsList" prefHeight="205.0" prefWidth="335.0" />

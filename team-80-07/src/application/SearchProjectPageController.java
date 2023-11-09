@@ -57,7 +57,6 @@ public class SearchProjectPageController implements Initializable {
 	@FXML
 	private ListView<Project> ProjectsList = new ListView<Project>();
 
-	private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
 
 	/**
 	 * This method handles the action when the "Back" button is clicked. Navigates
@@ -106,7 +105,7 @@ public class SearchProjectPageController implements Initializable {
 	 * 
 	 * @param event
 	 */
-	public void onInputMethodTextChangedProperty(ActionEvent event) {
+	public void searchSubstring(ActionEvent event) {
 		String searchInput = projectNameField.getText();
 		ProjectsList.getItems().clear();
 		ProjectsList.getItems().addAll(searchProjects(searchInput, retrieveProjects()));
@@ -181,6 +180,11 @@ public class SearchProjectPageController implements Initializable {
 				}
 			}
 		});
+		
+		// Add a listener to the TextField to trigger searchSubstring on text change
+	    projectNameField.textProperty().addListener((observable, oldValue, newValue) -> {
+	        searchSubstring(null); 
+	    });
 
 	}
 
@@ -194,7 +198,7 @@ public class SearchProjectPageController implements Initializable {
 		List<Project> projectList = new ArrayList<>();
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		try (Connection connection = DriverManager.getConnection(jdbcUrl)) 
+        try (Connection connection = DatabaseConnection.getInstance()) 
 		{
 			// The table to retrieve project data
 			String projectQuery = "SELECT project_name, project_date, project_description FROM projects";
