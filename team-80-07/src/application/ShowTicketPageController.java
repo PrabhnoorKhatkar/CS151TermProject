@@ -133,7 +133,19 @@ public class ShowTicketPageController
     
     public void editTicket(ActionEvent event) throws Exception 
     {
-    	//TODO
+    	FXMLLoader loader = new FXMLLoader();
+		Parent root = null;
+
+		loader.setLocation(getClass().getResource("EditTicketPage.fxml"));
+		root = loader.load();
+
+		EditTicketPageController controller = loader.getController();
+		controller.initData(passedInTicket);
+
+		Stage stage = (Stage) editTicket.getScene().getWindow();
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
     	
     }
     

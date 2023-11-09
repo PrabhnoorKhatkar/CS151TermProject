@@ -1,19 +1,12 @@
 package application;
 
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -24,10 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -145,7 +135,19 @@ public class ShowProjectPageController2
   }
   public void editProject(ActionEvent event) throws Exception 
   {
-  	//TODO
+	   FXMLLoader loader = new FXMLLoader();
+		Parent root = null;
+
+		loader.setLocation(getClass().getResource("EditProjectPage.fxml"));
+		root = loader.load();
+
+		EditProjectPageController controller = loader.getController();
+		controller.initData(passedInProject);
+
+		Stage stage = (Stage) editProject.getScene().getWindow();
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
   	
   }
   public void deleteProject(ActionEvent event) throws Exception 
