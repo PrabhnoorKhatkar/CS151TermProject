@@ -99,7 +99,8 @@ public class NewProjectPageController implements Initializable {
     }
 
     /**
-     * This method creates the "projects" table in the database if it doesn't exist.
+     * Creates the "projects" table in the database if it doesn't exist.
+     * The table includes columns for project ID, project name, project date, and project description.
      */
     private void createTable() {
         try (Connection connection = DriverManager.getConnection(jdbcUrl)) {

@@ -115,7 +115,8 @@ public class NewTicketPageController implements Initializable {
     }
 
     /**
-     * This method creates the "projects" table in the database if it doesn't exist.
+     * Creates the "tickets" table in the database if it doesn't exist.
+     * The table includes columns for ticket ID, project name, ticket name, ticket description, and ticket identifier.
      */
     private void createTable() {
         try (Connection connection = DriverManager.getConnection(jdbcUrl)) {

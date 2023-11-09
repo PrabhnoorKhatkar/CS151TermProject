@@ -127,7 +127,8 @@ public class EditTicketPageController
     }
 
     /**
-     * This method creates the "projects" table in the database if it doesn't exist.
+     * This method creates the "tickets" table in the database if it doesn't exist.
+     * The table includes columns for ticket ID, project name, ticket name, ticket description, and ticket identifier.
      */
     private void createTable() {
         try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
@@ -236,6 +237,11 @@ public class EditTicketPageController
 
     }
 
+    /**
+     * Initializes the user interface with data from the provided ticket and ensures the "tickets" table exists in the database.
+     *
+     * @param passedInTicket The ticket containing data to initialize the UI.
+     */
 	public void initData(Ticket passedInTicket) 
 	{
 

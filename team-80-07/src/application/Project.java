@@ -94,6 +94,11 @@ public class Project implements ProjectItem{
                 '}';
     }
 
+    /**
+     * Retrieves the name of the project.
+     *
+     * @return A string representing the name of the project.
+     */
 	@Override
 	public String getName() {
 		

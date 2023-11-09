@@ -97,6 +97,13 @@ public class AddCommentPageController {
 
     }
 
+    /**
+     * Inserts a new comment into the database.
+     *
+     * @param timestamp     The timestamp of the comment. 
+     * @param commentDesc   The description or content of the comment.
+     * @param ticketID      The unique identifier of the ticket associated with the comment.
+     */
     private void insertComment(String timestamp, String commentDesc, String ticketID) {
         // TODO Auto-generated method stub
         try (Connection connection = DriverManager.getConnection(jdbcUrl)) {

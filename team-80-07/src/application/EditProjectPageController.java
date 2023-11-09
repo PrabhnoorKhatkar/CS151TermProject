@@ -114,7 +114,8 @@ public class EditProjectPageController
     }
 
     /**
-     * This method creates the "projects" table in the database if it doesn't exist.
+     * Creates the "projects" table in the database if it doesn't exist.
+     * The table includes columns for project ID, project name, project date, and project description.
      */
     private void createTable() {
         try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
@@ -222,6 +223,12 @@ public class EditProjectPageController
 
     }
 
+    /**
+     * Initializes the user interface with data from the provided project.
+     * If the "projects" table does not exist in the database, it is created.
+     *
+     * @param passedInProject The project containing data to initialize the UI.
+     */
 	public void initData(Project passedInProject) 
 	{
 		createTable();

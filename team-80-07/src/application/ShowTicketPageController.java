@@ -131,6 +131,13 @@ public class ShowTicketPageController
     	
     }
     
+    /**
+     * Handles the action event for editing a ticket.
+     * Loads the "EditTicketPage.fxml" file and initializes the controller with data from the current ticket.
+     *
+     * @param event The ActionEvent triggered by the user's interaction.
+     * @throws Exception If an error occurs during the loading or initialization process.
+     */
     public void editTicket(ActionEvent event) throws Exception 
     {
     	FXMLLoader loader = new FXMLLoader();
@@ -212,6 +219,12 @@ public class ShowTicketPageController
     	
     }
 
+    /**
+     * Retrieves a list of comments associated with a specific ticket ID from the database.
+     *
+     * @param ticketID The unique identifier of the ticket for which comments are to be retrieved.
+     * @return A List of Comment objects representing comments associated with the specified ticket.
+     */
 	public List<Comment> getCommentsByTicketID(String ticketID) 
 	{
         List<Comment> commentList = new ArrayList<>();
@@ -250,9 +263,10 @@ public class ShowTicketPageController
 
     
 	  
-    /**
-     * This method creates the "projects" table in the database if it doesn't exist.
-     */
+	/**
+	 * Creates the "comments" table in the database if it doesn't exist.
+	 * The table includes columns for comment ID, ticket ID, timestamp, and comment description.
+	 */
     private void createTable() {
         try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
             String createTableSQL = "CREATE TABLE IF NOT EXISTS comments (" + // Updated table name to "tickets"

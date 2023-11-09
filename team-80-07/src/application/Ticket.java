@@ -82,11 +82,21 @@ public class Ticket implements ProjectItem
         this.ticketDescription = ticketDescription;
     }
 
+    /**
+     * Retrieves the name of the ticket.
+     *
+     * @return A string representing the name of the ticket.
+     */
 	@Override
 	public String getName() {
 		return ticketName;
 	}
 
+	/**
+	 * Deletes a ticket from the database based on its UUID.
+	 *
+	 * @param uuid The unique identifier of the ticket to be deleted.
+	 */
 	public static void deleteTicket(String uuid) {
 	    try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
 	        String deleteQuery = "DELETE FROM tickets WHERE ticketID = ?";
@@ -106,17 +116,21 @@ public class Ticket implements ProjectItem
 	    }
 	}
 
+	/**
+	 * Retrieves the unique identifier (ID) of the ticket.
+	 *
+	 * @return A string representing the ticket ID.
+	 */
 	public String getTicketID() 
 	{
 		return ticketID;
 	}
 	
-	  /**
-     * Returns a string representation of the Comment, including its description and
-     * TimeStamp.
-     *
-     * @return A string representation of the Comment.
-     */
+	/**
+	 * Returns a string representation of the ticket.
+	 *
+	 * @return A string representing the ticket's name.
+	 */
     @Override
     public String toString() {
 

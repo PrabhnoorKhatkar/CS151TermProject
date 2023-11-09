@@ -47,6 +47,11 @@ public class Comment {
         return description + "\n                                    -" + this.timestamp;
     }
 
+    /**
+     * Retrieves the name associated with this object.
+     *
+     * @return A string representing the name of the object.
+     */
     public String getName() {
         // TODO Auto-generated method stub
         return null;

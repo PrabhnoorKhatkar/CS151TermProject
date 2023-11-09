@@ -133,6 +133,14 @@ public class ShowProjectPageController2
   	//TODO
   	
   }
+  
+  /**
+   * Handles the action event for editing a project.
+   * Loads the "EditProjectPage.fxml" file and initializes the controller with data from the current project.
+   *
+   * @param event The ActionEvent triggered by the user's interaction.
+   * @throws Exception If an error occurs during the loading or initialization process.
+   */
   public void editProject(ActionEvent event) throws Exception 
   {
 	   FXMLLoader loader = new FXMLLoader();
@@ -210,9 +218,10 @@ public class ShowProjectPageController2
 	    return ticketList;
 	}
 
-	/**
-     * This method creates the "projects" table in the database if it doesn't exist.
-     */
+   /**
+   * This method creates the "tickets" table in the database if it doesn't exist.
+   * The table includes columns for ticket ID, project name, ticket name, ticket description, and ticket identifier.
+   */
     private void createTable() {
         try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
             String createTableSQL = "CREATE TABLE IF NOT EXISTS tickets (" + // Updated table name to "tickets"
