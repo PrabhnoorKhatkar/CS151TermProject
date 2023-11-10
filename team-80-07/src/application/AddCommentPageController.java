@@ -47,7 +47,6 @@ public class AddCommentPageController {
 
     private Ticket passedInProject;
 
-    private DatabaseConnector connection2 = new DatabaseConnector();
 
     private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
 
