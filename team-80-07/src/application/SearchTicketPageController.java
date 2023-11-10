@@ -2,6 +2,7 @@ package application;
 
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -48,6 +49,9 @@ public class SearchTicketPageController implements Initializable {
 
 	@FXML
 	private ListView<Ticket> TicketList = new ListView<Ticket>();
+
+	private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
+
 
 
 	/**
@@ -189,7 +193,7 @@ public class SearchTicketPageController implements Initializable {
 		List<Ticket> TicketList = new ArrayList<>();
 
 		
-		try (Connection connection = DatabaseConnection.getInstance()) {
+        try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
 			// The table to retrieve project data
 		
 			// The table to retrieve ticket data

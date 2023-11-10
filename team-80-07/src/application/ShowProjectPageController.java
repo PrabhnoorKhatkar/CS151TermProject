@@ -32,7 +32,11 @@ public class ShowProjectPageController implements Initializable {
     private Button backButton;
 
     @FXML
+
     private ListView<String> activeProjects = new ListView<String>();
+
+    private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
+
 
 
     /**
@@ -80,7 +84,7 @@ public class ShowProjectPageController implements Initializable {
         List<String> returnStringList = new ArrayList<String>();
 
         try {
-            Connection connection = DatabaseConnection.getInstance();
+            Connection connection = DriverManager.getConnection(jdbcUrl);
 
             PreparedStatement pstmt = connection.prepareStatement("SELECT " + col + " FROM " + table);
             ResultSet resultSet = pstmt.executeQuery();

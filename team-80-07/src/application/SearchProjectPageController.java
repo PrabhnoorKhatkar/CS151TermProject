@@ -57,6 +57,8 @@ public class SearchProjectPageController implements Initializable {
 	@FXML
 	private ListView<Project> ProjectsList = new ListView<Project>();
 
+	private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
+
 
 	/**
 	 * This method handles the action when the "Back" button is clicked. Navigates
@@ -198,7 +200,7 @@ public class SearchProjectPageController implements Initializable {
 		List<Project> projectList = new ArrayList<>();
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        try (Connection connection = DatabaseConnection.getInstance()) 
+		try (Connection connection = DriverManager.getConnection(jdbcUrl)) 
 		{
 			// The table to retrieve project data
 			String projectQuery = "SELECT project_name, project_date, project_description FROM projects";

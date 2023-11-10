@@ -44,6 +44,9 @@ public class NewProjectPageController implements Initializable {
     @FXML
     private Button clearButton;
 
+    private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
+
+
     /**
      * This method handles the action when the "Save" button is clicked.
      * Creates a new project and saves it to the database.
@@ -101,7 +104,7 @@ public class NewProjectPageController implements Initializable {
      * The table includes columns for project ID, project name, project date, and project description.
      */
     private void createTable() {
-        try (Connection connection = DatabaseConnection.getInstance()) {
+        try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
             String createTableSQL = "CREATE TABLE IF NOT EXISTS projects (" + // Updated table name to "projects"
                     "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "project_name TEXT NOT NULL," +
@@ -125,7 +128,7 @@ public class NewProjectPageController implements Initializable {
      * @param projectDescription The description of the project.
      */
     private void insertProject(String projectName, LocalDate projectDate, String projectDescription) {
-        try (Connection connection = DatabaseConnection.getInstance()) {
+        try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
             String insertQuery = "INSERT INTO projects (project_name, project_date, project_description) VALUES (?, ?, ?)"; // Updated
                                                                                                                             // table
                                                                                                                             // name

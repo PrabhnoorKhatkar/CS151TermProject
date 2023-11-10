@@ -53,6 +53,9 @@ public class EditTicketPageController
     
     private Ticket storedTicket;
 
+    private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
+
+
     /**
      * This method handles the action when the "Save" button is clicked.
      * Creates a new project and saves it to the database.
@@ -129,7 +132,7 @@ public class EditTicketPageController
      * The table includes columns for ticket ID, project name, ticket name, ticket description, and ticket identifier.
      */
     private void createTable() {
-        try (Connection connection = DatabaseConnection.getInstance()) {
+        try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
             String createTableSQL = "CREATE TABLE IF NOT EXISTS tickets (" + // Updated table name to "tickets"
                     "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "project_name TEXT NOT NULL," +
@@ -156,7 +159,7 @@ public class EditTicketPageController
      * @param ticketID           UUID of ticket which connects comments and tickets
      */
     private void insertTicket(String projectName, String ticketName, String ticketDescription, String ticketID) {
-        try (Connection connection = DatabaseConnection.getInstance()) {
+        try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
             String insertQuery = "INSERT INTO tickets (project_name, ticket_name, ticket_description, ticketID) VALUES (?, ?, ?, ?)"; // Updated
                                                                                                                                       // table
                                                                                                                                       // name
@@ -208,7 +211,7 @@ public class EditTicketPageController
         List<String> returnStringList = new ArrayList<String>();
 
         try {
-            Connection connection = DatabaseConnection.getInstance();
+            Connection connection = DriverManager.getConnection(jdbcUrl);
 
             PreparedStatement pstmt = connection.prepareStatement("SELECT " + col + " FROM " + table);
             ResultSet resultSet = pstmt.executeQuery();
