@@ -59,8 +59,6 @@ public class ShowTicketPageController
     private Ticket passedInTicket;
     
     private Comment selectedComment;
-
-    private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
     
     @FXML
     private ListView<Comment> commentList = new ListView<Comment>();
@@ -232,7 +230,7 @@ public class ShowTicketPageController
 
         try 
         {
-           Connection connection = DriverManager.getConnection(jdbcUrl);
+           Connection connection = DatabaseConnection.getSingleInstance().getConnection();
 
             String sql = "SELECT timestamp, comment_description FROM comments WHERE ticketID = ?";
             PreparedStatement pstmt = connection.prepareStatement(sql);
@@ -269,7 +267,7 @@ public class ShowTicketPageController
 	 * The table includes columns for comment ID, ticket ID, timestamp, and comment description.
 	 */
     private void createTable() {
-        try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
+        try (Connection connection = DatabaseConnection.getSingleInstance().getConnection()){
             String createTableSQL = "CREATE TABLE IF NOT EXISTS comments (" + // Updated table name to "tickets"
                     "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "ticketID TEXT NOT NULL," +

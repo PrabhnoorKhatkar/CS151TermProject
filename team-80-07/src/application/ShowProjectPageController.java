@@ -35,7 +35,6 @@ public class ShowProjectPageController implements Initializable {
 
     private ListView<String> activeProjects = new ListView<String>();
 
-    private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
 
 
 
@@ -84,7 +83,7 @@ public class ShowProjectPageController implements Initializable {
         List<String> returnStringList = new ArrayList<String>();
 
         try {
-            Connection connection = DriverManager.getConnection(jdbcUrl);
+            Connection connection = DatabaseConnection.getSingleInstance().getConnection();
 
             PreparedStatement pstmt = connection.prepareStatement("SELECT " + col + " FROM " + table);
             ResultSet resultSet = pstmt.executeQuery();

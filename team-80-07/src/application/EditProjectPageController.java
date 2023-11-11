@@ -48,7 +48,6 @@ public class EditProjectPageController
     
     private Project storedProject;
 
-    private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
 
 
     /**
@@ -119,7 +118,7 @@ public class EditProjectPageController
      * The table includes columns for project ID, project name, project date, and project description.
      */
     private void createTable() {
-        try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
+        try (Connection connection = DatabaseConnection.getSingleInstance().getConnection()){
             String createTableSQL = "CREATE TABLE IF NOT EXISTS projects (" + // Updated table name to "projects"
                     "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "project_name TEXT NOT NULL," +
@@ -144,7 +143,7 @@ public class EditProjectPageController
      */
     private void editProject(String projectName, LocalDate projectDate, String projectDescription) 
     {
-        try (Connection connection = DriverManager.getConnection(jdbcUrl)) 
+    	try (Connection connection = DatabaseConnection.getSingleInstance().getConnection())
         {
             // Check if the project_name already exists
             String selectQuery = "SELECT project_date, project_description FROM projects WHERE project_name = ?";

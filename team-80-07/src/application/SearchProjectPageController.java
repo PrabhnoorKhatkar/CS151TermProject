@@ -29,10 +29,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-import application.Project;
-import application.ProjectItem;
-import application.Ticket;
-
 /**
  * Controller for the New Project Page in the JavaFX application. This class
  * handles creating and saving new projects to a SQLite database.
@@ -56,8 +52,6 @@ public class SearchProjectPageController implements Initializable {
 
 	@FXML
 	private ListView<Project> ProjectsList = new ListView<Project>();
-
-	private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
 
 
 	/**
@@ -200,7 +194,7 @@ public class SearchProjectPageController implements Initializable {
 		List<Project> projectList = new ArrayList<>();
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		try (Connection connection = DriverManager.getConnection(jdbcUrl)) 
+		try (Connection connection = DatabaseConnection.getSingleInstance().getConnection())
 		{
 			// The table to retrieve project data
 			String projectQuery = "SELECT project_name, project_date, project_description FROM projects";

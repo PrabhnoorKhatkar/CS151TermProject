@@ -50,7 +50,6 @@ public class SearchTicketPageController implements Initializable {
 	@FXML
 	private ListView<Ticket> TicketList = new ListView<Ticket>();
 
-	private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
 
 
 
@@ -193,7 +192,8 @@ public class SearchTicketPageController implements Initializable {
 		List<Ticket> TicketList = new ArrayList<>();
 
 		
-        try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
+		try (Connection connection = DatabaseConnection.getSingleInstance().getConnection())
+		{
 			// The table to retrieve project data
 		
 			// The table to retrieve ticket data

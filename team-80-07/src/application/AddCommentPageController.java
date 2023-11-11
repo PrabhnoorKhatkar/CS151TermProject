@@ -47,9 +47,6 @@ public class AddCommentPageController {
 
     private Ticket passedInProject;
 
-
-    private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
-
     
 
     /**
@@ -109,7 +106,8 @@ public class AddCommentPageController {
      */
     private void insertComment(String timestamp, String commentDesc, String ticketID) {
 
-        try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
+    	try (Connection connection = DatabaseConnection.getSingleInstance().getConnection())
+    	{
         // TODO Auto-generated method stub
             String insertQuery = "INSERT INTO comments (ticketID, timestamp, comment_description) VALUES (?, ?, ?)"; // Updated
                                                                                                                      // table
