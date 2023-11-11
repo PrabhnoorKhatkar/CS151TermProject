@@ -113,10 +113,11 @@ public class NewTicketPageController implements Initializable {
 
     /**
      * Creates the "tickets" table in the database if it doesn't exist.
-     * The table includes columns for ticket ID, project name, ticket name, ticket description, and ticket identifier.
+     * The table includes columns for ticket ID, project name, ticket name, ticket
+     * description, and ticket identifier.
      */
     private void createTable() {
-        try (Connection connection = DatabaseConnection.getSingleInstance().getConnection()){
+        try (Connection connection = DatabaseConnection.getSingleInstance().getConnection()) {
             String createTableSQL = "CREATE TABLE IF NOT EXISTS tickets (" + // Updated table name to "tickets"
                     "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "project_name TEXT NOT NULL," +
@@ -143,7 +144,7 @@ public class NewTicketPageController implements Initializable {
      * @param ticketID           UUID of ticket which connects comments and tickets
      */
     private void insertTicket(String projectName, String ticketName, String ticketDescription, String ticketID) {
-        try (Connection connection = DatabaseConnection.getSingleInstance().getConnection()){
+        try (Connection connection = DatabaseConnection.getSingleInstance().getConnection()) {
             String insertQuery = "INSERT INTO tickets (project_name, ticket_name, ticket_description, ticketID) VALUES (?, ?, ?, ?)"; // Updated
                                                                                                                                       // table
                                                                                                                                       // name
@@ -212,7 +213,7 @@ public class NewTicketPageController implements Initializable {
         List<String> returnStringList = new ArrayList<String>();
 
         try {
-           Connection connection = DatabaseConnection.getSingleInstance().getConnection();
+            Connection connection = DatabaseConnection.getSingleInstance().getConnection();
 
             PreparedStatement pstmt = connection.prepareStatement("SELECT " + col + " FROM " + table);
             ResultSet resultSet = pstmt.executeQuery();

@@ -52,7 +52,6 @@ public class SearchProjectPageController implements Initializable {
 	@FXML
 	private ListView<Project> ProjectsList = new ListView<Project>();
 
-
 	/**
 	 * This method handles the action when the "Back" button is clicked. Navigates
 	 * back to the home page.
@@ -175,11 +174,11 @@ public class SearchProjectPageController implements Initializable {
 				}
 			}
 		});
-		
+
 		// Add a listener to the TextField to trigger searchSubstring on text change
-	    projectNameField.textProperty().addListener((observable, oldValue, newValue) -> {
-	        searchSubstring(null); 
-	    });
+		projectNameField.textProperty().addListener((observable, oldValue, newValue) -> {
+			searchSubstring(null);
+		});
 
 	}
 
@@ -188,26 +187,23 @@ public class SearchProjectPageController implements Initializable {
 	 *
 	 * @return A list of ProjectItem objects representing projects and tickets.
 	 */
-	public List<Project> retrieveProjects() 
-	{
+	public List<Project> retrieveProjects() {
 		List<Project> projectList = new ArrayList<>();
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		try (Connection connection = DatabaseConnection.getSingleInstance().getConnection())
-		{
+		try (Connection connection = DatabaseConnection.getSingleInstance().getConnection()) {
 			// The table to retrieve project data
 			String projectQuery = "SELECT project_name, project_date, project_description FROM projects";
 
 			try (PreparedStatement projectStatement = connection.prepareStatement(projectQuery);
-					ResultSet projectResuitSet = projectStatement.executeQuery()) 
-			{
+					ResultSet projectResuitSet = projectStatement.executeQuery()) {
 
-				while (projectResuitSet.next()) 
-				{
+				while (projectResuitSet.next()) {
 					String projectName = projectResuitSet.getString("project_name");
 					Date projectDate = dateFormat.parse(projectResuitSet.getString("project_date"));
 					String projectDescription = projectResuitSet.getString("project_description");
-					Project project = new Project(projectName,projectDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), projectDescription);
+					Project project = new Project(projectName,
+							projectDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), projectDescription);
 					projectList.add(project);
 				}
 			}

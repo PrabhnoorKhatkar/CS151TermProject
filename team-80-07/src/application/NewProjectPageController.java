@@ -97,10 +97,11 @@ public class NewProjectPageController implements Initializable {
 
     /**
      * Creates the "projects" table in the database if it doesn't exist.
-     * The table includes columns for project ID, project name, project date, and project description.
+     * The table includes columns for project ID, project name, project date, and
+     * project description.
      */
     private void createTable() {
-        try (Connection connection = DatabaseConnection.getSingleInstance().getConnection()){
+        try (Connection connection = DatabaseConnection.getSingleInstance().getConnection()) {
             String createTableSQL = "CREATE TABLE IF NOT EXISTS projects (" + // Updated table name to "projects"
                     "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "project_name TEXT NOT NULL," +
@@ -124,7 +125,7 @@ public class NewProjectPageController implements Initializable {
      * @param projectDescription The description of the project.
      */
     private void insertProject(String projectName, LocalDate projectDate, String projectDescription) {
-        try (Connection connection = DatabaseConnection.getSingleInstance().getConnection()){
+        try (Connection connection = DatabaseConnection.getSingleInstance().getConnection()) {
             String insertQuery = "INSERT INTO projects (project_name, project_date, project_description) VALUES (?, ?, ?)"; // Updated
                                                                                                                             // table
                                                                                                                             // name

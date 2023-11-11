@@ -34,9 +34,6 @@ public class ShowProjectPageController implements Initializable {
 
     private ListView<String> activeProjects = new ListView<String>();
 
-
-
-
     /**
      * This method handles the action when the "Back" button is clicked.
      * Navigates back to the home page.

@@ -26,8 +26,7 @@ import java.util.UUID;
  * Controller for the New Project Page in the JavaFX application.
  * This class handles creating and saving new projects to a SQLite database.
  */
-public class EditTicketPageController 
-{
+public class EditTicketPageController {
 
     @FXML
     private ComboBox<String> listProjects;
@@ -46,9 +45,8 @@ public class EditTicketPageController
 
     @FXML
     private Button clearButton;
-    
-    private Ticket storedTicket;
 
+    private Ticket storedTicket;
 
     /**
      * This method handles the action when the "Save" button is clicked.
@@ -95,7 +93,7 @@ public class EditTicketPageController
      */
     @FXML
     public void cancelButton(ActionEvent event) throws Exception {
-    	navigateToTicketPage(event);
+        navigateToTicketPage(event);
     }
 
     /**
@@ -104,29 +102,29 @@ public class EditTicketPageController
      * @param event The action event.
      * @throws Exception If navigation fails.
      */
-    private void navigateToTicketPage(ActionEvent event) throws Exception 
-    {
-    	 FXMLLoader loader = new FXMLLoader();
- 		Parent root = null;
+    private void navigateToTicketPage(ActionEvent event) throws Exception {
+        FXMLLoader loader = new FXMLLoader();
+        Parent root = null;
 
- 		loader.setLocation(getClass().getResource("ShowTicketPage.fxml"));
- 		root = loader.load();
+        loader.setLocation(getClass().getResource("ShowTicketPage.fxml"));
+        root = loader.load();
 
- 		ShowTicketPageController controller = loader.getController();
- 		controller.initData(storedTicket);
+        ShowTicketPageController controller = loader.getController();
+        controller.initData(storedTicket);
 
- 		Stage stage = (Stage) cancelButton.getScene().getWindow();
- 		Scene scene = new Scene(root);
- 		stage.setScene(scene);
- 		stage.show();
+        Stage stage = (Stage) cancelButton.getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     /**
      * This method creates the "tickets" table in the database if it doesn't exist.
-     * The table includes columns for ticket ID, project name, ticket name, ticket description, and ticket identifier.
+     * The table includes columns for ticket ID, project name, ticket name, ticket
+     * description, and ticket identifier.
      */
     private void createTable() {
-    	try (Connection connection = DatabaseConnection.getSingleInstance().getConnection()){
+        try (Connection connection = DatabaseConnection.getSingleInstance().getConnection()) {
             String createTableSQL = "CREATE TABLE IF NOT EXISTS tickets (" + // Updated table name to "tickets"
                     "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "project_name TEXT NOT NULL," +
@@ -153,8 +151,7 @@ public class EditTicketPageController
      * @param ticketID           UUID of ticket which connects comments and tickets
      */
     private void insertTicket(String projectName, String ticketName, String ticketDescription, String ticketID) {
-        try (Connection connection = DatabaseConnection.getSingleInstance().getConnection())
-        {
+        try (Connection connection = DatabaseConnection.getSingleInstance().getConnection()) {
             String insertQuery = "INSERT INTO tickets (project_name, ticket_name, ticket_description, ticketID) VALUES (?, ?, ?, ?)"; // Updated
                                                                                                                                       // table
                                                                                                                                       // name
@@ -234,26 +231,26 @@ public class EditTicketPageController
     }
 
     /**
-     * Initializes the user interface with data from the provided ticket and ensures the "tickets" table exists in the database.
+     * Initializes the user interface with data from the provided ticket and ensures
+     * the "tickets" table exists in the database.
      *
      * @param passedInTicket The ticket containing data to initialize the UI.
      */
-	public void initData(Ticket passedInTicket) 
-	{
+    public void initData(Ticket passedInTicket) {
 
-		storedTicket = passedInTicket;
-		
-		createTable(); // Call the createTable method when the application initializes
-	    ObservableList<String> projectNames = FXCollections.observableArrayList(getProjectNames("projects", "project_name"));
-	    listProjects.setItems(projectNames);     
-	        
-		ticketNameField.setText(passedInTicket.getName());
-		ticketNameField.setFocusTraversable(false); 
-		
-		
-		ticketDescriptionArea.setText(passedInTicket.getTicketDescription());
-		ticketDescriptionArea.setFocusTraversable(false); 
-		
-	}
+        storedTicket = passedInTicket;
+
+        createTable(); // Call the createTable method when the application initializes
+        ObservableList<String> projectNames = FXCollections
+                .observableArrayList(getProjectNames("projects", "project_name"));
+        listProjects.setItems(projectNames);
+
+        ticketNameField.setText(passedInTicket.getName());
+        ticketNameField.setFocusTraversable(false);
+
+        ticketDescriptionArea.setText(passedInTicket.getTicketDescription());
+        ticketDescriptionArea.setFocusTraversable(false);
+
+    }
 
 }

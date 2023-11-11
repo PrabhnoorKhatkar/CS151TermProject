@@ -49,9 +49,6 @@ public class SearchTicketPageController implements Initializable {
 	@FXML
 	private ListView<Ticket> TicketList = new ListView<Ticket>();
 
-
-
-
 	/**
 	 * This method handles the action when the "Back" button is clicked. Navigates
 	 * back to the home page.
@@ -78,21 +75,18 @@ public class SearchTicketPageController implements Initializable {
 	@FXML
 	public void selectButton(ActionEvent event) throws Exception {
 
-			FXMLLoader loader = new FXMLLoader();
-			Parent root = null;
+		FXMLLoader loader = new FXMLLoader();
+		Parent root = null;
 
-			
-				loader.setLocation(getClass().getResource("ShowTicketPage.fxml"));
-				root = loader.load();
-				ShowTicketPageController controller = loader.getController();
-				controller.initData((Ticket) selectedTicket);
-			
+		loader.setLocation(getClass().getResource("ShowTicketPage.fxml"));
+		root = loader.load();
+		ShowTicketPageController controller = loader.getController();
+		controller.initData((Ticket) selectedTicket);
 
-			Stage stage = (Stage) selectButton.getScene().getWindow();
-			Scene scene = new Scene(root);
-			stage.setScene(scene);
-			stage.show();
-		
+		Stage stage = (Stage) selectButton.getScene().getWindow();
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
 
 	}
 
@@ -130,7 +124,10 @@ public class SearchTicketPageController implements Initializable {
 	 */
 	private List<Ticket> searchTickets(String searchInput, List<Ticket> passInTickets) {
 
-		  return passInTickets.stream().filter(item -> item.getName().toLowerCase().contains(searchInput.toLowerCase()) || item.getProjects().toLowerCase().contains(searchInput.toLowerCase())).collect(Collectors.toList());
+		return passInTickets.stream()
+				.filter(item -> item.getName().toLowerCase().contains(searchInput.toLowerCase())
+						|| item.getProjects().toLowerCase().contains(searchInput.toLowerCase()))
+				.collect(Collectors.toList());
 
 	}
 
@@ -173,11 +170,11 @@ public class SearchTicketPageController implements Initializable {
 				}
 			}
 		});
-		
+
 		// Add a listener to the TextField to trigger searchSubstring on text change
-	    ticketNameField.textProperty().addListener((observable, oldValue, newValue) -> {
-	        searchSubstring(null); 
-	    });
+		ticketNameField.textProperty().addListener((observable, oldValue, newValue) -> {
+			searchSubstring(null);
+		});
 
 	}
 
@@ -186,15 +183,12 @@ public class SearchTicketPageController implements Initializable {
 	 *
 	 * @return A list of ProjectItem objects representing projects and tickets.
 	 */
-	public List<Ticket> retrieveTickets() 
-	{
+	public List<Ticket> retrieveTickets() {
 		List<Ticket> TicketList = new ArrayList<>();
 
-		
-		try (Connection connection = DatabaseConnection.getSingleInstance().getConnection())
-		{
+		try (Connection connection = DatabaseConnection.getSingleInstance().getConnection()) {
 			// The table to retrieve project data
-		
+
 			// The table to retrieve ticket data
 			String ticketQuery = "SELECT project_name, ticket_name, ticket_description, ticketID FROM tickets";
 
