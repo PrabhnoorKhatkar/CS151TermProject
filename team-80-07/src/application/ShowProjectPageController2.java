@@ -171,7 +171,18 @@ public class ShowProjectPageController2
   
   public void selectTicket(ActionEvent event) throws Exception 
   {
-  	//TODO
+	  FXMLLoader loader = new FXMLLoader();
+		Parent root = null;
+
+		loader.setLocation(getClass().getResource("ShowTicketPage.fxml"));
+		root = loader.load();
+		ShowTicketPageController controller = loader.getController();
+		controller.initData((Ticket) selectedTicket);
+
+		Stage stage = (Stage) selectTicket.getScene().getWindow();
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
   	
   }
   
