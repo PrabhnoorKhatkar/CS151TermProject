@@ -1,32 +1,31 @@
-package application;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DatabaseConnection {
+public class DatabaseConnection 
+{
+    private final String jdbcUrl = "jdbc:sqlite:Data/database.db";
 
-    private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
-    private static Connection connection;
-    
-    // Private constructor to prevent instantiation
-    private DatabaseConnection() {
-        try {
-            connection = DriverManager.getConnection(jdbcUrl);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Handle the exception appropriately
-        }
+    private static DatabaseConnection singleInstance = new DatabaseConnection();
+
+    private DatabaseConnection() 
+    {
+        Connection conn = null;
+		try 
+        {
+			conn = DriverManager.getConnection(jdbcUrl);
+		} 
+        catch (SQLException e) 
+        {
+			e.printStackTrace();
+            System.err.println("Database connection error: " + e.getMessage());
+		}
+
     }
 
-    public static Connection getInstance() {
-        if (connection == null) {
-            synchronized (DatabaseConnection.class) {
-                if (connection == null) {
-                    new DatabaseConnection();
-                }
-            }
-        }
-        return connection;
+    public static DatabaseConnection getSingleInstance() 
+    {
+        return singleInstance;
     }
+
 }
