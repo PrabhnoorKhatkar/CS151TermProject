@@ -106,22 +106,22 @@ public class ShowProjectPageController2
 	
 	
 	
-	 /**
-   * This method handles the action when the "Back" button is clicked.
-   * Navigates back to the home page.
-   * @param event The action event.
-   * @throws Exception If navigation fails.
-   */
-  @FXML
-  public void backButton(ActionEvent event) throws Exception 
-  {
-  	 Parent root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
-       Stage stage = (Stage) backButton.getScene().getWindow();
-       Scene scene = new Scene(root);
-       stage.setScene(scene);
-       stage.show();
-  	
-  }
+	/**
+	 * This method handles the action when the "Back" button is clicked. Navigates
+	 * back to the home page.
+	 * 
+	 * @param event The action event.
+	 * @throws Exception If navigation fails.
+	 */
+	@FXML
+	public void backButton(ActionEvent event) throws Exception {
+		Parent root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
+		Stage stage = (Stage) backButton.getScene().getWindow();
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+
+	}
   
   public void editTicket(ActionEvent event) throws Exception 
   {
@@ -169,9 +169,17 @@ public class ShowProjectPageController2
   	
   }
   
-  public void selectTicket(ActionEvent event) throws Exception 
-  {
-	  FXMLLoader loader = new FXMLLoader();
+	/**
+	 * Handles the action event when a ticket is selected. Loads the
+	 * ShowTicketPage.fxml, initializes its controller with data from the selected
+	 * ticket, and displays it in a new stage.
+	 *
+	 * @param event The ActionEvent triggering the method.
+	 * @throws Exception If an exception occurs during the loading or initialization
+	 *                   process.
+	 */
+	public void selectTicket(ActionEvent event) throws Exception {
+		FXMLLoader loader = new FXMLLoader();
 		Parent root = null;
 
 		loader.setLocation(getClass().getResource("ShowTicketPage.fxml"));
@@ -183,8 +191,8 @@ public class ShowProjectPageController2
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
-  	
-  }
+
+	}
   
   public void goToShowComments(ActionEvent event) throws Exception 
   {
