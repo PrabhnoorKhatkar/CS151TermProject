@@ -1,5 +1,9 @@
 package application;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -10,6 +14,7 @@ public class Project implements ProjectItem{
     private String projectName;
     private LocalDate projectDate;
     private String projectDescription;
+    private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
 
     /**
      * Constructs a new project with the given attributes.
@@ -104,6 +109,32 @@ public class Project implements ProjectItem{
 		
 		return projectName;
 	}
+	
+	public static void deleteProject(String projectName) 
+	{
+	    try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
+	        String deleteQuery = "DELETE FROM projects WHERE project_name = ?";
+	        try (PreparedStatement deleteStatement = connection.prepareStatement(deleteQuery)) {
+	            // Set the parameter value for project_name
+	            deleteStatement.setString(1, projectName);
+
+	            int rowsAffected = deleteStatement.executeUpdate();
+
+	            if (rowsAffected == 0) {
+	                System.err.println("No project " + projectName + " found for deletion.");
+	            } else {
+	                System.err.println("Project " + projectName + " has been deleted.");
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        System.err.println("Error deleting project: " + e.getMessage());
+	    }
+	    
+	    
+	    
+	}
+
 
 
 }

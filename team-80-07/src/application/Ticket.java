@@ -96,7 +96,8 @@ public class Ticket implements ProjectItem
 	 *
 	 * @param uuid The unique identifier of the ticket to be deleted.
 	 */
-	public static void deleteTicket(String uuid) {
+	public static void deleteTicket(String uuid) 
+	{
 	    try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
 	        String deleteQuery = "DELETE FROM tickets WHERE ticketID = ?";
 	        try (PreparedStatement deleteStatement = connection.prepareStatement(deleteQuery)) {

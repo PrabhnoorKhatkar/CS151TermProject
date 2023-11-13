@@ -154,7 +154,8 @@ public class ShowTicketPageController {
 	 * @param event
 	 * @throws Exception
 	 */
-	public void deleteTicket(ActionEvent event) throws Exception {
+	public void deleteTicket(ActionEvent event) throws Exception 
+	{
 		if (passedInTicket != null) {
 			String ticketName = passedInTicket.getTicketID();
 

@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -16,11 +17,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class ShowProjectPageController2 
@@ -153,14 +157,34 @@ public class ShowProjectPageController2
 		stage.show();
   	
   }
-  public void deleteProject(ActionEvent event) throws Exception 
+  public void deleteTicket(ActionEvent event) throws Exception 
   {
   	//TODO
   	
   }
-  public void deleteTicket(ActionEvent event) throws Exception 
+  public void deleteProject(ActionEvent event) throws Exception 
   {
-  	//TODO
+	  if (passedInProject != null) {
+			String projectName = passedInProject.getProjectName();
+
+			if (projectName != null && !projectName.isEmpty()) {
+
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+				alert.setTitle("Delete Project");
+				alert.setHeaderText("Confirm Deletion");
+				alert.setContentText("Are you sure you want to delete this project?");
+
+				Optional<ButtonType> result = alert.showAndWait();
+				if (result.get() == ButtonType.OK) {
+
+					Project.deleteProject(projectName);
+				}
+			} else {
+
+				System.out.println("Invalid project name");
+			}
+		}
+	  backButton(event);
   	
   }
   public void addTicket(ActionEvent event) throws Exception 
