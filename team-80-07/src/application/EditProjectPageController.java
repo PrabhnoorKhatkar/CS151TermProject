@@ -57,7 +57,7 @@ public class EditProjectPageController {
 
         if (projectName.isEmpty() || projectDate == null) {
             // Handle validation or show an error message
-        } else {
+        } else if ((projectName.equals(storedProject.getProjectName()))) {
             // Insert the project into the database
             editProject(projectName, projectDate, projectDescription);
 
@@ -66,6 +66,17 @@ public class EditProjectPageController {
 
             // After saving the project, you can navigate back to the main page
             navigateToProjectPage(event);
+        } else if (!(projectName.equals(storedProject.getProjectName()))) {
+
+            // Insert the project into the database
+            editProjectDiffName(storedProject.getProjectName(), projectName, projectDate, projectDescription);
+
+            // Provide user feedback that the project was saved successfully
+            // Example: showSuccessAlert("Project saved successfully.");
+
+            // After saving the project, you can navigate back to the main page
+            navigateToProjectPage(event);
+
         }
     }
 
@@ -126,27 +137,28 @@ public class EditProjectPageController {
     }
 
     /**
-     * Edits a project in the database by either updating an existing project or creating a new one with the updated information.
+     * Edits a project in the database by either updating an existing project or
+     * creating a new one with the updated information.
      *
-     * @param projectName       The new name of the project.
-     * @param projectDate       The new date of the project.
+     * @param projectName        The new name of the project.
+     * @param projectDate        The new date of the project.
      * @param projectDescription The new description of the project.
      */
     private void editProject(String projectName, LocalDate projectDate, String projectDescription) {
         try (Connection connection = DatabaseConnection.getSingleInstance().getConnection()) {
-            if (projectName.equals(storedProject.getName())) {
-                // If the project name hasn't changed, update the existing project
-                updateProject(projectName, projectDate, projectDescription, connection);
-            } else {
-                // If the project name has changed, check if the new name already exists
-                if (projectExists(projectName, connection)) {
-                    // The project with the new name already exists, handle accordingly
-                    // For now, let's print an error message
-                    System.err.println("Error: Project with the new name already exists.");
-                } else {
-                    // The project with the new name doesn't exist, update the existing project and remove the old one
-                    insertProject(projectName, projectDate, projectDescription, connection);
-                    deleteProject(storedProject.getName(), connection);
+            // Update the project information
+            String updateQuery = "UPDATE projects SET project_date = ?, project_description = ? WHERE project_name = ?";
+            try (PreparedStatement updateStatement = connection.prepareStatement(updateQuery)) {
+                updateStatement.setString(1, projectDate.toString());
+                updateStatement.setString(2, projectDescription);
+                updateStatement.setString(3, projectName);
+
+                int rowsUpdated = updateStatement.executeUpdate();
+                if (rowsUpdated > 0) {
+                    // The data was successfully updated
+                    storedProject.setProjectDate(projectDate);
+                    storedProject.setProjectDescription(projectDescription);
+                    storedProject.setProjectName(projectName);
                 }
             }
         } catch (SQLException e) {
@@ -157,86 +169,68 @@ public class EditProjectPageController {
     }
 
     /**
-     * Deletes a project from the database based on the project name.
+     * Edits a project in the database by either updating an existing project or
+     * creating a new one with the updated information.
      *
-     * @param projectName The name of the project to be deleted.
-     * @param connection  The database connection.
-     * @throws SQLException If a database access error occurs.
-     */
-    private void deleteProject(String projectName, Connection connection) throws SQLException {
-        String deleteQuery = "DELETE FROM projects WHERE project_name = ?";
-        try (PreparedStatement deleteStatement = connection.prepareStatement(deleteQuery)) {
-            deleteStatement.setString(1, projectName);
-            int rowsDeleted = deleteStatement.executeUpdate();
-            if (rowsDeleted > 0) {
-                // The existing project was successfully deleted
-            }
-        }
-    }
-
-    /**
-     * Checks if a project with the given name already exists in the database.
-     *
-     * @param projectName The name of the project to check for existence.
-     * @param connection  The database connection.
-     * @return True if a project with the given name already exists, false otherwise.
-     * @throws SQLException If a database access error occurs.
-     */
-    private boolean projectExists(String projectName, Connection connection) throws SQLException {
-        String selectQuery = "SELECT project_name FROM projects WHERE project_name = ?";
-        try (PreparedStatement selectStatement = connection.prepareStatement(selectQuery)) {
-            selectStatement.setString(1, projectName);
-            ResultSet resultSet = selectStatement.executeQuery();
-            return resultSet.next(); // Returns true if a project with the given name already exists
-        }
-    }
-
-    /**
-     * Updates an existing project in the database with the new information.
-     *
-     * @param projectName       The name of the project.
-     * @param projectDate       The new date of the project.
+     * @param projectName        The new name of the project.
+     * @param projectDate        The new date of the project.
      * @param projectDescription The new description of the project.
-     * @param connection        The database connection.
-     * @throws SQLException If a database access error occurs.
      */
-    private void updateProject(String projectName, LocalDate projectDate, String projectDescription, Connection connection) throws SQLException {
-        String updateQuery = "UPDATE projects SET project_date = ?, project_description = ? WHERE project_name = ?";
-        try (PreparedStatement updateStatement = connection.prepareStatement(updateQuery)) {
-            updateStatement.setString(1, projectDate.toString());
-            updateStatement.setString(2, projectDescription);
-            updateStatement.setString(3, projectName);
+    private void editProjectDiffName(String oldProjectName, String newProjectName, LocalDate projectDate,
+                                 String projectDescription) {
+    try (Connection connection = DatabaseConnection.getSingleInstance().getConnection()) 
+    {
+        connection.setAutoCommit(false); // Start a transaction
+        
+        try {
+            // Check if the new project name already exists
+            String selectQuery = "SELECT * FROM projects WHERE project_name = ?";
+            try (PreparedStatement selectStatement = connection.prepareStatement(selectQuery)) {
+                selectStatement.setString(1, newProjectName);
+                ResultSet resultSet = selectStatement.executeQuery();
 
-            int rowsUpdated = updateStatement.executeUpdate();
-            if (rowsUpdated > 0) {
-                // The data was successfully updated
+                if (resultSet.next()) {
+                    // Project with new name already exists, handle accordingly
+                    // You can update UI or inform the user about the name conflict
+                } else {
+                    // Update the project with the new name
+                    String updateQuery = "UPDATE projects SET project_name = ?, project_date = ?, project_description = ? WHERE project_name = ?";
+                    try (PreparedStatement updateStatement = connection.prepareStatement(updateQuery)) {
+                        updateStatement.setString(1, newProjectName);
+                        updateStatement.setString(2, projectDate.toString());
+                        updateStatement.setString(3, projectDescription);
+                        updateStatement.setString(4, oldProjectName);
+
+                        int rowsUpdated = updateStatement.executeUpdate();
+                        if (rowsUpdated > 0) {
+                            // The data was successfully updated with the new name
+                            storedProject.setProjectDate(projectDate);
+                            storedProject.setProjectDescription(projectDescription);
+                            storedProject.setProjectName(newProjectName);
+                            
+                            // Update tickets associated with the old project name
+                            String updateTicketsQuery = "UPDATE tickets SET project_name = ? WHERE project_name = ?";
+                            try (PreparedStatement updateTicketsStatement = connection.prepareStatement(updateTicketsQuery)) {
+                                updateTicketsStatement.setString(1, newProjectName);
+                                updateTicketsStatement.setString(2, oldProjectName);
+                                updateTicketsStatement.executeUpdate();
+                            }
+                        }
+                    }
+                }
             }
+            
+            connection.commit(); // Commit the transaction
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Database connection error: " + e.getMessage());
+            System.err.println("Project data not saved.");
         }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        System.err.println("Database connection error: " + e.getMessage());
     }
-
-    /**
-     * Inserts a new project into the database.
-     *
-     * @param projectName       The name of the new project.
-     * @param projectDate       The date of the new project.
-     * @param projectDescription The description of the new project.
-     * @param connection        The database connection.
-     * @throws SQLException If a database access error occurs.
-     */
-    private void insertProject(String projectName, LocalDate projectDate, String projectDescription, Connection connection) throws SQLException {
-        String insertQuery = "INSERT INTO projects (project_name, project_date, project_description) VALUES (?, ?, ?)";
-        try (PreparedStatement insertStatement = connection.prepareStatement(insertQuery)) {
-            insertStatement.setString(1, projectName);
-            insertStatement.setString(2, projectDate.toString());
-            insertStatement.setString(3, projectDescription);
-
-            int rowsInserted = insertStatement.executeUpdate();
-            if (rowsInserted > 0) {
-                // The data was successfully inserted
-            }
-        }
-    }
-
+}
 
 
     /**
