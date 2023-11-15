@@ -134,6 +134,39 @@ public class Project implements ProjectItem{
 	    
 	    
 	}
+	
+	 /**
+     * Deletes a project and its associated tickets and comments.
+     *
+     * @param projectName The name of the project to be deleted.
+     */
+    public static void deleteProjectContent(String projectName) {
+        try (Connection connection = DatabaseConnection.getSingleInstance().getConnection()) {
+            // Delete associated comments
+            String deleteCommentsQuery = "DELETE FROM comments WHERE ticketID IN (SELECT ticketID FROM tickets WHERE project_name = ?)";
+            try (PreparedStatement deleteCommentsStatement = connection.prepareStatement(deleteCommentsQuery)) {
+                deleteCommentsStatement.setString(1, projectName);
+                deleteCommentsStatement.executeUpdate();
+            }
+
+            // Delete associated tickets
+            String deleteTicketsQuery = "DELETE FROM tickets WHERE project_name = ?";
+            try (PreparedStatement deleteTicketsStatement = connection.prepareStatement(deleteTicketsQuery)) {
+                deleteTicketsStatement.setString(1, projectName);
+                deleteTicketsStatement.executeUpdate();
+            }
+
+            // Delete the project
+            String deleteProjectQuery = "DELETE FROM projects WHERE project_name = ?";
+            try (PreparedStatement deleteProjectStatement = connection.prepareStatement(deleteProjectQuery)) {
+                deleteProjectStatement.setString(1, projectName);
+                deleteProjectStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Error deleting project and associated data: " + e.getMessage());
+        }
+    }
 
 
 

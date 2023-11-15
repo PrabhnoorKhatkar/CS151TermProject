@@ -162,36 +162,46 @@ public class ShowProjectPageController2
   	//TODO
   	
   }
-  public void deleteProject(ActionEvent event) throws Exception 
-  {
-	  if (passedInProject != null) {
-			String projectName = passedInProject.getProjectName();
-
-			if (projectName != null && !projectName.isEmpty()) {
-
-				Alert alert = new Alert(AlertType.CONFIRMATION);
-				alert.setTitle("Delete Project");
-				alert.setHeaderText("Confirm Deletion");
-				alert.setContentText("Are you sure you want to delete this project?");
-
-				Optional<ButtonType> result = alert.showAndWait();
-				if (result.get() == ButtonType.OK) {
-
-					Project.deleteProject(projectName);
-				}
-			} else {
-
-				System.out.println("Invalid project name");
-			}
-		}
-	  backButton(event);
-  	
-  }
+ 
   public void addTicket(ActionEvent event) throws Exception 
   {
   	//TODO
   	
   }
+  
+  /**
+   * Handles the action event for deleting a project.
+   * Deletes the project, its associated tickets, and comments.
+   * Navigates back to the home page.
+   *
+   * @param event The ActionEvent triggered by the user's interaction.
+   * @throws Exception If an error occurs during the deletion or navigation process.
+   */
+  public void deleteProject(ActionEvent event) throws Exception {
+      if (passedInProject != null) {
+          String projectName = passedInProject.getProjectName();
+
+          if (projectName != null && !projectName.isEmpty()) {
+
+              Alert alert = new Alert(AlertType.CONFIRMATION);
+              alert.setTitle("Delete Project");
+              alert.setHeaderText("Confirm Deletion");
+              alert.setContentText("Are you sure you want to delete this project? This action will also delete associated tickets and comments.");
+
+              Optional<ButtonType> result = alert.showAndWait();
+              if (result.get() == ButtonType.OK) {
+                  // Delete the project, associated tickets, and comments
+                  Project.deleteProjectContent(projectName);
+
+                  // Navigate back to the home page
+                  backButton(event);
+              }
+          } else {
+              System.out.println("Invalid project name");
+          }
+      }
+  }
+
   
 	/**
 	 * Handles the action event when a ticket is selected. Loads the
