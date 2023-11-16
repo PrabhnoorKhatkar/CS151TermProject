@@ -1,8 +1,14 @@
 package application;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 public class Comment {
     private String description;
     private String timestamp;
+    private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
 
     /**
      * Constructs a new Comment with the given description.
@@ -55,5 +61,30 @@ public class Comment {
     public String getName() {
         // TODO Auto-generated method stub
         return null;
+    }
+    
+    /**
+     * Deletes a comment from the database based on its timestamp.
+     *
+     * @param timestamp The timestamp of the comment to be deleted.
+     */
+    public static void deleteComment(String timestamp) {
+        try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
+            String deleteQuery = "DELETE FROM comments WHERE timestamp = ?";
+            try (PreparedStatement deleteStatement = connection.prepareStatement(deleteQuery)) {
+                deleteStatement.setString(1, timestamp);
+
+                int rowsAffected = deleteStatement.executeUpdate();
+
+                if (rowsAffected == 0) {
+                    System.err.println("No comment with timestamp " + timestamp + " found for deletion.");
+                } else {
+                    System.out.println("Comment with timestamp " + timestamp + " has been deleted.");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Error deleting comment: " + e.getMessage());
+        }
     }
 }

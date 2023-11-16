@@ -46,6 +46,10 @@ public class ShowTicketPageController {
 
 	@FXML
 	private Button addCommentButton;
+	@FXML
+	private Button editCommentButton;
+	@FXML
+	private Button deleteCommentButton;
 
 	@FXML
 	private Label ticketNameDisplay;
@@ -56,13 +60,17 @@ public class ShowTicketPageController {
 
 	@FXML
 	private ListView<Comment> commentList = new ListView<Comment>();
+	
 
 	/**
 	 * Initializes the display and the instance variable to the selected ticket
 	 * 
 	 * @param selectedTicketOrProject passed in ticket from searchTicketPage
 	 */
-	public void initData(Ticket selectedTicketOrProject) {
+	public void initData(Ticket selectedTicketOrProject) 
+	{
+		editCommentButton.setVisible(false);
+		deleteCommentButton.setVisible(false);
 		passedInTicket = selectedTicketOrProject;
 		ticketNameDisplay.setText(passedInTicket.getName());
 
@@ -78,6 +86,9 @@ public class ShowTicketPageController {
 				@Override
 				public void changed(ObservableValue<? extends Comment> observable, Comment oldValue, Comment newValue) {
 					selectedComment = (Comment) commentList.getSelectionModel().getSelectedItem();
+					editCommentButton.setVisible(true);
+					deleteCommentButton.setVisible(true);
+					
 				}
 			});
 
@@ -201,6 +212,48 @@ public class ShowTicketPageController {
 		stage.show();
 
 	}
+	
+	public void editComment(ActionEvent event) throws Exception 
+	{
+/*
+		FXMLLoader loader = new FXMLLoader();
+		Parent root = null;
+		loader.setLocation(getClass().getResource("EditCommentPage.fxml"));
+		root = loader.load();
+		EditCommentPageController controller = loader.getController();
+
+		controller.initData(selectedComment);
+
+		Stage stage = (Stage) addCommentButton.getScene().getWindow();
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+		*/
+	}
+	
+	public void deleteComment(ActionEvent event) throws Exception 
+	{
+		
+		if (selectedComment != null) 
+		{
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+				alert.setTitle("Delete Comment");
+				alert.setHeaderText("Confirm Deletion");
+				alert.setContentText("Are you sure you want to delete this comment?");
+
+				Optional<ButtonType> result = alert.showAndWait();
+				if (result.get() == ButtonType.OK) {
+
+					Comment.deleteComment(selectedComment.getTimestamp());
+				}
+		}
+		//TODO REFRESH COMMENTLISTVIEW TO SHOW COMMENT IS GONE
+		
+	}
+
+
+
+	
 
 	/**
 	 * Retrieves a list of comments associated with a specific ticket ID from the

@@ -1,18 +1,5 @@
 package application;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-import javafx.fxml.FXMLLoader;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,6 +9,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
 /**
  * Controller for the New Project Page in the JavaFX application.
  * This class handles creating and saving new projects to a SQLite database.
@@ -29,7 +26,7 @@ import java.util.UUID;
 public class EditTicketPageController {
 
     @FXML
-    private ComboBox<String> listProjects;
+    private TextField projectNameField;
 
     @FXML
     private TextField ticketNameField;
@@ -57,23 +54,21 @@ public class EditTicketPageController {
      */
     public void saveTicket(ActionEvent event) throws Exception {
 
-        String selectedProject = listProjects.getValue();
+        String selectedProject = projectNameField.getText();
         String ticketName = ticketNameField.getText();
         String ticketDesc = ticketDescriptionArea.getText();
-
-        // Generate a UUID (Universally Unique Identifier)
-        String uuid = UUID.randomUUID().toString();
-
-        // Remove hyphens and any other special characters
-        String ticketID = uuid.replaceAll("-", "");
+        String ticketID = storedTicket.getTicketID();
 
         // TODO if empty dont SAVE
-        if (selectedProject.isEmpty() || ticketName.isEmpty()) {
+        if (selectedProject.isEmpty() || ticketName.isEmpty()) 
+        {
             // Handle validation or show an error message
             // TODO
-        } else {
+        } 
+        else 
+        {
             // Insert the project into the database
-            insertTicket(selectedProject, ticketName, ticketDesc, ticketID);
+            editTicket(selectedProject, ticketName, ticketDesc, ticketID);
 
             // Provide user feedback that the project was saved successfully
             // Example: showSuccessAlert("Project saved successfully.");
@@ -150,29 +145,30 @@ public class EditTicketPageController {
      * @param projectDescription The description of the project.
      * @param ticketID           UUID of ticket which connects comments and tickets
      */
-    private void insertTicket(String projectName, String ticketName, String ticketDescription, String ticketID) {
+    private void editTicket(String projectName, String ticketName, String ticketDescription, String ticketID) {
         try (Connection connection = DatabaseConnection.getSingleInstance().getConnection()) {
-            String insertQuery = "INSERT INTO tickets (project_name, ticket_name, ticket_description, ticketID) VALUES (?, ?, ?, ?)"; // Updated
-                                                                                                                                      // table
-                                                                                                                                      // name
-                                                                                                                                      // to
-                                                                                                                                      // "tickets"
-            try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
-                preparedStatement.setString(1, projectName);
-                preparedStatement.setString(2, ticketName); // Store date as a string
-                preparedStatement.setString(3, ticketDescription);
-                preparedStatement.setString(4, ticketID);
+            String updateQuery = "UPDATE tickets SET ticket_name = ?, ticket_description = ? WHERE ticketID = ?";
+            
+            try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+                preparedStatement.setString(1, ticketName);
+                preparedStatement.setString(2, ticketDescription);
+                preparedStatement.setString(3, ticketID); // assuming ticketID is the unique identifier
 
                 int rowsAffected = preparedStatement.executeUpdate();
 
-                if (rowsAffected > 0) {
-                    // The data was successfully inserted
-                }
+                if (rowsAffected > 0) 
+                {
+                    System.out.println("Ticket updated successfully.");
+                    
+                    storedTicket.setTicketDescription(ticketDescription);
+                    storedTicket.setTicketName(ticketName);
+                    
+                } 
             }
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println("Database connection error: " + e.getMessage());
-            System.err.println("Project data not saved.");
+            System.err.println("Ticket not updated.");
         }
     }
 
@@ -185,9 +181,13 @@ public class EditTicketPageController {
      */
     @FXML
     public void clearButton(ActionEvent event) throws Exception {
-        ticketNameField.clear();
-        ticketDescriptionArea.clear();
-        listProjects.valueProperty().set(null);
+    	  projectNameField.setText(storedTicket.getName());
+          projectNameField.setFocusTraversable(false);
+
+          ticketNameField.setText(storedTicket.getTicketName()); 
+
+          ticketDescriptionArea.setText(storedTicket.getTicketDescription());
+          ticketDescriptionArea.setFocusTraversable(false);
 
     }
 
@@ -241,9 +241,8 @@ public class EditTicketPageController {
         storedTicket = passedInTicket;
 
         createTable(); // Call the createTable method when the application initializes
-        ObservableList<String> projectNames = FXCollections
-                .observableArrayList(getProjectNames("projects", "project_name"));
-        listProjects.setItems(projectNames);
+        projectNameField.setText(passedInTicket.getProjects());
+        projectNameField.setFocusTraversable(false);
 
         ticketNameField.setText(passedInTicket.getName());
         ticketNameField.setFocusTraversable(false);

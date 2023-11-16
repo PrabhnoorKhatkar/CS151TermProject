@@ -52,15 +52,21 @@
          </center>
       </BorderPane>
       <BorderPane layoutX="358.0" layoutY="66.0" prefHeight="200.0" prefWidth="200.0">
-         <bottom>
-            <Button fx:id="addCommentButton" mnemonicParsing="false" onAction="#addComment" text="Add Comment" BorderPane.alignment="CENTER" />
-         </bottom>
          <top>
             <Label text="Comment History" BorderPane.alignment="CENTER" />
          </top>
          <center>
-            <ListView fx:id="commentList" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+            <ListView fx:id="commentList" minHeight="200.0" minWidth="200.0" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
          </center>
+         <bottom>
+            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="addCommentButton" mnemonicParsing="false" onAction="#addComment" text="Add Comment" translateX="50.0" />
+                  <Button fx:id="editCommentButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#editComment" text="Edit Comment" translateX="51.0" />
+                  <Button fx:id="deleteCommentButton" layoutX="10.0" layoutY="37.0" mnemonicParsing="false" onAction="#deleteComment" text="Delete Comment" textFill="RED" translateX="45.0" />
+               </children>
+            </VBox>
+         </bottom>
       </BorderPane>
       <Label layoutX="95.0" layoutY="6.0" text="Ticket Name: " />
       <Label fx:id="ticketNameDisplay" layoutX="177.0" layoutY="6.0" text="Label" />
