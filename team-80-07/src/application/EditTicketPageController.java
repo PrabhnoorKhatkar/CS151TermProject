@@ -23,7 +23,8 @@ import javafx.stage.Stage;
  * Controller for the New Project Page in the JavaFX application.
  * This class handles creating and saving new projects to a SQLite database.
  */
-public class EditTicketPageController {
+public class EditTicketPageController 
+{
 
     @FXML
     private TextField projectNameField;

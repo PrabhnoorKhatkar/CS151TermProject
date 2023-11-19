@@ -154,10 +154,6 @@ public class ShowTicketPageController {
 
 	}
 
-	public void goToShowComments(ActionEvent event) throws Exception {
-
-		// TODO
-	}
 
 	/**
 	 * Deletes ticket and warns users plenty of times it will be deleted
@@ -215,7 +211,7 @@ public class ShowTicketPageController {
 	
 	public void editComment(ActionEvent event) throws Exception 
 	{
-/*
+
 		FXMLLoader loader = new FXMLLoader();
 		Parent root = null;
 		loader.setLocation(getClass().getResource("EditCommentPage.fxml"));
@@ -228,7 +224,7 @@ public class ShowTicketPageController {
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
-		*/
+		
 	}
 	
 	public void deleteComment(ActionEvent event) throws Exception 
@@ -245,9 +241,11 @@ public class ShowTicketPageController {
 				if (result.get() == ButtonType.OK) {
 
 					Comment.deleteComment(selectedComment.getTimestamp());
+		            refreshCommentList(); // Refresh the comment list to reflect the deletion
 				}
 		}
 		//TODO REFRESH COMMENTLISTVIEW TO SHOW COMMENT IS GONE
+		
 		
 	}
 
@@ -312,6 +310,12 @@ public class ShowTicketPageController {
 			e.printStackTrace();
 			System.err.println("Error creating the table: " + e.getMessage());
 		}
+	}
+	
+	private void refreshCommentList() {
+	    ObservableList<Comment> updatedListOfComments = FXCollections
+	            .observableArrayList(getCommentsByTicketID(passedInTicket.getTicketID()));
+	    commentList.setItems(updatedListOfComments);
 	}
 
 }
