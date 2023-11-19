@@ -60,15 +60,13 @@ public class ShowTicketPageController {
 
 	@FXML
 	private ListView<Comment> commentList = new ListView<Comment>();
-	
 
 	/**
 	 * Initializes the display and the instance variable to the selected ticket
 	 * 
 	 * @param selectedTicketOrProject passed in ticket from searchTicketPage
 	 */
-	public void initData(Ticket selectedTicketOrProject) 
-	{
+	public void initData(Ticket selectedTicketOrProject) {
 		editCommentButton.setVisible(false);
 		deleteCommentButton.setVisible(false);
 		passedInTicket = selectedTicketOrProject;
@@ -88,7 +86,7 @@ public class ShowTicketPageController {
 					selectedComment = (Comment) commentList.getSelectionModel().getSelectedItem();
 					editCommentButton.setVisible(true);
 					deleteCommentButton.setVisible(true);
-					
+
 				}
 			});
 
@@ -154,15 +152,13 @@ public class ShowTicketPageController {
 
 	}
 
-
 	/**
 	 * Deletes ticket and warns users plenty of times it will be deleted
 	 * 
 	 * @param event
 	 * @throws Exception
 	 */
-	public void deleteTicket(ActionEvent event) throws Exception 
-	{
+	public void deleteTicket(ActionEvent event) throws Exception {
 		if (passedInTicket != null) {
 			String ticketName = passedInTicket.getTicketID();
 
@@ -208,9 +204,8 @@ public class ShowTicketPageController {
 		stage.show();
 
 	}
-	
-	public void editComment(ActionEvent event) throws Exception 
-	{
+
+	public void editComment(ActionEvent event) throws Exception {
 
 		FXMLLoader loader = new FXMLLoader();
 		Parent root = null;
@@ -224,34 +219,26 @@ public class ShowTicketPageController {
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
-		
+
 	}
-	
-	public void deleteComment(ActionEvent event) throws Exception 
-	{
-		
-		if (selectedComment != null) 
-		{
-				Alert alert = new Alert(AlertType.CONFIRMATION);
-				alert.setTitle("Delete Comment");
-				alert.setHeaderText("Confirm Deletion");
-				alert.setContentText("Are you sure you want to delete this comment?");
 
-				Optional<ButtonType> result = alert.showAndWait();
-				if (result.get() == ButtonType.OK) {
+	public void deleteComment(ActionEvent event) throws Exception {
 
-					Comment.deleteComment(selectedComment.getTimestamp());
-		            refreshCommentList(); // Refresh the comment list to reflect the deletion
-				}
+		if (selectedComment != null) {
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Delete Comment");
+			alert.setHeaderText("Confirm Deletion");
+			alert.setContentText("Are you sure you want to delete this comment?");
+
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == ButtonType.OK) {
+
+				Comment.deleteComment(selectedComment.getTimestamp());
+				refreshCommentList(); // Refresh the comment list to reflect the deletion
+			}
 		}
-		//TODO REFRESH COMMENTLISTVIEW TO SHOW COMMENT IS GONE
-		
-		
+
 	}
-
-
-
-	
 
 	/**
 	 * Retrieves a list of comments associated with a specific ticket ID from the
@@ -278,7 +265,7 @@ public class ShowTicketPageController {
 				String timestamp = resultSet.getString("timestamp");
 				String commentDescription = resultSet.getString("comment_description");
 
-				Comment comment = new Comment(commentDescription, timestamp);
+				Comment comment = new Comment(commentDescription, timestamp, ticketID);
 				commentList.add(comment);
 			}
 
@@ -311,11 +298,11 @@ public class ShowTicketPageController {
 			System.err.println("Error creating the table: " + e.getMessage());
 		}
 	}
-	
+
 	private void refreshCommentList() {
-	    ObservableList<Comment> updatedListOfComments = FXCollections
-	            .observableArrayList(getCommentsByTicketID(passedInTicket.getTicketID()));
-	    commentList.setItems(updatedListOfComments);
+		ObservableList<Comment> updatedListOfComments = FXCollections
+				.observableArrayList(getCommentsByTicketID(passedInTicket.getTicketID()));
+		commentList.setItems(updatedListOfComments);
 	}
 
 }

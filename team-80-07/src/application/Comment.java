@@ -8,6 +8,7 @@ import java.sql.SQLException;
 public class Comment {
     private String description;
     private String timestamp;
+    private String ticketID;
     private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
 
     /**
@@ -15,12 +16,13 @@ public class Comment {
      *
      * @param description The text content of the comment (required).
      */
-    public Comment(String description, String time) {
+    public Comment(String description, String time, String ticketID) {
         if (description == null || description.isEmpty()) {
             throw new IllegalArgumentException("Comment description must not be empty.");
         }
         this.description = description;
         this.timestamp = time;
+        this.setTicketID(ticketID);
     }
 
     /**
@@ -40,6 +42,15 @@ public class Comment {
     public String getTimestamp() {
         return timestamp;
     }
+    
+    public void setDescripton(String Description) 
+    {
+		this.description = description;
+	}
+    public void setTimestamp(String timestamp) 
+    {
+		this.timestamp = timestamp;
+	}
 
     /**
      * Returns a string representation of the Comment, including its description and
@@ -87,4 +98,16 @@ public class Comment {
             System.err.println("Error deleting comment: " + e.getMessage());
         }
     }
+
+
+	public String getTicketID() {
+		return ticketID;
+	}
+
+	public void setTicketID(String ticketID) {
+		this.ticketID = ticketID;
+	}
+
+
+
 }
