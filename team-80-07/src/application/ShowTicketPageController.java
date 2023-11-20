@@ -299,10 +299,20 @@ public class ShowTicketPageController {
 		}
 	}
 
-	private void refreshCommentList() {
+	private void refreshCommentList() 
+	{
 		ObservableList<Comment> updatedListOfComments = FXCollections
 				.observableArrayList(getCommentsByTicketID(passedInTicket.getTicketID()));
 		commentList.setItems(updatedListOfComments);
+		
+		if(updatedListOfComments.isEmpty())
+		{
+			editCommentButton.setVisible(false);
+			deleteCommentButton.setVisible(false);
+			
+		}
+		
+		
 	}
 
 }
