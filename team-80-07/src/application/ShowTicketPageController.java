@@ -143,7 +143,7 @@ public class ShowTicketPageController {
 		root = loader.load();
 
 		EditTicketPageController controller = loader.getController();
-		controller.initData(passedInTicket);
+		controller.initData(passedInTicket, null, false);
 
 		Stage stage = (Stage) editTicket.getScene().getWindow();
 		Scene scene = new Scene(root);

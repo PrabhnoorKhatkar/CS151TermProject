@@ -130,9 +130,11 @@ public class ShowProjectPageController2 {
 
 		loader.setLocation(getClass().getResource("EditTicketPage.fxml"));
 		root = loader.load();
-
+		
+		boolean fromProjectController = true;
+		
 		EditTicketPageController controller = loader.getController();
-		controller.initData(selectedTicket);
+		controller.initData(selectedTicket, passedInProject, fromProjectController);
 
 		Stage stage = (Stage) editProject.getScene().getWindow();
 		Scene scene = new Scene(root);

@@ -101,7 +101,16 @@ public class EditTicketPageController
      */
     @FXML
     public void cancelButton(ActionEvent event) throws Exception {
-        navigateToTicketPage(event);
+    	if(fromProjectController)
+        {
+        	fromProjectController = false;
+        	navigateToProjectPage(event);
+        	
+        }
+        else
+        {
+        	navigateToTicketPage(event);
+        }
     }
 
     /**
@@ -194,7 +203,9 @@ public class EditTicketPageController
                     storedTicket.setTicketName(ticketName);
                     
                    
-                    storedProject.setProjectName(projectName);
+              
+                   
+                    
                     //TODO get the project details from projectname and store in storedProject
                     
                 } 
@@ -204,6 +215,7 @@ public class EditTicketPageController
             System.err.println("Database connection error: " + e.getMessage());
             System.err.println("Ticket not updated.");
         }
+        
     }
 
     /**
@@ -269,9 +281,17 @@ public class EditTicketPageController
      * the "tickets" table exists in the database.
      *
      * @param passedInTicket The ticket containing data to initialize the UI.
+     * @param passedInProject 
+     * @param fromProjectController2 
      */
-    public void initData(Ticket passedInTicket) {
-
+    public void initData(Ticket passedInTicket, Project passedInProject, boolean fromProjectController2) 
+    {
+    	if(fromProjectController2)
+    	{
+    		fromProjectController = fromProjectController2;
+    		storedProject = passedInProject;
+    	}
+    	
         storedTicket = passedInTicket;
 
         createTable(); // Call the createTable method when the application initializes

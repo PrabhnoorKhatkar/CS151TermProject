@@ -50,6 +50,7 @@ public class NewTicketPageController implements Initializable {
     private Button clearButton;
     
     private Project storedProject;
+    
     private boolean fromProjectController = false;
 
     /**
@@ -115,7 +116,8 @@ public class NewTicketPageController implements Initializable {
      * @param event The action event.
      * @throws Exception If navigation fails.
      */
-    private void navigateToMainPage(ActionEvent event) throws Exception {
+    private void navigateToMainPage(ActionEvent event) throws Exception 
+    {
         Parent root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         Scene scene = new Scene(root);
@@ -194,7 +196,7 @@ public class NewTicketPageController implements Initializable {
 
                 if (rowsAffected > 0) {
                     // The data was successfully inserted
-                	storedProject.setProjectDate(null);
+     
                 	
                 	
                 }
@@ -280,6 +282,7 @@ public class NewTicketPageController implements Initializable {
 	public void initData(Project passedInProject) 
 	{
 		// TODO Auto-generated method stub
+		storedProject = passedInProject;
 		listProjects.setValue(passedInProject.getProjectName());
 		fromProjectController = true;
 		
