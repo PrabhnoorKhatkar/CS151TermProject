@@ -175,9 +175,9 @@ public class ShowProjectPageController2 {
 	 */
 	public void deleteTicket(ActionEvent event) throws Exception {
 		if (selectedTicket != null) {
-			String ticketName = selectedTicket.getTicketID();
+			String ticketID = selectedTicket.getTicketID();
 
-			if (ticketName != null && !ticketName.isEmpty()) {
+			if (ticketID != null && !ticketID.isEmpty()) {
 
 				Alert alert = new Alert(AlertType.CONFIRMATION);
 				alert.setTitle("Delete Ticket");
@@ -187,7 +187,7 @@ public class ShowProjectPageController2 {
 				Optional<ButtonType> result = alert.showAndWait();
 				if (result.get() == ButtonType.OK) {
 
-					Ticket.deleteTicket(ticketName);
+					Ticket.deleteTicket(ticketID);
 					resetTicketListListener(); // Reset the listener
 					refreshTicketList(); // Refresh the comment list to reflect the deletion
 				}

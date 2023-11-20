@@ -44,6 +44,10 @@ public class EditTicketPageController
     private Button clearButton;
 
     private Ticket storedTicket;
+    
+    private Project storedProject;
+    
+    private boolean fromProjectController = false;
 
     /**
      * This method handles the action when the "Save" button is clicked.
@@ -74,7 +78,16 @@ public class EditTicketPageController
             // Example: showSuccessAlert("Project saved successfully.");
 
             // After saving the project, you can navigate back to the main page
-            navigateToTicketPage(event);
+            if(fromProjectController)
+            {
+            	fromProjectController = false;
+            	navigateToProjectPage(event);
+            	
+            }
+            else
+            {
+            	navigateToTicketPage(event);
+            }
         }
 
     }
@@ -112,6 +125,23 @@ public class EditTicketPageController
         stage.setScene(scene);
         stage.show();
     }
+    
+    private void navigateToProjectPage(ActionEvent event) throws Exception {
+        FXMLLoader loader = new FXMLLoader();
+        Parent root = null;
+
+        loader.setLocation(getClass().getResource("ShowProjectPage2.fxml"));
+        root = loader.load();
+
+        ShowProjectPageController2 controller = loader.getController();
+        controller.initData(storedProject);
+
+        Stage stage = (Stage) cancelButton.getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
 
     /**
      * This method creates the "tickets" table in the database if it doesn't exist.
@@ -162,6 +192,10 @@ public class EditTicketPageController
                     
                     storedTicket.setTicketDescription(ticketDescription);
                     storedTicket.setTicketName(ticketName);
+                    
+                   
+                    storedProject.setProjectName(projectName);
+                    //TODO get the project details from projectname and store in storedProject
                     
                 } 
             }
