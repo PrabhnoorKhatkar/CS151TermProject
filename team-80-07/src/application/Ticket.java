@@ -100,7 +100,10 @@ public class Ticket implements ProjectItem
 	{
 	    try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
 	        String deleteQuery = "DELETE FROM tickets WHERE ticketID = ?";
-	        try (PreparedStatement deleteStatement = connection.prepareStatement(deleteQuery)) {
+	        try (PreparedStatement deleteStatement = connection.prepareStatement(deleteQuery)) 
+	        {
+	        	 // Set the parameter value
+	            deleteStatement.setString(1, uuid);
 	           
 	            int rowsAffected = deleteStatement.executeUpdate();
 	            

@@ -176,8 +176,10 @@ public class ShowProjectPageController2 {
 	 * @throws Exception
 	 */
 	public void deleteTicket(ActionEvent event) throws Exception {
-		if (selectedTicket != null) {
+		if (selectedTicket != null) 
+		{
 			String ticketID = selectedTicket.getTicketID();
+			System.out.println(ticketID);
 
 			if (ticketID != null && !ticketID.isEmpty()) {
 
@@ -193,7 +195,9 @@ public class ShowProjectPageController2 {
 					resetTicketListListener(); // Reset the listener
 					refreshTicketList(); // Refresh the comment list to reflect the deletion
 				}
-			} else {
+			} 
+			else 
+			{
 
 				System.out.println("Invalid ticket name");
 			}

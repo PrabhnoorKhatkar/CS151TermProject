@@ -227,7 +227,7 @@ public class EditTicketPageController
      */
     @FXML
     public void clearButton(ActionEvent event) throws Exception {
-    	  projectNameField.setText(storedTicket.getName());
+    	  projectNameField.setText(storedTicket.getProjects());
           projectNameField.setFocusTraversable(false);
 
           ticketNameField.setText(storedTicket.getTicketName()); 
