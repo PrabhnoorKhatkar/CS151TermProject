@@ -7,37 +7,37 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.HomePageController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: C7CDD9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.HomePageController">
    <children>
-      <BorderPane layoutX="27.0" layoutY="27.0" prefHeight="64.0" prefWidth="215.0">
+      <BorderPane layoutX="14.0" layoutY="19.0" prefHeight="362.0" prefWidth="215.0">
          <center>
-            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="268.0" prefWidth="215.0" style="-fx-background-color: d1c6ad;" BorderPane.alignment="CENTER">
                <children>
-                  <ToolBar prefHeight="40.0" prefWidth="200.0">
+                  <ToolBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: d1c6ad;">
                     <items>
                       <Button fx:id="goToNewProject" mnemonicParsing="false" onAction="#goToNewProjectScene" text="New Project" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Create New Project" />
                     </items>
                   </ToolBar>
-                  <ToolBar layoutX="10.0" layoutY="10.0" prefHeight="40.0" prefWidth="200.0">
+                  <ToolBar layoutX="10.0" layoutY="10.0" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: d1c6ad;">
                      <items>
                         <Button fx:id="ShowProjectButton" mnemonicParsing="false" onAction="#goToShowProjects" text="Show Projects" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Show Projects" />
                      </items>
                   </ToolBar>
-                  <ToolBar layoutX="10.0" layoutY="49.0" prefHeight="40.0" prefWidth="200.0">
+                  <ToolBar layoutX="10.0" layoutY="49.0" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: d1c6ad;">
                      <items>
                         <Button fx:id="newTicketButton" mnemonicParsing="false" onAction="#goToNewTicket" text="New Ticket" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Create New Ticket" />
                      </items>
                   </ToolBar>
-                  <ToolBar layoutX="10.0" layoutY="88.0" prefHeight="40.0" prefWidth="200.0">
+                  <ToolBar layoutX="10.0" layoutY="88.0" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: d1c6ad;">
                      <items>
                         <Button fx:id="goToSearchTicket" mnemonicParsing="false" onAction="#goToSearchTicket" text="Search Ticket" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Search Tickets" />
                      </items>
                   </ToolBar>
-                  <ToolBar layoutX="10.0" layoutY="127.0" prefHeight="40.0" prefWidth="200.0">
+                  <ToolBar layoutX="10.0" layoutY="127.0" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: d1c6ad;">
                      <items>
                         <Button fx:id="goToSearchProject" mnemonicParsing="false" onAction="#goToSearchProject" text="Search Project" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Search Projects" />
