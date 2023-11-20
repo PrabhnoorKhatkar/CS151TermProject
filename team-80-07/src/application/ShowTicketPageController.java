@@ -234,7 +234,10 @@ public class ShowTicketPageController {
 			if (result.get() == ButtonType.OK) {
 
 				Comment.deleteComment(selectedComment.getTimestamp());
+				resetCommentListListener(); // Reset the listener
 				refreshCommentList(); // Refresh the comment list to reflect the deletion
+				
+				
 			}
 		}
 
@@ -313,6 +316,17 @@ public class ShowTicketPageController {
 		}
 		
 		
+	}
+	
+	private void resetCommentListListener() {
+	    commentList.getSelectionModel().selectedItemProperty().removeListener(this::commentSelectionChanged);
+	    commentList.getSelectionModel().selectedItemProperty().addListener(this::commentSelectionChanged);
+	}
+
+	private void commentSelectionChanged(ObservableValue<? extends Comment> observable, Comment oldValue, Comment newValue) {
+	    selectedComment = commentList.getSelectionModel().getSelectedItem();
+	    editCommentButton.setVisible(selectedComment != null);
+	    deleteCommentButton.setVisible(selectedComment != null);
 	}
 
 }
