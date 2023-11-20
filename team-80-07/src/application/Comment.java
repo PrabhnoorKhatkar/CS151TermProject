@@ -45,7 +45,7 @@ public class Comment {
     
     public void setDescripton(String Description) 
     {
-		this.description = description;
+		this.description = Description;
 	}
     public void setTimestamp(String timestamp) 
     {

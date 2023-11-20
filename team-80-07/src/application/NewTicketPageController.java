@@ -48,6 +48,9 @@ public class NewTicketPageController implements Initializable {
 
     @FXML
     private Button clearButton;
+    
+    private Project storedProject;
+    private boolean fromProjectController = false;
 
     /**
      * This method handles the action when the "Save" button is clicked.
@@ -80,7 +83,16 @@ public class NewTicketPageController implements Initializable {
             // Example: showSuccessAlert("Project saved successfully.");
 
             // After saving the project, you can navigate back to the main page
-            navigateToMainPage(event);
+            if(fromProjectController)
+            {
+            	fromProjectController = false;
+            	navigateToProjectPage(event);
+            	
+            }
+            else
+            {
+            	navigateToMainPage(event);
+            }
         }
 
     }
@@ -109,6 +121,28 @@ public class NewTicketPageController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+    
+    /**
+     * This method navigates back to the main page.
+     * 
+     * @param event The action event.
+     * @throws Exception If navigation fails.
+     */
+    private void navigateToProjectPage(ActionEvent event) throws Exception {
+    	 FXMLLoader loader = new FXMLLoader();
+			Parent root = null;
+
+			loader.setLocation(getClass().getResource("ShowProjectPage2.fxml"));
+			root = loader.load();
+
+			ShowProjectPageController2 controller = loader.getController();
+			controller.initData(storedProject);
+
+			Stage stage = (Stage) clearButton.getScene().getWindow();
+			Scene scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
     }
 
     /**
@@ -160,6 +194,9 @@ public class NewTicketPageController implements Initializable {
 
                 if (rowsAffected > 0) {
                     // The data was successfully inserted
+                	storedProject.setProjectDate(null);
+                	
+                	
                 }
             }
         } catch (SQLException e) {
@@ -239,5 +276,16 @@ public class NewTicketPageController implements Initializable {
         return returnStringList;
 
     }
+
+	public void initData(Project passedInProject) 
+	{
+		// TODO Auto-generated method stub
+		listProjects.setValue(passedInProject.getProjectName());
+		fromProjectController = true;
+		
+		
+		
+		
+	}
 
 }

@@ -129,7 +129,20 @@ public class ShowProjectPageController2
   
   public void editTicket(ActionEvent event) throws Exception 
   {
-  	//TODO
+	  FXMLLoader loader = new FXMLLoader();
+		Parent root = null;
+
+		loader.setLocation(getClass().getResource("EditTicketPage.fxml"));
+		root = loader.load();
+
+		EditTicketPageController controller = loader.getController();
+		controller.initData(selectedTicket);
+
+		Stage stage = (Stage) editProject.getScene().getWindow();
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+ 
   	
   }
   
@@ -159,13 +172,25 @@ public class ShowProjectPageController2
   }
   public void deleteTicket(ActionEvent event) throws Exception 
   {
-  	//TODO
+	 
   	
   }
  
   public void addTicket(ActionEvent event) throws Exception 
   {
-  	//TODO
+	  FXMLLoader loader = new FXMLLoader();
+			Parent root = null;
+
+			loader.setLocation(getClass().getResource("NewTicketPage.fxml"));
+			root = loader.load();
+
+			NewTicketPageController controller = loader.getController();
+			controller.initData(passedInProject);
+
+			Stage stage = (Stage) editProject.getScene().getWindow();
+			Scene scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
   	
   }
   
