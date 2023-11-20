@@ -158,7 +158,8 @@ public class ShowTicketPageController {
 	 * @param event
 	 * @throws Exception
 	 */
-	public void deleteTicket(ActionEvent event) throws Exception {
+	public void deleteTicket(ActionEvent event) throws Exception 
+	{
 		if (passedInTicket != null) {
 			String ticketName = passedInTicket.getTicketID();
 
@@ -179,6 +180,8 @@ public class ShowTicketPageController {
 				System.out.println("Invalid ticket name");
 			}
 		}
+		backButton(event);
+		
 	}
 
 	/**

@@ -106,8 +106,19 @@ public class NewTicketPageController implements Initializable {
      * @throws Exception If navigation fails.
      */
     @FXML
-    public void cancelButton(ActionEvent event) throws Exception {
-        navigateToMainPage(event);
+    public void cancelButton(ActionEvent event) throws Exception 
+    {
+    	
+    	if(fromProjectController)
+        {
+        	fromProjectController = false;
+        	navigateToProjectPage(event);
+        	
+        }
+        else
+        {
+        	navigateToMainPage(event);
+        }
     }
 
     /**
