@@ -12,7 +12,7 @@ public class Main extends Application
 	
 	/**
 	 * This method initializes the primary stage and sets up the initial scene.
-	 *
+	 *     
 	 * @param primaryStage The primary stage where the application's UI is displayed.
 	 */
 	
