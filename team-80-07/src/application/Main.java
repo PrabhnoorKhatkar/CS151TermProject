@@ -112,4 +112,5 @@ public class Main extends Application {
         rotateTransition.setCycleCount(RotateTransition.INDEFINITE); // Repeat indefinitely
         rotateTransition.play();
     }
+}
     
