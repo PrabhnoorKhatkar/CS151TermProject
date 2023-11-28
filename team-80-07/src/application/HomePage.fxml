@@ -2,6 +2,8 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
@@ -47,5 +49,10 @@
             </VBox>
          </center>
       </BorderPane>
+      <ImageView fx:id="projectImageView" fitHeight="362.0" fitWidth="345.0" layoutX="239.0" layoutY="19.0" pickOnBounds="true">
+         <image>
+            <Image url="@images/Screenshot%202023-11-27%20at%204.39.23%20PM.png" />
+         </image>
+      </ImageView>
    </children>
 </Pane>
