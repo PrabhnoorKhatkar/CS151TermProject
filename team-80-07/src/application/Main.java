@@ -112,13 +112,4 @@ public class Main extends Application {
         rotateTransition.setCycleCount(RotateTransition.INDEFINITE); // Repeat indefinitely
         rotateTransition.play();
     }
-
-    /**
-     * The main method to launch the JavaFX application.
-     *
-     * @param args Command-line arguments (not used in this application).
-     */
-    public static void main(String[] args) {
-        launch(args);
-    }
-}
+    
