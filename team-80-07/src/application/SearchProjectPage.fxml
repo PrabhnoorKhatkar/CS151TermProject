@@ -6,6 +6,8 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -58,5 +60,10 @@
             </VBox>
          </center>
       </BorderPane>
+      <ImageView fitHeight="284.0" fitWidth="225.0" layoutX="362.0" layoutY="21.0" pickOnBounds="true">
+         <image>
+            <Image url="@images/Project%20Search.png" />
+         </image>
+      </ImageView>
    </children>
 </Pane>

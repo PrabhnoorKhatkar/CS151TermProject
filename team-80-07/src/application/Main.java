@@ -18,10 +18,19 @@ import javafx.util.Duration;
 public class Main extends Application {
 
     private Stage primaryStage;
-    private Parent root; // Declare root as a class variable
+    private Parent root; 
 
     /**
      * The main entry point for the JavaFX application.
+     *
+     * @param args The command line arguments.
+     */
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    /**
+     * Starts the JavaFX application by loading the splash screen.
      *
      * @param primaryStage The primary stage for the application.
      */
@@ -40,12 +49,12 @@ public class Main extends Application {
             Scene splashScene = new Scene(root);
 
             // Setting up the fade-in transition for the splash screen
-            FadeTransition fadeIn = new FadeTransition(Duration.seconds(5), root);
+            FadeTransition fadeIn = new FadeTransition(Duration.seconds(3), root);
             fadeIn.setFromValue(0);
             fadeIn.setToValue(1);
 
             // Setting up the fade-out transition for the splash screen
-            FadeTransition fadeOut = new FadeTransition(Duration.seconds(5), root);
+            FadeTransition fadeOut = new FadeTransition(Duration.seconds(3), root);
             fadeOut.setFromValue(1);
             fadeOut.setToValue(0);
 
@@ -58,22 +67,23 @@ public class Main extends Application {
 
             // Starting the sequential transition
             sequence.play();
-            
+
             // Add image rotation after a delay using Platform.runLater
             Platform.runLater(() -> {
-                ImageView imageView = (ImageView) root.lookup("#SplashImage2"); // Replace with your image view ID
-                if (imageView != null) {
-                    rotateImage(imageView);
-                }
-            });
-            // Add image rotation after a delay using Platform.runLater
-            Platform.runLater(() -> {
-                ImageView imageView = (ImageView) root.lookup("#SplashImage1"); // Replace with your image view ID
+                ImageView imageView = (ImageView) root.lookup("#SplashImage2"); 
                 if (imageView != null) {
                     rotateImage(imageView);
                 }
             });
 
+            // Add image rotation after a delay using Platform.runLater
+            Platform.runLater(() -> {
+                ImageView imageView = (ImageView) root.lookup("#SplashImage1"); 
+                if (imageView != null) {
+                    rotateImage(imageView);
+                }
+            });
+        
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -87,15 +97,6 @@ public class Main extends Application {
             root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
             Scene mainScene = new Scene(root, 600, 400);
             primaryStage.setScene(mainScene);
-
-            // Add image rotation after a delay using Platform.runLater
-            Platform.runLater(() -> {
-                ImageView imageView = (ImageView) root.lookup("#projectImageView"); // Replace with your image view ID
-                if (imageView != null) {
-                    rotateImage(imageView);
-                }
-            });
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -108,9 +109,8 @@ public class Main extends Application {
      */
     private void rotateImage(ImageView imageView) {
         RotateTransition rotateTransition = new RotateTransition(Duration.seconds(3), imageView);
-        rotateTransition.setByAngle(360); // Rotate by 360 degrees
-        rotateTransition.setCycleCount(RotateTransition.INDEFINITE); // Repeat indefinitely
+        rotateTransition.setByAngle(360); 
+        rotateTransition.setCycleCount(RotateTransition.INDEFINITE); 
         rotateTransition.play();
     }
 }
-    

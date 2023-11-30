@@ -5,6 +5,8 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -47,5 +49,10 @@
             </VBox>
          </center>
       </BorderPane>
+      <ImageView fitHeight="296.0" fitWidth="335.0" layoutX="274.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/Comment.png" />
+         </image>
+      </ImageView>
    </children>
 </Pane>
