@@ -5,13 +5,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class Ticket implements ProjectItem
+public class Ticket 
 {
     private String projects; 
     private String ticketName;
     private String ticketDescription;
     private String ticketID;
-    private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
 
     /**
      * Constructs a new Ticket with the given information.
@@ -81,15 +80,6 @@ public class Ticket implements ProjectItem
         this.ticketDescription = ticketDescription;
     }
 
-    /**
-     * Retrieves the name of the ticket.
-     *
-     * @return A string representing the name of the ticket.
-     */
-	@Override
-	public String getName() {
-		return ticketName;
-	}
 
 	/**
 	 * Deletes a ticket from the database based on its UUID.
@@ -98,7 +88,7 @@ public class Ticket implements ProjectItem
 	 */
 	public static void deleteTicket(String uuid) 
 	{
-	    try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
+        try (Connection connection = DatabaseConnection.getSingleInstance().getConnection()) {
 	        String deleteQuery = "DELETE FROM tickets WHERE ticketID = ?";
 	        try (PreparedStatement deleteStatement = connection.prepareStatement(deleteQuery)) 
 	        {

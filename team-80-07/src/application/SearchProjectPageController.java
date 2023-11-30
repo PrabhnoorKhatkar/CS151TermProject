@@ -131,7 +131,7 @@ public class SearchProjectPageController implements Initializable {
 		// passInprojectsAndTickets).getName().stream().filter(name ->
 		// name.toLowerCase().contains(searchInput.toLowerCase())).collect(Collectors.toList());
 
-		return passInprojects.stream().filter(item -> item.getName().toLowerCase().contains(searchInput.toLowerCase()))
+		return passInprojects.stream().filter(item -> item.getProjectName().toLowerCase().contains(searchInput.toLowerCase()))
 				.collect(Collectors.toList());
 
 	}
@@ -170,7 +170,7 @@ public class SearchProjectPageController implements Initializable {
 				if (empty || item == null) {
 					setText(null);
 				} else {
-					setText(item.getName());
+					setText(item.getProjectName());
 				}
 			}
 		});

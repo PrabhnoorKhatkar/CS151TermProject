@@ -70,7 +70,7 @@ public class ShowTicketPageController {
 		editCommentButton.setVisible(false);
 		deleteCommentButton.setVisible(false);
 		passedInTicket = selectedTicketOrProject;
-		ticketNameDisplay.setText(passedInTicket.getName());
+		ticketNameDisplay.setText(passedInTicket.getTicketName());
 
 		createTable();
 

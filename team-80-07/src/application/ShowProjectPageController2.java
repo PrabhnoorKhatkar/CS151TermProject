@@ -69,7 +69,7 @@ public class ShowProjectPageController2 {
 		passedInProject = selectedProject;
 		editTicket.setVisible(false);
 		deleteTicket.setVisible(false);
-		projectNameDisplay.setText(passedInProject.getName());
+		projectNameDisplay.setText(passedInProject.getProjectName());
 
 		createTable();
 

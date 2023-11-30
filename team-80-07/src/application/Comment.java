@@ -9,7 +9,6 @@ public class Comment {
     private String description;
     private String timestamp;
     private String ticketID;
-    private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
 
     /**
      * Constructs a new Comment with the given description.
@@ -80,7 +79,7 @@ public class Comment {
      * @param timestamp The timestamp of the comment to be deleted.
      */
     public static void deleteComment(String timestamp) {
-        try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
+        try (Connection connection = DatabaseConnection.getSingleInstance().getConnection()) {
             String deleteQuery = "DELETE FROM comments WHERE timestamp = ?";
             try (PreparedStatement deleteStatement = connection.prepareStatement(deleteQuery)) {
                 deleteStatement.setString(1, timestamp);

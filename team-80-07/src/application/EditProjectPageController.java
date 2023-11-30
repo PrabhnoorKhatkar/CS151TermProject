@@ -243,7 +243,7 @@ public class EditProjectPageController {
     @FXML
     public void clearButton(ActionEvent event) throws Exception {
         // TODO Auto-generated method stub
-        projectNameField.setText(storedProject.getName());
+        projectNameField.setText(storedProject.getProjectName());
         projectNameField.setFocusTraversable(false);
 
         projectDatePicker.setValue(storedProject.getProjectDate()); // Set date to first date made
@@ -263,7 +263,7 @@ public class EditProjectPageController {
         createTable();
         storedProject = passedInProject;
         // TODO Auto-generated method stub
-        projectNameField.setText(passedInProject.getName());
+        projectNameField.setText(passedInProject.getProjectName());
         projectNameField.setFocusTraversable(false);
 
         projectDatePicker.setValue(passedInProject.getProjectDate()); // Set date to first date made

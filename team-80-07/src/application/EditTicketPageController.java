@@ -298,7 +298,7 @@ public class EditTicketPageController
         projectNameField.setText(passedInTicket.getProjects());
         projectNameField.setFocusTraversable(false);
 
-        ticketNameField.setText(passedInTicket.getName());
+        ticketNameField.setText(passedInTicket.getTicketName());
         ticketNameField.setFocusTraversable(false);
 
         ticketDescriptionArea.setText(passedInTicket.getTicketDescription());

@@ -125,7 +125,7 @@ public class SearchTicketPageController implements Initializable {
 	private List<Ticket> searchTickets(String searchInput, List<Ticket> passInTickets) {
 
 		return passInTickets.stream()
-				.filter(item -> item.getName().toLowerCase().contains(searchInput.toLowerCase())
+				.filter(item -> item.getTicketName().toLowerCase().contains(searchInput.toLowerCase())
 						|| item.getProjects().toLowerCase().contains(searchInput.toLowerCase()))
 				.collect(Collectors.toList());
 
@@ -166,7 +166,7 @@ public class SearchTicketPageController implements Initializable {
 				if (empty || item == null) {
 					setText(null);
 				} else {
-					setText(item.getName());
+					setText(item.getTicketName());
 				}
 			}
 		});

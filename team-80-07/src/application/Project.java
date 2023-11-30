@@ -10,11 +10,11 @@ import java.time.format.DateTimeFormatter;
 /**
  * This class is representing a project with a name, date, and description.
  */
-public class Project implements ProjectItem{
+public class Project
+{
     private String projectName;
     private LocalDate projectDate;
     private String projectDescription;
-    private static final String jdbcUrl = "jdbc:sqlite:Data/database.db";
 
     /**
      * Constructs a new project with the given attributes.
@@ -99,20 +99,11 @@ public class Project implements ProjectItem{
                 '}';
     }
 
-/**
-     * Retrieves the name of the project.
-     *
-     * @return A string representing the name of the project.
-     */
-	@Override
-	public String getName() {
-		
-		return projectName;
-	}
+
 	
 	public static void deleteProject(String projectName) 
 	{
-	    try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
+        try (Connection connection = DatabaseConnection.getSingleInstance().getConnection()) {
 	        String deleteQuery = "DELETE FROM projects WHERE project_name = ?";
 	        try (PreparedStatement deleteStatement = connection.prepareStatement(deleteQuery)) {
 	            // Set the parameter value for project_name
