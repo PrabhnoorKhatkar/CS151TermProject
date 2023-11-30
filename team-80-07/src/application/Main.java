@@ -59,7 +59,7 @@ public class Main extends Application {
 
             primaryStage.setScene(splashScene);
             primaryStage.show();
-n
+
             sequence.play();
 
             Platform.runLater(() -> {
