@@ -51,7 +51,7 @@
       </BorderPane>
       <ImageView fx:id="projectImageView" fitHeight="362.0" fitWidth="345.0" layoutX="239.0" layoutY="19.0" pickOnBounds="true">
          <image>
-            <Image url="@images/Screenshot%202023-11-27%20at%204.39.23%20PM.png" />
+            <Image url="@images/SplashScreen.png" />
          </image>
       </ImageView>
    </children>
