@@ -8,17 +8,25 @@
    <children>
       <ImageView fx:id="SplashImage1" fitHeight="200.0" fitWidth="200.0" layoutX="50.0" layoutY="200.0" pickOnBounds="true">
          <image>
+<<<<<<< HEAD
             <Image url="@images/splash1.png" />
+=======
+            <Image url="@images/SplashScreen.png" />
+>>>>>>> 8ea4ad4046aa83e8b12f0df6f5ee3ac07cd8335a
          </image>
       </ImageView>
       <ImageView fx:id="SplashImage2" fitHeight="200.0" fitWidth="200.0" layoutX="350.0" layoutY="200.0" pickOnBounds="true">
          <image>
+<<<<<<< HEAD
             <Image url="@images/splash2.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="200.0" fitWidth="600.0" pickOnBounds="true">
          <image>
             <Image url="@images/Welcome.png" />
+=======
+            <Image url="@images/SplashScreen.png" />
+>>>>>>> 8ea4ad4046aa83e8b12f0df6f5ee3ac07cd8335a
          </image>
       </ImageView>
    </children>

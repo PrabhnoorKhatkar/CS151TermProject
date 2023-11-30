@@ -19,7 +19,10 @@ public class Main extends Application {
 
     private Stage primaryStage;
     private Parent root; 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8ea4ad4046aa83e8b12f0df6f5ee3ac07cd8335a
     /**
      * The main entry point for the JavaFX application.
      *
@@ -28,7 +31,10 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8ea4ad4046aa83e8b12f0df6f5ee3ac07cd8335a
     /**
      * Starts the JavaFX application by loading the splash screen.
      *
@@ -48,6 +54,7 @@ public class Main extends Application {
             root = FXMLLoader.load(getClass().getResource("SplashScreen.fxml"));
             Scene splashScene = new Scene(root);
 
+<<<<<<< HEAD
             // Setting up the fade-in transition for the splash screen
             FadeTransition fadeIn = new FadeTransition(Duration.seconds(3), root);
             fadeIn.setFromValue(0);
@@ -55,20 +62,28 @@ public class Main extends Application {
 
             // Setting up the fade-out transition for the splash screen
             FadeTransition fadeOut = new FadeTransition(Duration.seconds(3), root);
+=======
+            FadeTransition fadeIn = new FadeTransition(Duration.seconds(5), root);
+            fadeIn.setFromValue(0);
+            fadeIn.setToValue(1);
+
+            FadeTransition fadeOut = new FadeTransition(Duration.seconds(5), root);
+>>>>>>> 8ea4ad4046aa83e8b12f0df6f5ee3ac07cd8335a
             fadeOut.setFromValue(1);
             fadeOut.setToValue(0);
 
-            // Combining both transitions into a sequential transition
             SequentialTransition sequence = new SequentialTransition(fadeIn, fadeOut);
             sequence.setOnFinished(e -> loadMainPage());
 
             primaryStage.setScene(splashScene);
             primaryStage.show();
 
-            // Starting the sequential transition
             sequence.play();
 
+<<<<<<< HEAD
             // Add image rotation after a delay using Platform.runLater
+=======
+>>>>>>> 8ea4ad4046aa83e8b12f0df6f5ee3ac07cd8335a
             Platform.runLater(() -> {
                 ImageView imageView = (ImageView) root.lookup("#SplashImage2"); 
                 if (imageView != null) {
@@ -76,7 +91,11 @@ public class Main extends Application {
                 }
             });
 
+<<<<<<< HEAD
             // Add image rotation after a delay using Platform.runLater
+=======
+            
+>>>>>>> 8ea4ad4046aa83e8b12f0df6f5ee3ac07cd8335a
             Platform.runLater(() -> {
                 ImageView imageView = (ImageView) root.lookup("#SplashImage1"); 
                 if (imageView != null) {

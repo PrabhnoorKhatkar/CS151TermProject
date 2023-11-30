@@ -51,7 +51,11 @@
       </BorderPane>
       <ImageView fx:id="projectImageView" fitHeight="362.0" fitWidth="345.0" layoutX="239.0" layoutY="19.0" pickOnBounds="true">
          <image>
+<<<<<<< HEAD
             <Image url="@images/Main.png" />
+=======
+            <Image url="@images/SplashScreen.png" />
+>>>>>>> 8ea4ad4046aa83e8b12f0df6f5ee3ac07cd8335a
          </image>
       </ImageView>
    </children>

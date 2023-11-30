@@ -72,29 +72,41 @@ public class NewTicketPageController implements Initializable {
         // Remove hyphens and any other special characters
         String ticketID = uuid.replaceAll("-", "");
 
-        // TODO if empty dont SAVE
-        if (selectedProject.isEmpty() || ticketName.isEmpty()) {
-            // Handle validation or show an error message
-            // TODO
-        } else {
-            // Insert the project into the database
-            insertTicket(selectedProject, ticketName, ticketDesc, ticketID);
-
-            // Provide user feedback that the project was saved successfully
-            // Example: showSuccessAlert("Project saved successfully.");
-
-            // After saving the project, you can navigate back to the main page
-            if(fromProjectController)
+        try
+        {
+            // TODO if empty dont SAVE
+            if (selectedProject.isEmpty() || ticketName.isEmpty()) 
             {
-            	fromProjectController = false;
-            	navigateToProjectPage(event);
-            	
-            }
-            else
+                // Handle validation or show an error message
+                // TODO
+            } 
+            else 
             {
-            	navigateToMainPage(event);
+                // Insert the project into the database
+                insertTicket(selectedProject, ticketName, ticketDesc, ticketID);
+
+                // Provide user feedback that the project was saved successfully
+                // Example: showSuccessAlert("Project saved successfully.");
+
+                // After saving the project, you can navigate back to the main page
+                if(fromProjectController)
+                {
+                	fromProjectController = false;
+                	navigateToProjectPage(event);
+                	
+                }
+                else
+                {
+                	navigateToMainPage(event);
+                }
             }
+        	
         }
+        catch(NullPointerException e)
+        {
+        	
+        }
+  
 
     }
 
