@@ -99,7 +99,11 @@ public class Project
     }
 
 
-	
+    /**
+     * Deletes a project from the database based on its project name.
+     *
+     * @param projectName The name of the project to be deleted.
+     */
 	public static void deleteProject(String projectName) 
 	{
         try (Connection connection = DatabaseConnection.getSingleInstance().getConnection()) {

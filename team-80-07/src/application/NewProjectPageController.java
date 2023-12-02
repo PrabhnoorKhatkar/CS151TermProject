@@ -4,6 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
@@ -20,7 +22,6 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 /**
- * Controller for the New Project Page in the JavaFX application.
  * This class handles creating and saving new projects to a SQLite database.
  */
 public class NewProjectPageController implements Initializable {
@@ -57,17 +58,31 @@ public class NewProjectPageController implements Initializable {
 
         if (projectName.isEmpty() || projectDate == null) {
             // Handle validation or show an error message
+            showAlert("Validation Error", "Project name and project date are required fields.");
         } else {
             // Insert the project into the database
             insertProject(projectName, projectDate, projectDescription);
 
-            // Provide user feedback that the project was saved successfully
-            // Example: showSuccessAlert("Project saved successfully.");
+            System.out.print("Project saved successfully.");
 
-            // After saving the project, you can navigate back to the main page
             navigateToMainPage(event);
         }
     }
+
+    /**
+     * Displays an error alert with the specified title and message.
+     *
+     * @param title   The title of the error alert.
+     * @param message The detailed error message to be displayed.
+     */
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
 
     /**
      * This method handles the action when the "Cancel" button is clicked.
@@ -126,20 +141,17 @@ public class NewProjectPageController implements Initializable {
      */
     private void insertProject(String projectName, LocalDate projectDate, String projectDescription) {
         try (Connection connection = DatabaseConnection.getSingleInstance().getConnection()) {
-            String insertQuery = "INSERT INTO projects (project_name, project_date, project_description) VALUES (?, ?, ?)"; // Updated
-                                                                                                                            // table
-                                                                                                                            // name
-                                                                                                                            // to
-                                                                                                                            // "projects"
+            String insertQuery = "INSERT INTO projects (project_name, project_date, project_description) VALUES (?, ?, ?)"; 
+            
             try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
                 preparedStatement.setString(1, projectName);
-                preparedStatement.setString(2, projectDate.toString()); // Store date as a string
+                preparedStatement.setString(2, projectDate.toString()); 
                 preparedStatement.setString(3, projectDescription);
 
                 int rowsAffected = preparedStatement.executeUpdate();
 
                 if (rowsAffected > 0) {
-                    // The data was successfully inserted
+                  
                 }
             }
         } catch (SQLException e) {
@@ -158,8 +170,8 @@ public class NewProjectPageController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        projectDatePicker.setValue(LocalDate.now()); // Set default date to today
-        createTable(); // Call the createTable method when the application initializes
+        projectDatePicker.setValue(LocalDate.now()); 
+        createTable(); 
         projectDescriptionArea.setFocusTraversable(false);
 
     }
@@ -174,7 +186,7 @@ public class NewProjectPageController implements Initializable {
     @FXML
     public void clearButton(ActionEvent event) throws Exception {
         projectNameField.clear();
-        projectDatePicker.setValue(LocalDate.now()); // Set default date to today
+        projectDatePicker.setValue(LocalDate.now()); 
         projectDescriptionArea.clear();
 
     }

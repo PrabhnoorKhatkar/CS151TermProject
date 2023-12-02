@@ -6,6 +6,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
@@ -26,7 +28,6 @@ import java.util.ResourceBundle;
 import java.util.UUID;
 
 /**
- * Controller for the New Project Page in the JavaFX application.
  * This class handles creating and saving new projects to a SQLite database.
  */
 public class NewTicketPageController implements Initializable {
@@ -53,62 +54,64 @@ public class NewTicketPageController implements Initializable {
     
     private boolean fromProjectController = false;
 
-    /**
-     * This method handles the action when the "Save" button is clicked.
-     * Creates a new project and saves it to the database.
-     * 
-     * @param event The action event.
-     * @throws Exception If saving the project or navigation fails.
-     */
-    public void saveTicket(ActionEvent event) throws Exception {
+	/**
+	 * This method handles the action when the "Save" button is clicked. Creates a
+	 * new project and saves it to the database.
+	 * 
+	 * @param event The action event.
+	 * @throws Exception If saving the project or navigation fails.
+	 */
+	public void saveTicket(ActionEvent event) throws Exception {
 
-        String selectedProject = listProjects.getValue();
-        String ticketName = ticketNameField.getText();
-        String ticketDesc = ticketDescriptionArea.getText();
+		String selectedProject = listProjects.getValue();
+		String ticketName = ticketNameField.getText();
+		String ticketDesc = ticketDescriptionArea.getText();
 
-        // Generate a UUID (Universally Unique Identifier)
-        String uuid = UUID.randomUUID().toString();
+		String uuid = UUID.randomUUID().toString();
 
-        // Remove hyphens and any other special characters
-        String ticketID = uuid.replaceAll("-", "");
+		String ticketID = uuid.replaceAll("-", "");
 
-        try
-        {
-            // TODO if empty dont SAVE
-            if (selectedProject.isEmpty() || ticketName.isEmpty()) 
-            {
-                // Handle validation or show an error message
-                // TODO
-            } 
-            else 
-            {
-                // Insert the project into the database
-                insertTicket(selectedProject, ticketName, ticketDesc, ticketID);
+		try {
 
-                // Provide user feedback that the project was saved successfully
-                // Example: showSuccessAlert("Project saved successfully.");
+			if (selectedProject.isEmpty() || ticketName.isEmpty()) {
+				
+				showAlert("Validation Error", "Selected project and ticket name are required fields.");
+				
+			} else {
 
-                // After saving the project, you can navigate back to the main page
-                if(fromProjectController)
-                {
-                	fromProjectController = false;
-                	navigateToProjectPage(event);
-                	
-                }
-                else
-                {
-                	navigateToMainPage(event);
-                }
-            }
-        	
-        }
-        catch(NullPointerException e)
-        {
-        	
-        }
-  
+				insertTicket(selectedProject, ticketName, ticketDesc, ticketID);
 
-    }
+				System.out.print("Ticket saved successfully.");
+
+				if (fromProjectController) {
+					fromProjectController = false;
+					navigateToProjectPage(event);
+
+				} else {
+					navigateToMainPage(event);
+				}
+			}
+
+		} catch (NullPointerException e) {
+
+		}
+
+	}
+    
+	/**
+	 * Displays an error alert with the specified title and message.
+	 *
+	 * @param title   The title of the error alert.
+	 * @param message The detailed error message to be displayed.
+	 */
+	private void showAlert(String title, String message) {
+	    Alert alert = new Alert(AlertType.ERROR);
+	    alert.setTitle(title);
+	    alert.setHeaderText(null);
+	    alert.setContentText(message);
+	    alert.showAndWait();
+	}
+
 
     /**
      * This method handles the action when the "Cancel" button is clicked.
@@ -302,16 +305,18 @@ public class NewTicketPageController implements Initializable {
 
     }
 
-	public void initData(Project passedInProject) 
-	{
-		// TODO Auto-generated method stub
-		storedProject = passedInProject;
-		listProjects.setValue(passedInProject.getProjectName());
-		fromProjectController = true;
-		
-		
-		
-		
-	}
+    /**
+     * Initializes data for the controller with the provided project.
+     * Sets the stored project, updates the selected value in the projects list,
+     * and sets the flag indicating if called from the project controller.
+     *
+     * @param passedInProject The project to initialize the data with.
+     */
+    public void initData(Project passedInProject) {
+        storedProject = passedInProject;
+        listProjects.setValue(passedInProject.getProjectName());
+        fromProjectController = true;
+    }
+
 
 }

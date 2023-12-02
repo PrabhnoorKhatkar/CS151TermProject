@@ -208,6 +208,12 @@ public class ShowTicketPageController {
 
 	}
 
+	/**
+     * Edits a comment by loading the `EditCommentPage` and initializing it with the selected comment.
+     *
+     * @param event The action event.
+     * @throws Exception If editing the comment or navigating to the edit page fails.
+     */
 	public void editComment(ActionEvent event) throws Exception {
 
 		FXMLLoader loader = new FXMLLoader();
@@ -225,6 +231,12 @@ public class ShowTicketPageController {
 
 	}
 
+	 /**
+     * Deletes a comment after confirming the deletion with a dialog.
+     *
+     * @param event The action event.
+     * @throws Exception If deleting the comment or handling the confirmation dialog fails.
+     */
 	public void deleteComment(ActionEvent event) throws Exception {
 
 		if (selectedComment != null) {
@@ -238,12 +250,9 @@ public class ShowTicketPageController {
 
 				Comment.deleteComment(selectedComment.getTimestamp());
 				resetCommentListListener(); // Reset the listener
-				refreshCommentList(); // Refresh the comment list to reflect the deletion
-				
-				
+				refreshCommentList(); // Refresh the comment list to reflect the deletion								
 			}
 		}
-
 	}
 
 	/**
@@ -305,6 +314,10 @@ public class ShowTicketPageController {
 		}
 	}
 
+	/**
+     * Refreshes the comment list based on the comments associated with the currently selected ticket.
+     * If the list is empty, it hides the edit and delete buttons.
+     */
 	private void refreshCommentList() 
 	{
 		ObservableList<Comment> updatedListOfComments = FXCollections
@@ -314,18 +327,25 @@ public class ShowTicketPageController {
 		if(updatedListOfComments.isEmpty())
 		{
 			editCommentButton.setVisible(false);
-			deleteCommentButton.setVisible(false);
-			
-		}
-		
-		
+			deleteCommentButton.setVisible(false);			
+		}			
 	}
 	
+	/**
+     * Resets the listener for comment list selection changes.
+     */
 	private void resetCommentListListener() {
 	    commentList.getSelectionModel().selectedItemProperty().removeListener(this::commentSelectionChanged);
 	    commentList.getSelectionModel().selectedItemProperty().addListener(this::commentSelectionChanged);
 	}
 
+	/**
+     * Handles the event when the selected comment in the comment list changes.
+     *
+     * @param observable The observable value.
+     * @param oldValue    The old value.
+     * @param newValue    The new value.
+     */
 	private void commentSelectionChanged(ObservableValue<? extends Comment> observable, Comment oldValue, Comment newValue) {
 	    selectedComment = commentList.getSelectionModel().getSelectedItem();
 	    editCommentButton.setVisible(selectedComment != null);

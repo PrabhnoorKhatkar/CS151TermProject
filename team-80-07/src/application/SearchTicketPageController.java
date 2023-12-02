@@ -26,8 +26,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
- * Controller for the New Project Page in the JavaFX application. This class
- * handles creating and saving new projects to a SQLite database.
+ * This class handles creating and saving new projects to a SQLite database.
  */
 public class SearchTicketPageController implements Initializable {
 
@@ -141,8 +140,6 @@ public class SearchTicketPageController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		// Initialize the projectAndTicketNames list view with all project names and
-		// ticket names
 		ObservableList<Ticket> TicketNames = FXCollections
 				.observableArrayList(retrieveTickets());
 
@@ -171,7 +168,6 @@ public class SearchTicketPageController implements Initializable {
 			}
 		});
 
-		// Add a listener to the TextField to trigger searchSubstring on text change
 		ticketNameField.textProperty().addListener((observable, oldValue, newValue) -> {
 			searchSubstring(null);
 		});
@@ -187,9 +183,7 @@ public class SearchTicketPageController implements Initializable {
 		List<Ticket> TicketList = new ArrayList<>();
 
 		try (Connection connection = DatabaseConnection.getSingleInstance().getConnection()) {
-			// The table to retrieve project data
 
-			// The table to retrieve ticket data
 			String ticketQuery = "SELECT project_name, ticket_name, ticket_description, ticketID FROM tickets";
 
 			try (PreparedStatement ticketStatement = connection.prepareStatement(ticketQuery);

@@ -124,15 +124,22 @@ public class ShowProjectPageController2 {
 
 	}
 
+	/**
+	 * Handles the action when the "Edit" button is clicked. Loads the Edit Ticket
+	 * Page and initializes the controller with the necessary data.
+	 *
+	 * @param event The action event.
+	 * @throws Exception If loading the Edit Ticket Page fails.
+	 */
 	public void editTicket(ActionEvent event) throws Exception {
 		FXMLLoader loader = new FXMLLoader();
 		Parent root = null;
 
 		loader.setLocation(getClass().getResource("EditTicketPage.fxml"));
 		root = loader.load();
-		
+
 		boolean fromProjectController = true;
-		
+
 		EditTicketPageController controller = loader.getController();
 		controller.initData(selectedTicket, passedInProject, fromProjectController);
 
@@ -144,9 +151,9 @@ public class ShowProjectPageController2 {
 	}
 
 	/**
-	 * Handles the action event for editing a project.
-	 * Loads the "EditProjectPage.fxml" file and initializes the controller with
-	 * data from the current project.
+	 * Handles the action event for editing a project. Loads the
+	 * "EditProjectPage.fxml" file and initializes the controller with data from the
+	 * current project.
 	 *
 	 * @param event The ActionEvent triggered by the user's interaction.
 	 * @throws Exception If an error occurs during the loading or initialization
@@ -176,8 +183,7 @@ public class ShowProjectPageController2 {
 	 * @throws Exception
 	 */
 	public void deleteTicket(ActionEvent event) throws Exception {
-		if (selectedTicket != null) 
-		{
+		if (selectedTicket != null) {
 			String ticketID = selectedTicket.getTicketID();
 			System.out.println(ticketID);
 
@@ -195,15 +201,20 @@ public class ShowProjectPageController2 {
 					resetTicketListListener(); // Reset the listener
 					refreshTicketList(); // Refresh the comment list to reflect the deletion
 				}
-			} 
-			else 
-			{
+			} else {
 
 				System.out.println("Invalid ticket name");
 			}
 		}
 	}
 
+	/**
+	 * Handles the action when the "Add Ticket" button is clicked. Loads the Add
+	 * Ticket Page and initializes the controller with the necessary data.
+	 *
+	 * @param event The action event.
+	 * @throws Exception If loading the Add Ticket Page fails.
+	 */
 	public void addTicket(ActionEvent event) throws Exception {
 		FXMLLoader loader = new FXMLLoader();
 		Parent root = null;
@@ -222,9 +233,8 @@ public class ShowProjectPageController2 {
 	}
 
 	/**
-	 * Handles the action event for deleting a project.
-	 * Deletes the project, its associated tickets, and comments.
-	 * Navigates back to the home page.
+	 * Handles the action event for deleting a project. Deletes the project, its
+	 * associated tickets, and comments. Navigates back to the home page.
 	 *
 	 * @param event The ActionEvent triggered by the user's interaction.
 	 * @throws Exception If an error occurs during the deletion or navigation
@@ -319,12 +329,8 @@ public class ShowProjectPageController2 {
 	private void createTable() {
 		try (Connection connection = DatabaseConnection.getSingleInstance().getConnection()) {
 			String createTableSQL = "CREATE TABLE IF NOT EXISTS tickets (" + // Updated table name to "tickets"
-					"id INTEGER PRIMARY KEY AUTOINCREMENT," +
-					"project_name TEXT NOT NULL," +
-					"ticket_name TEXT NOT NULL," +
-					"ticket_description TEXT," +
-					"ticketID TEXT NOT NULL" +
-					")";
+					"id INTEGER PRIMARY KEY AUTOINCREMENT," + "project_name TEXT NOT NULL,"
+					+ "ticket_name TEXT NOT NULL," + "ticket_description TEXT," + "ticketID TEXT NOT NULL" + ")";
 			try (PreparedStatement preparedStatement = connection.prepareStatement(createTableSQL)) {
 				preparedStatement.executeUpdate();
 			}
@@ -334,6 +340,10 @@ public class ShowProjectPageController2 {
 		}
 	}
 
+	/**
+	 * Refreshes the ticket list based on the current project. If the updated list
+	 * is empty, hides the edit and delete buttons.
+	 */
 	private void refreshTicketList() {
 		ObservableList<Ticket> updatedListOfTicket = FXCollections
 				.observableArrayList(retrieveTickets(passedInProject.getProjectName()));
@@ -342,16 +352,25 @@ public class ShowProjectPageController2 {
 		if (updatedListOfTicket.isEmpty()) {
 			editTicket.setVisible(false);
 			deleteTicket.setVisible(false);
-
 		}
-
 	}
 
+	/**
+	 * Resets the listener for the ticket list selection change.
+	 */
 	private void resetTicketListListener() {
 		ticketList.getSelectionModel().selectedItemProperty().removeListener(this::ticketSelectionChanged);
 		ticketList.getSelectionModel().selectedItemProperty().addListener(this::ticketSelectionChanged);
 	}
 
+	/**
+	 * Handles the change in ticket selection. Updates the selected ticket and
+	 * visibility of edit and delete buttons.
+	 *
+	 * @param observable The observable value.
+	 * @param oldValue   The old selected ticket.
+	 * @param newValue   The new selected ticket.
+	 */
 	private void ticketSelectionChanged(ObservableValue<? extends Ticket> observable, Ticket oldValue,
 			Ticket newValue) {
 		selectedTicket = ticketList.getSelectionModel().getSelectedItem();

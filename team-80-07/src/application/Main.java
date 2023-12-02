@@ -38,52 +38,49 @@ public class Main extends Application {
         splashScreenLoader();
     }
 
-    /**
-     * Loads and displays the splash screen with fade-in and fade-out transitions.
-     */
-    private void splashScreenLoader() {
-        try {
-            root = FXMLLoader.load(getClass().getResource("SplashScreen.fxml"));
-            Scene splashScene = new Scene(root);
+	/**
+	 * Loads and displays the splash screen with fade-in and fade-out transitions.
+	 */
+	private void splashScreenLoader() {
+		try {
+			root = FXMLLoader.load(getClass().getResource("SplashScreen.fxml"));
+			Scene splashScene = new Scene(root);
 
-            // Setting up the fade-in transition for the splash screen
-            FadeTransition fadeIn = new FadeTransition(Duration.seconds(3), root);
-            fadeIn.setFromValue(0);
-            fadeIn.setToValue(1);
+			// Setting up the fade-in transition for the splash screen
+			FadeTransition fadeIn = new FadeTransition(Duration.seconds(3), root);
+			fadeIn.setFromValue(0);
+			fadeIn.setToValue(1);
 
-            // Setting up the fade-out transition for the splash screen
-            FadeTransition fadeOut = new FadeTransition(Duration.seconds(3), root);
-            fadeOut.setFromValue(1);
-            fadeOut.setToValue(0);
+			// Setting up the fade-out transition for the splash screen
+			FadeTransition fadeOut = new FadeTransition(Duration.seconds(3), root);
+			fadeOut.setFromValue(1);
+			fadeOut.setToValue(0);
 
-            SequentialTransition sequence = new SequentialTransition(fadeIn, fadeOut);
-            sequence.setOnFinished(e -> loadMainPage());
+			SequentialTransition sequence = new SequentialTransition(fadeIn, fadeOut);
+			sequence.setOnFinished(e -> loadMainPage());
+			primaryStage.setScene(splashScene);
+			primaryStage.show();
 
-            primaryStage.setScene(splashScene);
-            primaryStage.show();
+			sequence.play();
 
-            sequence.play();
+			Platform.runLater(() -> {
+				ImageView imageView = (ImageView) root.lookup("#SplashImage2");
+				if (imageView != null) {
+					rotateImage(imageView);
+				}
+			});
 
-            // Add image rotation after a delay using Platform.runLater
-            Platform.runLater(() -> {
-                ImageView imageView = (ImageView) root.lookup("#SplashImage2"); 
-                if (imageView != null) {
-                    rotateImage(imageView);
-                }
-            });
+			Platform.runLater(() -> {
+				ImageView imageView = (ImageView) root.lookup("#SplashImage1");
+				if (imageView != null) {
+					rotateImage(imageView);
+				}
+			});
 
-            // Add image rotation after a delay using Platform.runLater
-            Platform.runLater(() -> {
-                ImageView imageView = (ImageView) root.lookup("#SplashImage1"); 
-                if (imageView != null) {
-                    rotateImage(imageView);
-                }
-            });
-        
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
     /**
      * Loads and displays the main page with image rotation after a delay.

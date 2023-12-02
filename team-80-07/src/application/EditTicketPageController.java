@@ -19,7 +19,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
- * Controller for the New Project Page in the JavaFX application.
  * This class handles creating and saving new projects to a SQLite database.
  */
 public class EditTicketPageController 
@@ -63,21 +62,16 @@ public class EditTicketPageController
         String ticketDesc = ticketDescriptionArea.getText();
         String ticketID = storedTicket.getTicketID();
 
-        // TODO if empty dont SAVE
+
         if (selectedProject.isEmpty() || ticketName.isEmpty()) 
         {
-            // Handle validation or show an error message
-            // TODO
+        	 System.err.println("Error: Project name and ticket name cannot be empty. Ticket not saved.");
         } 
         else 
         {
-            // Insert the project into the database
+
             editTicket(selectedProject, ticketName, ticketDesc, ticketID);
 
-            // Provide user feedback that the project was saved successfully
-            // Example: showSuccessAlert("Project saved successfully.");
-
-            // After saving the project, you can navigate back to the main page
             if(fromProjectController)
             {
             	fromProjectController = false;
@@ -135,6 +129,12 @@ public class EditTicketPageController
         stage.show();
     }
     
+    /**
+     * Navigates to the project page (ShowProjectPage2.fxml) and initializes the controller with the stored project data.
+     *
+     * @param event The action event triggering the navigation.
+     * @throws Exception If navigation or initialization fails.
+     */
     private void navigateToProjectPage(ActionEvent event) throws Exception {
         FXMLLoader loader = new FXMLLoader();
         Parent root = null;
@@ -191,7 +191,7 @@ public class EditTicketPageController
             try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
                 preparedStatement.setString(1, ticketName);
                 preparedStatement.setString(2, ticketDescription);
-                preparedStatement.setString(3, ticketID); // assuming ticketID is the unique identifier
+                preparedStatement.setString(3, ticketID); 
 
                 int rowsAffected = preparedStatement.executeUpdate();
 
@@ -201,13 +201,7 @@ public class EditTicketPageController
                     
                     storedTicket.setTicketDescription(ticketDescription);
                     storedTicket.setTicketName(ticketName);
-                    
-                   
-              
-                   
-                    
-                    //TODO get the project details from projectname and store in storedProject
-                    
+
                 } 
             }
         } catch (SQLException e) {
@@ -294,7 +288,7 @@ public class EditTicketPageController
     	
         storedTicket = passedInTicket;
 
-        createTable(); // Call the createTable method when the application initializes
+        createTable(); 
         projectNameField.setText(passedInTicket.getProjects());
         projectNameField.setFocusTraversable(false);
 
