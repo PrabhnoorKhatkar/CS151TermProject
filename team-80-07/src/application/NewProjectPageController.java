@@ -63,7 +63,7 @@ public class NewProjectPageController implements Initializable {
             // Insert the project into the database
             insertProject(projectName, projectDate, projectDescription);
 
-            System.out.print("Project saved successfully.");
+            System.out.println("Project saved successfully.");
 
             navigateToMainPage(event);
         }

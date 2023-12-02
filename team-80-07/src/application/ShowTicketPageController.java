@@ -174,13 +174,14 @@ public class ShowTicketPageController {
 				if (result.get() == ButtonType.OK) {
 
 					Ticket.deleteTicket(ticketName);
+					backButton(event);
 				}
 			} else {
 
 				System.out.println("Invalid ticket name");
 			}
 		}
-		backButton(event);
+		
 		
 	}
 
