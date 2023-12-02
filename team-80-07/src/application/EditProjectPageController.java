@@ -241,7 +241,7 @@ public class EditProjectPageController {
      */
     @FXML
     public void clearButton(ActionEvent event) throws Exception {
-        // TODO Auto-generated method stub
+        
         projectNameField.setText(storedProject.getProjectName());
         projectNameField.setFocusTraversable(false);
 
@@ -261,7 +261,7 @@ public class EditProjectPageController {
     public void initData(Project passedInProject) {
         createTable();
         storedProject = passedInProject;
-        // TODO Auto-generated method stub
+        
         projectNameField.setText(passedInProject.getProjectName());
         projectNameField.setFocusTraversable(false);
 
